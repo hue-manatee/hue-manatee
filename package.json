@@ -4,7 +4,11 @@
   "description": "node api built to interact with philips hue api",
   "main": "server.js",
   "scripts": {
-    "test": "mocha"
+    "create-db-dir": "node lib/mk_db.js",
+    "start-server": "node server.js",
+    "install": "npm run create-db-dir",
+    "start": "npm run start-server",
+    "test": "./node_modules/mocha/bin/mocha test"
   },
   "repository": {
     "type": "git",
