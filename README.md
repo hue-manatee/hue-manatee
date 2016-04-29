@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/slugbyte/travis-demo.svg?branch=master)](https://travis-ci.org/slugbyte/travis-demo)
+
 # hue-manatee
 A node REST api designed to interface with philips hue bridge and light technology.
 

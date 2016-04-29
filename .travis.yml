@@ -7,5 +7,4 @@ before_script:
   - npm install -g gulp
 script:
   - eslint $(find . -name '*.js' | grep -v '.min.js' | grep -v 'vendor' | grep -v 'node_modules')
-  - gulp
   - mocha
