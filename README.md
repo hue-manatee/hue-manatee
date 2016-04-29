@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/hue-manatee/hue-manatee/tree/staging)](https://travis-ci.org/hue-manatee/hue-manatee)
+[![Build Status](https://travis-ci.org/hue-manatee/hue-manatee.svg?branch=staging)](https://travis-ci.org/hue-manatee/hue-manatee)
 
 # hue-manatee
 A node REST api designed to interface with philips hue bridge and light technology.
