@@ -6,7 +6,6 @@ const request = chai.request;
 const setup = require(__dirname + '/test_setup');
 const teardown = require(__dirname + '/test_teardown');
 const port = process.env.PORT = 5000;
-process.env.MONGODB_URI = 'mongo://localhost/hue_test_db';
 var User = require(__dirname + '/../models/user');
 
 describe('the login route tests', () => {
