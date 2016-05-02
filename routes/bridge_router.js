@@ -15,3 +15,15 @@ bridgeRouter.post('/bridge', bodyParser, (req, res) => {
     res.status(200).json(data);
   });
 });
+
+bridgeRouter.get('/bridge/:bridgeId', (req, res) => {
+  Bridge.findOne({ _id: req.params.bridgeId }, (err, bridge) => {
+    if (err) return handleErr(err);
+    superAgent
+      .get('http://' + bridge.ip + '/api/' + bridge.bridgeUserId + '/lights')
+      .end((err, superRes) => {
+        if (err) return handleErr(err);
+        res.status(200).json(superRes);
+      });
+  });
+});
