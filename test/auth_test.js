@@ -13,14 +13,13 @@ describe('the login route tests', () => {
   before((done) => {
     setup(done);
   });
-  after((done) => {
-    teardown(done);
-  });
+
   before((done) => {
     var newUser = new User({
       username: 'testUser',
       password: 'muchPassword'
     });
+
     newUser.generateHash(newUser.password);
     newUser.save((err, user) => {
       if (err) console.log(err);
@@ -32,6 +31,11 @@ describe('the login route tests', () => {
       });
     });
   });
+
+  after((done) => {
+    teardown(done);
+  });
+
   it('should login and GET a new token', (done) => {
     request('testUser:muchPassword@localhost:' + port)
       .get('/api/login')
@@ -40,6 +44,19 @@ describe('the login route tests', () => {
         expect(res.status).to.eql(200);
         expect(res.body.token.length).to.not.eql(0);
         expect(res.body.token).to.eql(this.token);
+        done();
+      });
+  });
+
+  it('should sign up a new user', (done) => {
+    request('localhost:' + port)
+      .post('/api/signup')
+      .send({ username: 'test', password: 'test' })
+      .end((err, res) => {
+        expect(err).to.eql(null);
+        expect(res.status).to.eql(200);
+        expect(res.body.token.length).to.not.eql(0);
+        expect(res.body.token).to.not.eql(this.token);
         done();
       });
   });
