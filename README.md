@@ -11,6 +11,7 @@ For documentation about acquiring your hue bridge IP and registering new User ID
 * mongoose
 * body-parser
 * superagent
+* jsonwebtoken
 * bcrypt
 
 ## dev dependencies
@@ -20,3 +21,5 @@ For documentation about acquiring your hue bridge IP and registering new User ID
 * gulp
 * gulp-mocha
 * gulp-eslint
+
+## Registering a bridge
