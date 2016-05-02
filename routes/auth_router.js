@@ -2,6 +2,7 @@ const Router = require('express').Router;
 const User = require(__dirname + '/../models/user');
 const bodyParser = require('body-parser').json();
 const authRouter = module.exports = exports = new Router();
+const basicHttp = require(__dirname + '/../lib/basic_http');
 
 authRouter.post('/signup', bodyParser, (req, res) => {
   var password = req.body.password;
@@ -15,6 +16,20 @@ authRouter.post('/signup', bodyParser, (req, res) => {
     user.generateToken((err, token) => {
     if (err) return res.status(500).json({ msg: 'could not generate token, try again foo' });
     res.json({ token });
+    });
+  });
+});
+
+authRouter.get('/login', basicHttp, (req, res) => {
+  User.findOne({ username: req.auth.username }, (err, user) => {
+    if (err) return res.status(500).json({ msg: 'authentication error' });
+    if (!user) return res.status(500).json({ msg: 'user not found' });
+    if (!user.compareHash(req.auth.password)) {
+      return res.status(500).json({ msg: 'wrong password' });
+    }
+    user.generateToken((err, token) => {
+      if (err) return res.status(500).json({ msg: 'could not generate token, try again later' });
+      res.json({ token });
     });
   });
 });
