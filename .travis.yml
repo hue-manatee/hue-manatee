@@ -1,6 +1,8 @@
 language: node_js
 node_js:
   - "4"
+services:
+  - mongodb
 addons:
   apt:
     sources:
@@ -13,7 +15,6 @@ env:
 sudo: required
 before_script:
   - npm install -g eslint mocha
-  - npm install -g gulp
 script:
   - eslint $(find . -name '*.js' | grep -v '.min.js' | grep -v 'vendor' | grep -v 'node_modules')
   - mocha
