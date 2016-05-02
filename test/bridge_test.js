@@ -9,7 +9,7 @@ const teardown = require(__dirname + '/test_teardown');
 const port = process.env.PORT = 5000;
 const User = require(__dirname + '/../models/user');
 
-describe('the bridge', () => {
+describe('the bridge post', () => {
   before((done) => {
     setup(done);
   });
@@ -46,6 +46,60 @@ describe('the bridge', () => {
       expect(res.body.name).to.eql('test testerson');
       expect(res.body.ip).to.eql('192.168.2.2');
       expect(res.body.bridgeUserId).to.eql('afdfafdfafdfadf');
+      done();
+    });
+  });
+});
+
+describe('the bridge get requests', () => {
+  before((done) => {
+    setup(done);
+  });
+  after((done) => {
+    teardown(done);
+  });
+  before((done) => {
+    var newUser = new User({
+      username: 'awesome',
+      password: 'test'
+    });
+    newUser.save((err, user) => {
+      if (err) console.log(err);
+      user.generateToken((err, token) => {
+        if (err) console.log(err);
+        this.token = token;
+        this.user = user;
+        done();
+      });
+    });
+  });
+  beforeEach((done) => {
+    var newBridge = new Bridge({
+      name: 'bridge test name',
+      ip: '192.0.0.0',
+      bridgeUserId: 'afdfafdfafdfadf',
+      admin: this.user._id
+    });
+    newBridge.save((err, bridge) => {
+      if (err) console.log(err);
+      this.bridge = bridge;
+      done();
+    });
+  });
+  afterEach((done) => {
+    this.bridge.remove((err) => {
+      if (err) console.log(err);
+      done();
+    });
+  });
+  it('should show appropriate errors for an unconnected bridge', (done) => {
+    request('localhost:' + port)
+    .get('/api/bridge/' + this.bridge.bridgeUserId)
+    .set('token', this.token)
+    .end((err, res) => {
+      expect(err.toString()).to.eql('Error: Request Timeout');
+      expect(res).to.have.status(408);
+      expect(res.body.msg).to.eql('too slow bro');
       done();
     });
   });
