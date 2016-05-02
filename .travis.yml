@@ -12,6 +12,7 @@ addons:
     - g++-4.8
 env:
   - CXX=g++-4.8
+  - APP_SECRET=Iamasecret
 sudo: required
 before_script:
   - npm install -g eslint mocha
