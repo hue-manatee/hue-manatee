@@ -33,7 +33,9 @@ describe('the bridge post', () => {
         done();
       });
     });
+  });
 
+  before((done) => {
     var newBridge = new Bridge({
       name: 'bridge test name',
       ip: '192.0.0.0',
