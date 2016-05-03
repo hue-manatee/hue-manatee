@@ -25,7 +25,7 @@ bridgeRouter.get('/bridge/:bridgeId', jwtAuth, (req, res) => {
       // TODO: lenghten timeout before production release
       .timeout(1000)
       .end((err, superRes) => {
-        if ( err && err.timeout) return res.status(408).json({ msg: 'too slow bro' });
+        if (err && err.timeout) return res.status(408).json({ msg: 'too slow bro' });
         if (err) return console.log(err);
         res.status(200).json(JSON.parse(superRes.text));
       });
