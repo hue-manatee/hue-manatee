@@ -7,7 +7,7 @@ const setup = require(__dirname + '/test_setup');
 const teardown = require(__dirname + '/test_teardown');
 const port = process.env.PORT = 5000;
 
-const Bridge = require(__dirname + '/../models/light_schema');
+const Bridge = require(__dirname + '/../models/bridge');
 const User = require(__dirname + '/../models/user');
 
 describe('the bridge post', () => {
