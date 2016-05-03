@@ -80,7 +80,7 @@ describe('the bridge post', () => {
       });
     });
 
-    it('should put an update into the light', (done) => {
+    it('should PUT an update into the light', (done) => {
       request('localhost:' + port)
         .put('/api/light/' + this.light._id)
         .set('token', this.token)
@@ -95,11 +95,21 @@ describe('the bridge post', () => {
         });
     });
 
-    it('should attempt to get from the bridge', (done) => {
+    it('should attempt to send a GET to the bridge', (done) => {
       request('localhost:' + port)
         .get('/api/lights')
         .set('token', this.token)
-        .end((err, res) => {
+        .end((err) => {
+          expect(err.response.body.msg).to.eql('ip address not found');
+          done();
+        });
+    });
+
+    it('should attempt to GET status of a single light', (done) => {
+      request('localhost:' + port)
+        .get('/api/light/status/' + this.light._id)
+        .set('token', this.token)
+        .end((err) => {
           expect(err.response.body.msg).to.eql('ip address not found');
           done();
         });
