@@ -13,7 +13,7 @@ lightRouter.post('/light', jwtAuth, bodyParser, (req, res) => {
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
-    newLight.bridgeId = bridge._id.toString();
+    newLight.bridgeId = bridge._id;
   });
   newLight.save((err, data) => {
     if (err) return console.log(err);
