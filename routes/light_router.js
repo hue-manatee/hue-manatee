@@ -46,3 +46,18 @@ lightRouter.get('/lights', jwtAuth, (req, res) => {
     });
   });
 });
+
+lightRouter.put('/light/:lightId', jwtAuth, bodyParser, (req, res) => {
+  var lightData = req.body;
+  delete lightData._id;
+
+  Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
+    if (err) return console.log(err);
+    if (!bridge._id) return res.status(401).json({ msg: 'not authorized' });
+
+    Light.update({ _id: req.params.lightId }, lightData, (err, data) => {
+      if (err) return console.log(err);
+      res.status(200).json(data);
+    });
+  });
+});
