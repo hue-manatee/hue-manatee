@@ -59,8 +59,8 @@ describe('the bridge post', () => {
       })
       .end((err, res) => {
         expect(err).to.eql(null);
-        expect(res.body.name).to.eql('slothlight');
-        expect(res.body.bridgeId).to.eql(this.bridge._id);
+        expect(res.body.lightName).to.eql('slothlight');
+        expect(res.body.bridgeId).to.eql(this.bridge._id.toString());
         done();
       });
   });
