@@ -96,7 +96,27 @@ The httpie call would look like this:
 ```
 http https://hue-manatee.herokuapp.com/api/_Your_bridgeUserId_Here_ token:_unique_token_here_
 ```
+## Add Your Lights
+After your bridge is registered you can find all lights associated with your bridge. See [hue documentation](http://www.developers.meethue.com/documentation/getting-started for more info. Your light IDs will be 1, 2, 3 etc...
 
+The post data should be sent in JSON format, the only required fields are lightName and bridgeLightId, but all these fields are available:
+```
+{
+  "lightName": "Your Name Here",
+  "bridgeLightId": "#",
+  "groups": "['array','of','groups']"
+  "hue": "0 to 65535"
+  "sat": "0 to 254"
+  "bri": "0 to 254
+  "on": "true/false"
+}
+```
+
+Example http
+hue, sat, bri, on are the default properties of the light. So you can easily return to your default settings later.
+```
+http POST https://hue-manatee.herokuapp.com/api/light lightName="name" bridgeLightId="3" groups="['livingroom','ceiling']" hue="10000" sat="254" bri="100" on="true" token:_unique_token_here_
+```
 ## Routes
 Let's start making requests! You can use [httpie](https://github.com/jkbrzt/httpie)
 
