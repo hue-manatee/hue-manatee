@@ -31,3 +31,15 @@ bridgeRouter.get('/bridge/:bridgeId', jwtAuth, (req, res) => {
       });
   });
 });
+
+bridgeRouter.put('/bridge/:bridgeId', jwtAuth, bodyParser, (req, res) => {
+  var bridgeData = req.body;
+  delete bridgeData._id;
+
+  Bridge.update({ _id: req.params.bridgeId, admin: req.user._id },
+    bridgeData, (err, data) => {
+    if (!data) return res.status(401).json({ msg: 'not authorized' });
+    if (err) console.log(err);
+    res.status(200).json(data);
+  });
+});
