@@ -52,7 +52,8 @@ describe('the bridge post', () => {
       .post('/api/light')
       .set('token', this.token)
       .send({
-        name: 'slothlight'
+        lightName: 'slothlight',
+        bridgeLightId: 3
       })
       .end((err, res) => {
         expect(err).to.eql(null);
