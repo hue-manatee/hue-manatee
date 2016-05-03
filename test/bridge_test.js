@@ -103,4 +103,20 @@ describe('the bridge get requests', () => {
       done();
     });
   });
+  it('should update the bridge on a put command', (done) => {
+    request('localhost:' + port)
+    .put('/api/bridge/' + this.bridge._id)
+    .set('token', this.token)
+    .send({
+      name: 'updated bridge',
+      ip: 'updated ip',
+      bridgeUserId: 'diff user id'
+    })
+    .end((err, res) => {
+      expect(err).to.eql(null);
+      expect(res).to.have.status(200);
+      expect(res.body.nModified).to.eql(1);
+      done();
+    });
+  });
 });
