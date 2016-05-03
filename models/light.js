@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 
 var lightSchema = new mongoose.Schema({
-  bridgeId: { type: String, required: true },
+  bridgeId: String,
   bridgeLightId: { type: String, required: true },
-  defaultState: { type: String, required: true,
-    default: { 'on': true, 'sat': 10, 'bri': 100, 'hue': 16000 } },
+  state: { type: Boolean, required: true, default: true },
+  sat: { type: Number, required: true, default: 10 },
+  bri: { type: Number, required: true, default: 100 },
+  hue: { type: Number, required: true, default: 16000 },
   lightName: { type: String, require: true },
   groups: [String]
 });
