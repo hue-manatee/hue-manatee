@@ -7,9 +7,8 @@ const setup = require(__dirname + '/test_setup');
 const teardown = require(__dirname + '/test_teardown');
 const port = process.env.PORT = 5000;
 
-const Light = require(__dirname + '/../models/light_schema');
 const Bridge = require(__dirname + '/../models/light_schema');
-const User = require (__dirname + '/../models/user');
+const User = require(__dirname + '/../models/user');
 
 describe('the bridge post', () => {
   before((done) => {
@@ -58,7 +57,7 @@ describe('the bridge post', () => {
       .end((err, res) => {
         expect(err).to.eql(null);
         expect(res.body.name).to.eql('slothlight');
-        expect(res.body.bridgeId).to.eql(this.bridge._id.toString());
+        expect(res.body.bridgeId).to.eql(this.bridge._id);
         done();
       });
   });
