@@ -1,0 +1,56 @@
+DEMOs
+
+LOCALHOST
+////////////////////////////////////////////////////////////////////////////////
+POST request creating a user:
+http POST :5555/api/signup username='Much Username' password='Many Secure'
+
+Cut and Paste
+http POST :5555/api/signup username='Optimus Lightbulb' password='Autobulbs roll out'
+
+
+////////////////////////////////////////////////////////////////////////////////
+POST request for creating the bridge:
+http POST :5555/api/bridge token:'Generated Token' name=Autobulbs ip='192.168.2.2' bridgeUserId='23a519d651b025616b4b9c0e672eba79'
+
+Cut and Paste
+http POST :5555/api/bridge token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGQiOiI1NzI5MGNjZWZhNmEzOTc0MzRiZmM2NTAiLCJpYXQiOjE0NjIzMDgwNDZ9.Vbtf-ms-DzOC48RU5qr8Ooi3rT3LQyg5Fxz2EXRzOp4 name=Autobulbs ip='192.168.2.2' bridgeUserId='23a519d651b025616b4b9c0e672eba79'
+
+
+////////////////////////////////////////////////////////////////////////////////
+POST request for adding a bulb:
+http POST :5555/api/light lightName='Bumble bulb' bridgeLightId=3 token:'Generated Token'
+
+Cut and Paste
+http POST :5555/api/light token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGQiOiI1NzI5MGNjZWZhNmEzOTc0MzRiZmM2NTAiLCJpYXQiOjE0NjIzMDgwNDZ9.Vbtf-ms-DzOC48RU5qr8Ooi3rT3LQyg5Fxz2EXRzOp4 lightName='Bumble bulb' bridgeLightId=3
+
+
+////////////////////////////////////////////////////////////////////////////////
+GET request for changing individual aspects of each lightbulb:
+http GET :5555/api/lights token:'Generated Token' lightId==3 hue==0 bri==100 sat==254
+
+Cut and Paste
+http GET :5555/api/lights token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGQiOiI1NzI5MGNjZWZhNmEzOTc0MzRiZmM2NTAiLCJpYXQiOjE0NjIzMDgwNDZ9.Vbtf-ms-DzOC48RU5qr8Ooi3rT3LQyg5Fxz2EXRzOp4 lightId==3 hue==0 bri==100 sat==254
+
+
+////////////////////////////////////////////////////////////////////////////////
+GET request for the Status of a specific light
+http GET :5555/api/light/status/3 token:
+
+Cut and Paste
+http GET :5555/api/light/status/3 token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGQiOiI1NzI5MGNjZWZhNmEzOTc0MzRiZmM2NTAiLCJpYXQiOjE0NjIzMDgwNDZ9.Vbtf-ms-DzOC48RU5qr8Ooi3rT3LQyg5Fxz2EXRzOp4
+
+
+////////////////////////////////////////////////////////////////////////////////
+PUT request to update a section in the Bridge
+http PUT :5555/api/bridge/57290e3afa6a397434bfc651 token:'Generated Token' name='New, better name'
+
+Cut and Paste
+http PUT :5555/api/bridge/57290e3afa6a397434bfc651 token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGQiOiI1NzI5MGNjZWZhNmEzOTc0MzRiZmM2NTAiLCJpYXQiOjE0NjIzMDgwNDZ9.Vbtf-ms-DzOC48RU5qr8Ooi3rT3LQyg5Fxz2EXRzOp4 name='BridgeScream'
+
+
+////////////////////////////////////////////////////////////////////////////////
+PUT request to change a setting from the default settings
+http PUT :5555/api/light/572917dd4849cbca30543f0b token:'Generated Token' lightName='New name'
+
+http PUT :5555/api/light/572917dd4849cbca30543f0b token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGQiOiI1NzI5MTc4YjQ4NDljYmNhMzA1NDNmMDkiLCJpYXQiOjE0NjIzMTA3OTV9.C9d8Jc31hZqgwYVK7SwdGgXkH_TqLsj_uM5o3jcmPUc lightName='not bumblebulb'
