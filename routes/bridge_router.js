@@ -2,10 +2,9 @@ const Router = require('express').Router;
 const bodyParser = require('body-parser').json();
 const Bridge = require(__dirname + '/../models/bridge');
 const superAgent = require('superagent');
-// const handleErr = require(__dirname + '/../lib/handle_err');
 const jwtAuth = require(__dirname + '/../lib/jwt_auth');
 
-var bridgeRouter = module.exports = Router();
+var bridgeRouter = module.exports = exports = Router();
 
 bridgeRouter.post('/bridge', jwtAuth, bodyParser, (req, res) => {
   var newBridge = new Bridge(req.body);
@@ -26,7 +25,7 @@ bridgeRouter.get('/bridge/:bridgeId', jwtAuth, (req, res) => {
       // TODO: lenghten timeout before production release
       .timeout(1000)
       .end((err, superRes) => {
-        if ( err && err.timeout) return res.status(408).json({ msg: 'too slow bro' });
+        if (err && err.timeout) return res.status(408).json({ msg: 'too slow bro' });
         if (err) return console.log(err);
         res.status(200).json(JSON.parse(superRes.text));
       });
