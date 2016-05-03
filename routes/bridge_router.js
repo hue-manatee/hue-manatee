@@ -2,10 +2,9 @@ const Router = require('express').Router;
 const bodyParser = require('body-parser').json();
 const Bridge = require(__dirname + '/../models/bridge');
 const superAgent = require('superagent');
-// const handleErr = require(__dirname + '/../lib/handle_err');
 const jwtAuth = require(__dirname + '/../lib/jwt_auth');
 
-var bridgeRouter = module.exports = Router();
+var bridgeRouter = module.exports = exports = Router();
 
 bridgeRouter.post('/bridge', jwtAuth, bodyParser, (req, res) => {
   var newBridge = new Bridge(req.body);
