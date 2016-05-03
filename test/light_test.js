@@ -9,6 +9,7 @@ const port = process.env.PORT = 5000;
 
 const Bridge = require(__dirname + '/../models/bridge');
 const User = require(__dirname + '/../models/user');
+const Light = require(__dirname + '/../models/light');
 
 describe('the bridge post', () => {
   before((done) => {
@@ -63,5 +64,45 @@ describe('the bridge post', () => {
         expect(res.body.bridgeId).to.eql(this.bridge._id.toString());
         done();
       });
+  });
+
+  describe('routes that need a light', () => {
+    beforeEach((done) => {
+      var newLight = new Light({
+        lightName: 'test',
+        bridgeId: this.bridge._id,
+        bridgeLightId: '1'
+      });
+      newLight.save((err, light) => {
+        if (err) console.log(err);
+        this.light = light;
+        done();
+      });
+    });
+
+    it('should put an update into the light', (done) => {
+      request('localhost:' + port)
+        .put('/api/light/' + this.light._id)
+        .set('token', this.token)
+        .send({
+          lightName: 'not test'
+        })
+        .end((err, res) => {
+          expect(err).to.eql(null);
+          expect(res).to.have.status(200);
+          expect(res.body.nModified).to.eql(1);
+          done();
+        });
+    });
+
+    it('should attempt to get from the bridge', (done) => {
+      request('localhost:' + port)
+        .get('/api/lights')
+        .set('token', this.token)
+        .end((err, res) => {
+          console.log(err);
+          done();
+        });
+    });
   });
 });
