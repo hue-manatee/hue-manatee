@@ -100,7 +100,7 @@ describe('the bridge post', () => {
         .get('/api/lights')
         .set('token', this.token)
         .end((err, res) => {
-          console.log(err);
+          expect(err.response.body.msg).to.eql('ip address not found');
           done();
         });
     });
