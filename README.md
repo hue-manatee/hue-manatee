@@ -128,23 +128,27 @@ http POST https://hue-manatee.herokuapp.com/api/light token:"unique token here" 
 ```
 Once your light is added, you can get the connection status of that light from the bridge by sending a GET request to that individual bridgelightId (1, 2, 3, etc)
 ```
-https://hue-manatee.herokuapp.com/api/status/_Your_brigdeLightId_Here_
+https://hue-manatee.herokuapp.com/api/light/status/_Your_brigdeLightId_Here_
 ```
 The httpie call would look like this:
 ```
-http https://hue-manatee.herokuapp.com/api/status/_Your_bridgeLightId_Here_ token:"unique token here"
+http https://hue-manatee.herokuapp.com/api/light/status/_Your_bridgeLightId_Here_ token:"unique token here"
 ```
 You can also update any light in any context using the light id by sending a PUT request to
 ```
-https://hue-manatee.herokuapp.com/api/_Your_lightId_Here_
+https://hue-manatee.herokuapp.com/api/light/_Your_lightId_Here_
 ```
 The httpie call would look like this:
 ```
-http https://hue-manatee.herokuapp.com/api/_Your_lightId_Here_ token:"unique token here" lightName="new name here"
+http https://hue-manatee.herokuapp.com/api/light/_Your_lightId_Here_ token:"unique token here" lightName="new name here"
 ```
 
 ## Routes
-Let's start making requests! You can use [httpie](https://github.com/jkbrzt/httpie)
+Let's start making requests! You can use [httpie](https://github.com/jkbrzt/httpie). To make changes to the state of the light, you send get requests to
+```
+https://hue-manatee.herokuapp.com/api/lights
+```
+Here is where the fun begins.  Properties on the light can be accessed through a simple query string appended to the end of the url, making it accessible through many places, including your browser.
 
 
 ## Running Locally
@@ -266,19 +270,19 @@ http POST https://localhost:PORT/api/light token:"unique token here" lightName="
 ```
 Once your light is added, you can get the connection status of that light from the bridge by sending a GET request to that individual bridgelightId (1, 2, 3, etc)
 ```
-https://localhost:PORT/api/status/_Your_brigdeLightId_Here_
+https://localhost:PORT/api/light/status/_Your_brigdeLightId_Here_
 ```
 The httpie call would look like this:
 ```
-http https://localhost:PORT/api/status/_Your_bridgeLightId_Here_ token:"unique token here"
+http https://localhost:PORT/api/light/status/_Your_bridgeLightId_Here_ token:"unique token here"
 ```
 You can also update any light in any context using the light id by sending a PUT request to
 ```
-https://localhost:PORT/api/_Your_lightId_Here_
+https://localhost:PORT/api/light/_Your_lightId_Here_
 ```
 The httpie call would look like this:
 ```
-http https://localhost:PORT/api/_Your_lightId_Here_ token:"unique token here" lightName="new name here"
+http https://localhost:PORT/api/light/_Your_lightId_Here_ token:"unique token here" lightName="new name here"
 ```
 
 ## Routes
