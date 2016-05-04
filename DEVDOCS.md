@@ -205,3 +205,8 @@ This this request grabs light number 3, turns the hue to red (0) and the brightn
 * hue (0 - 65535, color of the light)
 * sat (0 - 254, color saturation)
 * bri (0 - 254, light brightness)
+* red (0 - 255, rgb red value)
+* green (0 - 255, rgb green value)
+* blue (0 - 255, rgb blue value)
+
+Please note that the presence of an red, green, blue, or hex value will supersede the hue/sat values if both are passed.
