@@ -72,34 +72,45 @@ X-Powered-By: Express
 ```
 
 ## Registering a bridge
-Make sure you have registered your bridge using the Hue documents [hue documentation](http://www.developers.meethue.com/documentation/getting-started. Once your bridge is linked and you have your bridge IP and unique username, you can register your bridge with the hue-manatee interface using a POST request and your auth token from above.  Send a POST request to
+Make sure you have registered your bridge using the Hue documents [hue documentation](http://www.developers.meethue.com/documentation/getting-started).  Also make sure you are able to securely expose your local bridge IP to the world.  We suggest a secure tunneling interface such as [ngrok](https://ngrok.com/) or some other form of SSH tunneling. Once your bridge is linked and you have your bridge access and unique username, you can register your bridge with the hue-manatee interface using a POST request and your auth token from above.  This request will also set the current logged in user as the bridge admin.  Send a POST request to
 ```
-  https://hue-manatee.herokuapp.com/api/bridge
+  https://hue-manatee.herokuapp.com/api/bridge/create
 ```
 The post data should be sent in JSON format, and you will need to send the following fields:
 ```
 {
   "name": "Your Name Here",
-  "ip": "hue bridge IP here",
+  "ip": "access to bridge IP here (ngrok url)",
   "bridgeUserId": "hue bridge unique username here"
 }
 ```
 You can also use a tool like [httpie](https://github.com/jkbrzt/httpie) to make this request.  This would look like:
 ```
-http POST https://hue-manatee.herokuapp.com/api/bridge name="Your name here" ip="your ip here" bridgeUserId="your hue bridge username here" token:_unique_token_here_
+http POST https://hue-manatee.herokuapp.com/api/bridge/create name="Your bridge name here" ip="access to bridge IP here" bridgeUserId="your hue bridge username here" token:"your unique token here"
 ```
-This request will also set the current logged in user as the bridge admin.  Once your bridge is registered, you can access information about the lights attached to that bridge by sending a GET request to
+Once your bridge is registered, you can access information about the lights attached to that bridge by sending a GET request to
 ```
-https://hue-manatee.herokuapp.com/api/_Your_bridgeUserId_Here_
+https://hue-manatee.herokuapp.com/api/bridge/status/_Your_bridgeUserId_Here_
 ```
 The httpie call would look like this:
 ```
-http https://hue-manatee.herokuapp.com/api/_Your_bridgeUserId_Here_ token:_unique_token_here_
+http https://hue-manatee.herokuapp.com/api/bridge/status_Your_bridgeUserId_Here_ token:"unique token here"
 ```
-## Add Your Lights
-After your bridge is registered you can find all lights associated with your bridge. See [hue documentation](http://www.developers.meethue.com/documentation/getting-started for more info. Your light IDs will be 1, 2, 3 etc...
+You can also update your bridge by sending a PUT request to
+```
+https://hue-manatee.herokuapp.com/api/bridge/update/_Your_bridgeUserId_Here_
+```
+The httpie call would look like this:
+```
+http https://hue-manatee.herokuapp.com/api/bridge/update/_Your_bridgeUserId_Here_ token:"unique token here" name="new name here" ip="new ngrok url"
+```
 
-The post data should be sent in JSON format, the only required fields are lightName and bridgeLightId, but all these fields are available:
+## Add Your Lights
+After your bridge is registered you can find all lights associated with your bridge. See [hue documentation](http://www.developers.meethue.com/documentation/getting-started) for more info. Your light IDs will be 1, 2, 3 etc...  To create a light, send a POST request to
+```
+https://hue-manatee.herokuapp.com/api/light/create
+```
+The post data should be sent in JSON format. Hue, sat, bri, on are the default properties of the light, so you can easily return to your default settings later. The only required fields are lightName and bridgeLightId, but all these fields are available.
 ```
 {
   "lightName": "Your Name Here",
@@ -111,14 +122,38 @@ The post data should be sent in JSON format, the only required fields are lightN
   "on": "true/false"
 }
 ```
+The httpie call would look like this:
+```
+http POST https://hue-manatee.herokuapp.com/api/light/create token:"unique token here" lightName="name" bridgeLightId="3" groups="['livingroom','ceiling']" hue="10000" sat="254" bri="100" on="true"
+```
+Once your light is added, you can get the connection status of that light from the bridge by sending a GET request to that individual bridgelightId (1, 2, 3, etc)
+```
+https://hue-manatee.herokuapp.com/api/light/status/_Your_brigdeLightId_Here_
+```
+The httpie call would look like this:
+```
+http https://hue-manatee.herokuapp.com/api/light/status/_Your_bridgeLightId_Here_ token:"unique token here"
+```
+You can also update a light by sending a PUT request to
+```
+https://hue-manatee.herokuapp.com/api/light/update/_Your_bridgeLightId_Here_
+```
+The httpie call would look like this:
+```
+http https://hue-manatee.herokuapp.com/api/light/update/_Your_bridgeLightId_Here_ token:"unique token here" lightName="new name here"
+```
 
-Example http
-hue, sat, bri, on are the default properties of the light. So you can easily return to your default settings later.
-```
-http POST https://hue-manatee.herokuapp.com/api/light lightName="name" bridgeLightId="3" groups="['livingroom','ceiling']" hue="10000" sat="254" bri="100" on="true" token:_unique_token_here_
-```
 ## Routes
-Let's start making requests! You can use [httpie](https://github.com/jkbrzt/httpie)
+Let's start making requests! You can use [httpie](https://github.com/jkbrzt/httpie). To make changes to the state of the light, you send get requests to
+```
+https://hue-manatee.herokuapp.com/api/light/magic
+```
+Here is where the fun begins.  Properties on the light can be accessed through a simple query string appended to the end of the url, making it accessible through many places, including your browser. The only mandatory field is the bridgeLightId.
+
+an httpie example would look like:
+```
+http GET https://hue-manatee.herokuapp.com/api/light/magic token:"unique token here" bridgeLightId==3 hue==0 bri==254
+```
 
 
 ## Running Locally
@@ -184,29 +219,75 @@ X-Powered-By: Express
 ```
 
 ## Registering a bridge
-Make sure you have registered your bridge using the Hue documents [hue documentation](http://www.developers.meethue.com/documentation/getting-started. Once your bridge is linked and you have your bridge IP and unique username, you can register your bridge with the hue-manatee interface using a POST request and your auth token from above.  Send a POST request to
+Make sure you have registered your bridge using the Hue documents [hue documentation](http://www.developers.meethue.com/documentation/getting-started). Once your bridge is linked and you have your bridge IP (including http://) and unique username, you can register your bridge with the hue-manatee interface using a POST request and your auth token from above.  This request will also set the current logged in user as the bridge admin.  Send a POST request to
 ```
-  http://localhost:PORT/api/bridge
+  http://localhost:PORT/api/bridge/create
 ```
 The post data should be sent in JSON format, and you will need to send the following fields:
 ```
 {
   "name": "Your Name Here",
-  "ip": "hue bridge IP here",
+  "ip": "hue bridge IP here (including http://)",
   "bridgeUserId": "hue bridge unique username here"
 }
 ```
 You can also use a tool like [httpie](https://github.com/jkbrzt/httpie) to make this request.  This would look like:
 ```
-http POST http://localhost:PORT/api/bridge name="Your name here" ip="your ip here" bridgeUserId="your hue bridge username here" token:_unique_token_here_
+http POST http://localhost:PORT/api/bridge/create name="Your name here" ip="your ip here" bridgeUserId="your hue bridge username here" token:_unique_token_here_
 ```
-This request will also set the current logged in user as the bridge admin.  Once your bridge is registered, you can access information about the lights attached to that bridge by sending a GET request to
+Once your bridge is registered, you can access information about the lights attached to that bridge by sending a GET request to
 ```
-http://localhost:PORT/api/_Your_bridgeUserId_Here_
+http://localhost:PORT/api/bridge/status/_Your_bridgeUserId_Here_
 ```
 The httpie call would look like this:
 ```
-http http://localhost:PORT/api/_Your_bridgeUserId_Here_ token:_unique_token_here_
+http http://localhost:PORT/api/bridge/status/_Your_bridgeUserId_Here_ token:"unique token here"
+```
+You can also update your bridge by sending a PUT request to
+```
+https://localhost:PORT/api/bridge/update/_Your_bridgeUserId_Here_
+```
+The httpie call would look like this:
+```
+http https://localhost:PORT/api/bridge/update/_Your_bridgeUserId_Here_ token:"unique token here" name="new name here" ip="new bridge ip here"
+```
+
+## Add Your Lights
+After your bridge is registered you can find all lights associated with your bridge. See [hue documentation](http://www.developers.meethue.com/documentation/getting-started) for more info. Your light IDs will be 1, 2, 3 etc...  To create a light, send a POST request to
+```
+https://localhost:PORT/api/light/create
+```
+The post data should be sent in JSON format. Hue, sat, bri, on are the default properties of the light, so you can easily return to your default settings later. The only required fields are lightName and bridgeLightId, but all these fields are available.
+```
+{
+  "lightName": "Your Name Here",
+  "bridgeLightId": "#",
+  "groups": "['array','of','groups']"
+  "hue": "0 to 65535"
+  "sat": "0 to 254"
+  "bri": "0 to 254
+  "on": "true/false"
+}
+```
+The httpie call would look like this:
+```
+http POST https://localhost:PORT/api/light/create token:"unique token here" lightName="name" bridgeLightId="3" groups="['livingroom','ceiling']" hue="10000" sat="254" bri="100" on="true"
+```
+Once your light is added, you can get the connection status of that light from the bridge by sending a GET request to that individual bridgelightId (1, 2, 3, etc)
+```
+https://localhost:PORT/api/light/status/_Your_brigdeLightId_Here_
+```
+The httpie call would look like this:
+```
+http https://localhost:PORT/api/light/status/_Your_bridgeLightId_Here_ token:"unique token here"
+```
+You can also update a light by sending a PUT request to
+```
+https://localhost:PORT/api/light/update_Your_bridgeLightId_Here_
+```
+The httpie call would look like this:
+```
+http https://localhost:PORT/api/light/update_Your_bridgeLightId_Here_ token:"unique token here" lightName="new name here"
 ```
 
 ## Routes
