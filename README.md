@@ -148,7 +148,12 @@ Let's start making requests! You can use [httpie](https://github.com/jkbrzt/http
 ```
 https://hue-manatee.herokuapp.com/api/lights
 ```
-Here is where the fun begins.  Properties on the light can be accessed through a simple query string appended to the end of the url, making it accessible through many places, including your browser.
+Here is where the fun begins.  Properties on the light can be accessed through a simple query string appended to the end of the url, making it accessible through many places, including your browser. The only mandatory field is the bridgeLightId.
+
+an httpie example would look like:
+```
+http GET https://hue-manatee.herokuapp.com/api/lights token:"unique token here" bridgeLightId==3 hue==0 bri==254
+```
 
 
 ## Running Locally
