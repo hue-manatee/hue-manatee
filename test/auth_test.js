@@ -16,7 +16,7 @@ describe('the login route tests', () => {
   before((done) => {
     var newUser = new User({
       username: 'testUser',
-      password: 'muchPassword'
+      password: 'muchPassword1'
     });
 
     newUser.generateHash(newUser.password);
@@ -36,7 +36,7 @@ describe('the login route tests', () => {
   });
 
   it('should login and GET a new token', (done) => {
-    request('testUser:muchPassword@localhost:' + port)
+    request('testUser:muchPassword1@localhost:' + port)
       .get('/api/login')
       .end((err, res) => {
         expect(err).to.eql(null);
@@ -49,7 +49,7 @@ describe('the login route tests', () => {
   it('should sign up a new user', (done) => {
     request('localhost:' + port)
       .post('/api/signup')
-      .send({ username: 'test', password: 'test' })
+      .send({ username: 'secondUser', password: 'Test23456' })
       .end((err, res) => {
         expect(err).to.eql(null);
         expect(res.status).to.eql(200);
