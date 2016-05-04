@@ -72,7 +72,7 @@ X-Powered-By: Express
 ```
 
 ## Registering a bridge
-Make sure you have registered your bridge using the Hue documents [hue documentation](http://www.developers.meethue.com/documentation/getting-started. Once your bridge is linked and you have your bridge IP and unique username, you can register your bridge with the hue-manatee interface using a POST request and your auth token from above.  Send a POST request to
+Make sure you have registered your bridge using the Hue documents [hue documentation](http://www.developers.meethue.com/documentation/getting-started).  Also make sure you are able to securely expose your local bridge IP to the world.  We suggest a secure tunneling interface such as [ngrok](https://ngrok.com/) or some other form of SSH tunneling. Once your bridge is linked and you have your bridge access and unique username, you can register your bridge with the hue-manatee interface using a POST request and your auth token from above.  Send a POST request to
 ```
   https://hue-manatee.herokuapp.com/api/bridge
 ```
@@ -80,13 +80,13 @@ The post data should be sent in JSON format, and you will need to send the follo
 ```
 {
   "name": "Your Name Here",
-  "ip": "hue bridge IP here",
+  "ip": "access to bridge IP here (ngrok url)",
   "bridgeUserId": "hue bridge unique username here"
 }
 ```
 You can also use a tool like [httpie](https://github.com/jkbrzt/httpie) to make this request.  This would look like:
 ```
-http POST https://hue-manatee.herokuapp.com/api/bridge name="Your name here" ip="your ip here" bridgeUserId="your hue bridge username here" token:_unique_token_here_
+http POST https://hue-manatee.herokuapp.com/api/bridge name="Your bridge name here" ip="access to bridge IP here" bridgeUserId="your hue bridge username here" token:"your unique token here"
 ```
 This request will also set the current logged in user as the bridge admin.  Once your bridge is registered, you can access information about the lights attached to that bridge by sending a GET request to
 ```
@@ -97,7 +97,7 @@ The httpie call would look like this:
 http https://hue-manatee.herokuapp.com/api/_Your_bridgeUserId_Here_ token:_unique_token_here_
 ```
 ## Add Your Lights
-After your bridge is registered you can find all lights associated with your bridge. See [hue documentation](http://www.developers.meethue.com/documentation/getting-started for more info. Your light IDs will be 1, 2, 3 etc...
+After your bridge is registered you can find all lights associated with your bridge. See [hue documentation](http://www.developers.meethue.com/documentation/getting-started) for more info. Your light IDs will be 1, 2, 3 etc...
 
 The post data should be sent in JSON format, the only required fields are lightName and bridgeLightId, but all these fields are available:
 ```
@@ -184,7 +184,7 @@ X-Powered-By: Express
 ```
 
 ## Registering a bridge
-Make sure you have registered your bridge using the Hue documents [hue documentation](http://www.developers.meethue.com/documentation/getting-started. Once your bridge is linked and you have your bridge IP and unique username, you can register your bridge with the hue-manatee interface using a POST request and your auth token from above.  Send a POST request to
+Make sure you have registered your bridge using the Hue documents [hue documentation](http://www.developers.meethue.com/documentation/getting-started). Once your bridge is linked and you have your bridge IP (including http://) and unique username, you can register your bridge with the hue-manatee interface using a POST request and your auth token from above.  Send a POST request to
 ```
   http://localhost:PORT/api/bridge
 ```
@@ -192,7 +192,7 @@ The post data should be sent in JSON format, and you will need to send the follo
 ```
 {
   "name": "Your Name Here",
-  "ip": "hue bridge IP here",
+  "ip": "hue bridge IP here (including http://)",
   "bridgeUserId": "hue bridge unique username here"
 }
 ```
