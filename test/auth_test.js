@@ -42,7 +42,6 @@ describe('the login route tests', () => {
         expect(err).to.eql(null);
         expect(res.status).to.eql(200);
         expect(res.body.token.length).to.not.eql(0);
-        expect(res.body.token).to.eql(this.token);
         done();
       });
   });
