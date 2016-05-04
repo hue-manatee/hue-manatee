@@ -22,8 +22,8 @@ describe('the bridge post', () => {
 
   before((done) => {
     var newUser = new User({
-      username: 'awesome',
-      password: 'test'
+      username: 'awesomeUser',
+      password: 'testMas33'
     });
     newUser.save((err, user) => {
       if (err) console.log(err);

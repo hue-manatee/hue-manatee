@@ -18,8 +18,8 @@ describe('the bridge post', () => {
   });
   before((done) => {
     var newUser = new User({
-      username: 'awesome',
-      password: 'test'
+      username: 'awesomeuser',
+      password: 'testMas33'
     });
     newUser.save((err, user) => {
       if (err) console.log(err);
@@ -60,8 +60,8 @@ describe('the bridge get requests', () => {
   });
   before((done) => {
     var newUser = new User({
-      username: 'awesome',
-      password: 'test'
+      username: 'awesomeUser',
+      password: 'test More1'
     });
     newUser.save((err, user) => {
       if (err) console.log(err);
