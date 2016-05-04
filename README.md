@@ -94,7 +94,15 @@ https://hue-manatee.herokuapp.com/api/_Your_bridgeUserId_Here_
 ```
 The httpie call would look like this:
 ```
-http https://hue-manatee.herokuapp.com/api/_Your_bridgeUserId_Here_ token:_unique_token_here_
+http https://hue-manatee.herokuapp.com/api/_Your_bridgeUserId_Here_ token:"unique token here"
+```
+You can also update your bridge by sending a PUT request to
+```
+https://hue-manatee.herokuapp.com/api/_Your_bridgeUserId_Here_
+```
+The httpie call would look like this:
+```
+http https://hue-manatee.herokuapp.com/api/_Your_bridgeUserId_Here_ token:"unique token here" name="new name here" ip="new ngrok url"
 ```
 
 ## Add Your Lights
@@ -185,7 +193,7 @@ X-Powered-By: Express
 ```
 
 ## Registering a bridge
-Make sure you have registered your bridge using the Hue documents [hue documentation](http://www.developers.meethue.com/documentation/getting-started). Once your bridge is linked and you have your bridge IP (including http://) and unique username, you can register your bridge with the hue-manatee interface using a POST request and your auth token from above.  Send a POST request to
+Make sure you have registered your bridge using the Hue documents [hue documentation](http://www.developers.meethue.com/documentation/getting-started). Once your bridge is linked and you have your bridge IP (including http://) and unique username, you can register your bridge with the hue-manatee interface using a POST request and your auth token from above.  This request will also set the current logged in user as the bridge admin.  Send a POST request to
 ```
   http://localhost:PORT/api/bridge
 ```
@@ -201,13 +209,21 @@ You can also use a tool like [httpie](https://github.com/jkbrzt/httpie) to make 
 ```
 http POST http://localhost:PORT/api/bridge name="Your name here" ip="your ip here" bridgeUserId="your hue bridge username here" token:_unique_token_here_
 ```
-This request will also set the current logged in user as the bridge admin.  Once your bridge is registered, you can access information about the lights attached to that bridge by sending a GET request to
+Once your bridge is registered, you can access information about the lights attached to that bridge by sending a GET request to
 ```
 http://localhost:PORT/api/_Your_bridgeUserId_Here_
 ```
 The httpie call would look like this:
 ```
-http http://localhost:PORT/api/_Your_bridgeUserId_Here_ token:_unique_token_here_
+http http://localhost:PORT/api/_Your_bridgeUserId_Here_ token:"unique token here"
+```
+You can also update your bridge by sending a PUT request to
+```
+https://localhost:PORT/api/_Your_bridgeUserId_Here_
+```
+The httpie call would look like this:
+```
+http https://localhost:PORT/api/_Your_bridgeUserId_Here_ token:"unique token here" name="new name here" ip="new bridge ip here"
 ```
 
 ## Routes
