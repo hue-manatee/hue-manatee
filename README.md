@@ -72,7 +72,7 @@ X-Powered-By: Express
 ```
 
 ## Registering a bridge
-Make sure you have registered your bridge using the Hue documents [hue documentation](http://www.developers.meethue.com/documentation/getting-started).  Also make sure you are able to securely expose your local bridge IP to the world.  We suggest a secure tunneling interface such as [ngrok](https://ngrok.com/) or some other form of SSH tunneling. Once your bridge is linked and you have your bridge access and unique username, you can register your bridge with the hue-manatee interface using a POST request and your auth token from above.  Send a POST request to
+Make sure you have registered your bridge using the Hue documents [hue documentation](http://www.developers.meethue.com/documentation/getting-started).  Also make sure you are able to securely expose your local bridge IP to the world.  We suggest a secure tunneling interface such as [ngrok](https://ngrok.com/) or some other form of SSH tunneling. Once your bridge is linked and you have your bridge access and unique username, you can register your bridge with the hue-manatee interface using a POST request and your auth token from above.  This request will also set the current logged in user as the bridge admin.  Send a POST request to
 ```
   https://hue-manatee.herokuapp.com/api/bridge
 ```
@@ -88,7 +88,7 @@ You can also use a tool like [httpie](https://github.com/jkbrzt/httpie) to make 
 ```
 http POST https://hue-manatee.herokuapp.com/api/bridge name="Your bridge name here" ip="access to bridge IP here" bridgeUserId="your hue bridge username here" token:"your unique token here"
 ```
-This request will also set the current logged in user as the bridge admin.  Once your bridge is registered, you can access information about the lights attached to that bridge by sending a GET request to
+Once your bridge is registered, you can access information about the lights attached to that bridge by sending a GET request to
 ```
 https://hue-manatee.herokuapp.com/api/_Your_bridgeUserId_Here_
 ```
@@ -96,6 +96,7 @@ The httpie call would look like this:
 ```
 http https://hue-manatee.herokuapp.com/api/_Your_bridgeUserId_Here_ token:_unique_token_here_
 ```
+
 ## Add Your Lights
 After your bridge is registered you can find all lights associated with your bridge. See [hue documentation](http://www.developers.meethue.com/documentation/getting-started) for more info. Your light IDs will be 1, 2, 3 etc...
 
