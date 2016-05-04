@@ -3,8 +3,17 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 var userSchema = new mongoose.Schema({
-  username: { type: String, unique: true, required: true },
-  password: { type: String, required: true }
+  username: {
+    type: String,
+    minlength: [8, 'username must be 8 characters long'],
+    maxlength: [24, 'username must be 24 characters long'],
+    unique: true,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  }
 });
 
 userSchema.methods.generateHash = function(password) {
