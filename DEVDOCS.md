@@ -193,7 +193,7 @@ Let's start making requests! You can use [httpie](https://github.com/jkbrzt/http
 ```
 http://localhost:PORT/api/light/magic
 ```
-Here is where the fun begins.  Properties on the light can be accessed through a simple query string appended to the end of the url, making it accessible through many places. The only mandatory field is the bridgeLightId.
+Here is where the fun begins.  Properties on the light can be accessed through a simple query string appended to the end of the url, making it accessible through many places. The only mandatory field is the lightId.
 
 An httpie example would look like:
 ```
