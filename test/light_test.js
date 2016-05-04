@@ -114,5 +114,15 @@ describe('the bridge post', () => {
           done();
         });
     });
+    it('should attempt to send a GET to reset the light', (done) => {
+      request('localhost:' + port)
+        .get('/api/light/reset/3')
+        .set('token', this.token)
+        .end((err, res) => {
+          expect(res).to.have.status(408);
+          expect(err.response.body.msg).to.eql('ip address not found');
+          done();
+        });
+    });
   });
 });
