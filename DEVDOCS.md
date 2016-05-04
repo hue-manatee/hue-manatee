@@ -30,9 +30,15 @@ We have created a Setup and Teardown test file to make the process more modular.
 
 ### Main Tests
 The Authorization Test file includes:
-> Create a new User with a unique Token (POST request)
+> Create a new User with a valid username and password, returns a unique Token (POST request)
 
-> Login a new User checking to see if it is a unique Token (GET request)
+> Login with a valid username and password, returns a token (GET request)
+
+> Fail to create user with a username less than 8 characters, returns error (POST request)
+
+> Fail to create user with a username more than 24 characters, returns error (POST request)
+
+> Fail to create user with a password less than 8 characters, returns error (POST request)
 
 The Bridge Test file includes:
 > Create a new Hue Bridge instance (POST request)
@@ -73,12 +79,12 @@ Before making requests you will have to signup for an account or login in to you
 
 ### Signup:
 ```
-http POST localhost:PORT/api/signup username="example username" password="example password"
+http POST localhost:PORT/api/signup username="example username" password="Example1"
 ```
 The return of a signup request is a Web Token, which you should keep on hand to make requests to protected routes.
 Example SignUp Request:
 ```
-http POST localhost:5555/api/signup username="billy bob" password="much password"
+http POST localhost:5555/api/signup username="billy bob" password="hueAccess1"
 ```
 and its Response in the console:
 ```
@@ -90,7 +96,7 @@ Date: Mon, 02 May 2016 17:45:07 GMT
 ETag: W/"a1-PFMz84G1/pGO87fjHVahEg"
 X-Powered-By: Express
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGQiOiI1NzI3OTIyMzUyNmJjYzNiNDYxZTc2OGQiLCJpYXQiOjE0NjIyMTExMDd9.jk68R6hEBQhS02DnsYfIMTdzlOTelXyHfiybHR0kxIs"
+    "token": "this is where your token would print out"
 }
 ```
 
@@ -100,7 +106,7 @@ http -a username:password http://localhost:PORT/api/login
 ```
 Example:
 ```
-http -a billy\ bob:much\ password http://localhost:5555/api/login
+http -a billy\ bob:hueAccess1 http://localhost:5555/api/login
 ```
 and its Response in the console:
 ```
@@ -112,7 +118,7 @@ Date: Mon, 02 May 2016 18:28:04 GMT
 ETag: W/"a1-ic28p+iMmlcbUrRbRwvdIg"
 X-Powered-By: Express
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGQiOiI1NzI3OWMxYjg4YTJlN2IwNDdkNmE2MTkiLCJpYXQiOjE0NjIyMTM2ODR9.dqBUQfhybl_vAqU36TE2yevlXLyu3Dgweng3X28pdfA"
+    "token": "this is where your token would print out"
 }
 ```
 
@@ -139,7 +145,7 @@ http://localhost:PORT/api/bridge/status/_Your_bridgeUserId_Here_
 ```
 The httpie call would look like this:
 ```
-http http://localhost:PORT/api/bridge/status/_Your_bridgeUserId_Here_ token:"unique token here"
+http http://localhost:PORT/api/bridge/status/_Your_bridgeUserId_Here_ token:_unique_token_here_
 ```
 You can also update your bridge by sending a PUT request to
 ```
@@ -147,7 +153,7 @@ http://localhost:PORT/api/bridge/update/_Your_bridgeUserId_Here_
 ```
 The httpie call would look like this:
 ```
-http http://localhost:PORT/api/bridge/update/_Your_bridgeUserId_Here_ token:"unique token here" name="new name here" ip="new bridge ip here"
+http http://localhost:PORT/api/bridge/update/_Your_bridgeUserId_Here_ token:_unique_token_here_ name="new name here" ip="new bridge ip here"
 ```
 
 ## Add Your Lights
@@ -169,7 +175,7 @@ The post data should be sent in JSON format. Hue, sat, bri, on are the default p
 ```
 The httpie call would look like this:
 ```
-http POST http://localhost:PORT/api/light/create token:"unique token here" lightName="name" bridgeLightId="3" groups="['livingroom','ceiling']" hue="10000" sat="254" bri="100" on="true"
+http POST http://localhost:PORT/api/light/create token:_unique_token_here_ lightName="name" bridgeLightId="3" groups="['livingroom','ceiling']" hue="10000" sat="254" bri="100" on="true"
 ```
 Once your light is added, you can get the connection status of that light from the bridge by sending a GET request to that individual lightId (1, 2, 3, etc)
 ```
@@ -177,7 +183,7 @@ http://localhost:PORT/api/light/status/_Your_lightId_Here_
 ```
 The httpie call would look like this:
 ```
-http http://localhost:PORT/api/light/status/_Your_lightId_Here_ token:"unique token here"
+http http://localhost:PORT/api/light/status/_Your_lightId_Here_ token:_unique_token_here_
 ```
 You can also update a light by sending a PUT request to
 ```
@@ -185,7 +191,7 @@ http://localhost:PORT/api/light/update_Your_lightId_Here_
 ```
 The httpie call would look like this:
 ```
-http http://localhost:PORT/api/light/update_Your_lightId_Here_ token:"unique token here" lightName="new name here"
+http http://localhost:PORT/api/light/update_Your_lightId_Here_ token:_unique_token_here_ lightName="new name here"
 ```
 
 ## Routes
@@ -197,7 +203,7 @@ Here is where the fun begins.  Properties on the light can be accessed through a
 
 An httpie example would look like:
 ```
-http GET http://localhost:PORT/api/light/magic token:"unique token here" lightId==3 hue==0 bri==254
+http GET http://localhost:PORT/api/light/magic token:_unique_token_here_ lightId==3 hue==0 bri==254
 ```
 This this request grabs light number 3, turns the hue to red (0) and the brightness to max (254).  You have access to the following properties (lightId required):
 * lightId (required)
