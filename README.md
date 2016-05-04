@@ -23,17 +23,17 @@ For documentation about acquiring your hue bridge IP and registering new User ID
 * gulp-eslint
 
 
-## Using Deployed Client
-Before making requests you will have to signup for an account or login in to your previous account.
+## Using Deployed Client (instructions for local deployment in DEVDOCS.md)
+Before making requests you will have to signup for an account or login in to your previous account.  Usernames must be at least 8 characters long, and can be a maximum 24 characters long.  The password must be 8 characters long, and can be a maximum 255 characters long and must have at least one uppercase letter, at least one lowercase letter, and at least one number.
 
 ### Signup:
 ```
-http POST https://hue-manatee.herokuapp.com/api/signup username="example username" password="example password"
+http POST https://hue-manatee.herokuapp.com/api/signup username="ExampleUsername" password="ExamplePassword123"
 ```
 The return of a signup request is a Web Token, which you should keep on hand to make requests to protected routes.
 Example SignUp Request:
 ```
-http POST https://hue-manatee.herokuapp.com/api/signup username="billy bob" password="much password"
+http POST https://hue-manatee.herokuapp.com/api/signup username="billy bob" password="MuchPassword123"
 ```
 and its Response in the console:
 ```
@@ -55,7 +55,7 @@ http -a username:password https://hue-manatee.herokuapp.com/api/login
 ```
 Example:
 ```
-http -a billy\ bob:much\ password https://hue-manatee.herokuapp.com/api/login
+http -a billy\ bob:MuchPassword123 https://hue-manatee.herokuapp.com/api/login
 ```
 and its Response in the console:
 ```
@@ -126,21 +126,21 @@ The httpie call would look like this:
 ```
 http POST https://hue-manatee.herokuapp.com/api/light/create token:"unique token here" lightName="name" bridgeLightId="3" groups="['livingroom','ceiling']" hue="10000" sat="254" bri="100" on="true"
 ```
-Once your light is added, you can get the connection status of that light from the bridge by sending a GET request to that individual bridgelightId (1, 2, 3, etc)
+Once your light is added, you can get the connection status of that light from the bridge by sending a GET request to that individual lightId (1, 2, 3, etc)
 ```
-https://hue-manatee.herokuapp.com/api/light/status/_Your_brigdeLightId_Here_
+https://hue-manatee.herokuapp.com/api/light/status/_Your_lightId_Here_
 ```
 The httpie call would look like this:
 ```
-http https://hue-manatee.herokuapp.com/api/light/status/_Your_bridgeLightId_Here_ token:"unique token here"
+http https://hue-manatee.herokuapp.com/api/light/status/_Your_lightId_Here_ token:"unique token here"
 ```
 You can also update a light by sending a PUT request to
 ```
-https://hue-manatee.herokuapp.com/api/light/update/_Your_bridgeLightId_Here_
+https://hue-manatee.herokuapp.com/api/light/update/_Your_lightId_Here_
 ```
 The httpie call would look like this:
 ```
-http https://hue-manatee.herokuapp.com/api/light/update/_Your_bridgeLightId_Here_ token:"unique token here" lightName="new name here"
+http https://hue-manatee.herokuapp.com/api/light/update/_Your_lightId_Here_ token:"unique token here" lightName="new name here"
 ```
 
 ## Routes
@@ -148,9 +148,15 @@ Let's start making requests! You can use [httpie](https://github.com/jkbrzt/http
 ```
 https://hue-manatee.herokuapp.com/api/light/magic
 ```
-Here is where the fun begins.  Properties on the light can be accessed through a simple query string appended to the end of the url, making it accessible through many places, including your browser. The only mandatory field is the bridgeLightId.
+Here is where the fun begins.  Properties on the light can be accessed through a simple query string appended to the end of the url, making it accessible through many places. The only mandatory field is the lightId.
 
-an httpie example would look like:
+An httpie example would look like:
 ```
-http GET https://hue-manatee.herokuapp.com/api/light/magic token:"unique token here" bridgeLightId==3 hue==0 bri==254
+http GET https://hue-manatee.herokuapp.com/api/light/magic token:"unique token here" lightId==3 hue==0 bri==254
 ```
+This this request grabs light number 3, turns the hue to red (0) and the brightness to max (254).  You have access to the following properties (lightId required):
+* lightId (required)
+* on (true/false, turns light on or off)
+* hue (0 - 65535, color of the light)
+* sat (0 - 254, color saturation)
+* bri (0 - 254, light brightness)
