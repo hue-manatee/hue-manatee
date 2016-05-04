@@ -7,7 +7,7 @@ const bodyParser = require('body-parser').json();
 
 const lightRouter = module.exports = exports = Router();
 
-lightRouter.post('/light', jwtAuth, bodyParser, (req, res) => {
+lightRouter.post('/light/create', jwtAuth, bodyParser, (req, res) => {
   var newLight = new Light(req.body);
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
@@ -20,7 +20,7 @@ lightRouter.post('/light', jwtAuth, bodyParser, (req, res) => {
   });
 });
 
-lightRouter.get('/lights', jwtAuth, (req, res) => {
+lightRouter.get('/light/magic', jwtAuth, (req, res) => {
   var lightObj = {};
   if (req.query.hue) lightObj.hue = parseInt(req.query.hue, 10);
   if (req.query.sat) lightObj.sat = parseInt(req.query.sat, 10);
@@ -47,7 +47,7 @@ lightRouter.get('/lights', jwtAuth, (req, res) => {
   });
 });
 
-lightRouter.put('/light/:lightId', jwtAuth, bodyParser, (req, res) => {
+lightRouter.put('/light/update/:lightId', jwtAuth, bodyParser, (req, res) => {
   var lightData = req.body;
   delete lightData._id;
 
@@ -55,7 +55,7 @@ lightRouter.put('/light/:lightId', jwtAuth, bodyParser, (req, res) => {
     if (err) return console.log(err);
     if (!bridge._id) return res.status(401).json({ msg: 'not authorized' });
 
-    Light.update({ _id: req.params.lightId }, lightData, (err, data) => {
+    Light.update({ bridgeLightId: req.params.lightId }, lightData, (err, data) => {
       if (err) return console.log(err);
       res.status(200).json(data);
     });

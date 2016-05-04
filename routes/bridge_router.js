@@ -6,7 +6,7 @@ const jwtAuth = require(__dirname + '/../lib/jwt_auth');
 
 var bridgeRouter = module.exports = exports = Router();
 
-bridgeRouter.post('/bridge', jwtAuth, bodyParser, (req, res) => {
+bridgeRouter.post('/bridge/create', jwtAuth, bodyParser, (req, res) => {
   var newBridge = new Bridge(req.body);
 
   newBridge.admin = req.user._id;
@@ -16,7 +16,7 @@ bridgeRouter.post('/bridge', jwtAuth, bodyParser, (req, res) => {
   });
 });
 
-bridgeRouter.get('/bridge/:bridgeId', jwtAuth, (req, res) => {
+bridgeRouter.get('/bridge/status/:bridgeId', jwtAuth, (req, res) => {
   Bridge.findOne({ bridgeUserId: req.params.bridgeId, admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
@@ -32,7 +32,7 @@ bridgeRouter.get('/bridge/:bridgeId', jwtAuth, (req, res) => {
   });
 });
 
-bridgeRouter.put('/bridge/:bridgeId', jwtAuth, bodyParser, (req, res) => {
+bridgeRouter.put('/bridge/update/:bridgeId', jwtAuth, bodyParser, (req, res) => {
   var bridgeData = req.body;
   delete bridgeData._id;
 
