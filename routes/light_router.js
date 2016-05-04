@@ -4,6 +4,7 @@ const Bridge = require(__dirname + '/../models/bridge');
 const superAgent = require('superagent');
 const jwtAuth = require(__dirname + '/../lib/jwt_auth');
 const bodyParser = require('body-parser').json();
+const rgbToHue = require(__dirname + '/../lib/rgb_to_hue');
 
 const lightRouter = module.exports = exports = Router();
 
@@ -27,6 +28,11 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
   if (req.query.bri) lightObj.bri = parseInt(req.query.bri, 10);
   if (req.query.on) lightObj.on = Boolean(req.query.on);
   if (req.query.lightId) lightObj.lightId = req.query.lightId;
+  if (req.query.red || req.query.green || req.query.blue) {
+    var hueObj = rgbToHue(req.query.red || 0, req.query.green || 0, req.query.blue || 0);
+    lightObj.hue = hueObj.hue;
+    lightObj.sat = hueObj.sat;
+  }
 
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
