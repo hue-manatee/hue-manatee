@@ -52,7 +52,7 @@ describe('the bridge post', () => {
 
   it('should create a light', (done) => {
     request('localhost:' + port)
-      .post('/api/light')
+      .post('/api/light/create')
       .set('token', this.token)
       .send({
         lightName: 'slothlight',
@@ -82,7 +82,7 @@ describe('the bridge post', () => {
 
     it('should PUT an update into the light', (done) => {
       request('localhost:' + port)
-        .put('/api/light/' + this.light._id)
+        .put('/api/light/update/' + this.light.bridgeLightId)
         .set('token', this.token)
         .send({
           lightName: 'not test'
@@ -90,14 +90,14 @@ describe('the bridge post', () => {
         .end((err, res) => {
           expect(err).to.eql(null);
           expect(res).to.have.status(200);
-          expect(res.body.nModified).to.eql(1);
+          expect(res.body.n).to.eql(1);
           done();
         });
     });
 
     it('should attempt to send a GET to the bridge', (done) => {
       request('localhost:' + port)
-        .get('/api/lights')
+        .get('/api/light/magic')
         .set('token', this.token)
         .end((err) => {
           expect(err.response.body.msg).to.eql('ip address not found');

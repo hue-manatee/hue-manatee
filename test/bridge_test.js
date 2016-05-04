@@ -33,7 +33,7 @@ describe('the bridge post', () => {
   });
   it('should create a new bridge on post', (done) => {
     request('localhost:' + port)
-    .post('/api/bridge')
+    .post('/api/bridge/create')
     .set('token', this.token)
     .send({
       name: 'test testerson',
@@ -94,7 +94,7 @@ describe('the bridge get requests', () => {
   });
   it('should show appropriate errors for an unconnected bridge', (done) => {
     request('localhost:' + port)
-    .get('/api/bridge/' + this.bridge.bridgeUserId)
+    .get('/api/bridge/status/' + this.bridge.bridgeUserId)
     .set('token', this.token)
     .end((err, res) => {
       expect(err.toString()).to.eql('Error: Request Timeout');
@@ -105,7 +105,7 @@ describe('the bridge get requests', () => {
   });
   it('should update the bridge on a put command', (done) => {
     request('localhost:' + port)
-    .put('/api/bridge/' + this.bridge._id)
+    .put('/api/bridge/update/' + this.bridge._id)
     .set('token', this.token)
     .send({
       name: 'updated bridge',
@@ -115,7 +115,7 @@ describe('the bridge get requests', () => {
     .end((err, res) => {
       expect(err).to.eql(null);
       expect(res).to.have.status(200);
-      expect(res.body.nModified).to.eql(1);
+      expect(res.body.n).to.eql(1);
       done();
     });
   });
