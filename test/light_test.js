@@ -90,7 +90,7 @@ describe('the bridge post', () => {
         .end((err, res) => {
           expect(err).to.eql(null);
           expect(res).to.have.status(200);
-          expect(res.body).to.eql(1);
+          expect(res.body.n).to.eql(1);
           done();
         });
     });
