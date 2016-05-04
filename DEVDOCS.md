@@ -69,7 +69,7 @@ Start the server, this will tell you what port your server is running on. exampl
 npm start
 ```
 
-Before making requests you will have to signup for an account or login in to your previous account.
+Before making requests you will have to signup for an account or login in to your previous account.  Usernames must be at least 8 characters long, and can be a maximum 24 characters long.  The password must be 8 characters long, and can be a maximum 255 characters long and must have at least one uppercase letter, at least one lowercase letter, and at least one number.
 
 ### Signup:
 ```
@@ -143,17 +143,17 @@ http http://localhost:PORT/api/bridge/status/_Your_bridgeUserId_Here_ token:"uni
 ```
 You can also update your bridge by sending a PUT request to
 ```
-https://localhost:PORT/api/bridge/update/_Your_bridgeUserId_Here_
+http://localhost:PORT/api/bridge/update/_Your_bridgeUserId_Here_
 ```
 The httpie call would look like this:
 ```
-http https://localhost:PORT/api/bridge/update/_Your_bridgeUserId_Here_ token:"unique token here" name="new name here" ip="new bridge ip here"
+http http://localhost:PORT/api/bridge/update/_Your_bridgeUserId_Here_ token:"unique token here" name="new name here" ip="new bridge ip here"
 ```
 
 ## Add Your Lights
 After your bridge is registered you can find all lights associated with your bridge. See [hue documentation](http://www.developers.meethue.com/documentation/getting-started) for more info. Your light IDs will be 1, 2, 3 etc...  To create a light, send a POST request to
 ```
-https://localhost:PORT/api/light/create
+http://localhost:PORT/api/light/create
 ```
 The post data should be sent in JSON format. Hue, sat, bri, on are the default properties of the light, so you can easily return to your default settings later. The only required fields are lightName and bridgeLightId, but all these fields are available.
 ```
@@ -169,24 +169,39 @@ The post data should be sent in JSON format. Hue, sat, bri, on are the default p
 ```
 The httpie call would look like this:
 ```
-http POST https://localhost:PORT/api/light/create token:"unique token here" lightName="name" bridgeLightId="3" groups="['livingroom','ceiling']" hue="10000" sat="254" bri="100" on="true"
+http POST http://localhost:PORT/api/light/create token:"unique token here" lightName="name" bridgeLightId="3" groups="['livingroom','ceiling']" hue="10000" sat="254" bri="100" on="true"
 ```
-Once your light is added, you can get the connection status of that light from the bridge by sending a GET request to that individual bridgelightId (1, 2, 3, etc)
+Once your light is added, you can get the connection status of that light from the bridge by sending a GET request to that individual lightId (1, 2, 3, etc)
 ```
-https://localhost:PORT/api/light/status/_Your_brigdeLightId_Here_
+http://localhost:PORT/api/light/status/_Your_lightId_Here_
 ```
 The httpie call would look like this:
 ```
-http https://localhost:PORT/api/light/status/_Your_bridgeLightId_Here_ token:"unique token here"
+http http://localhost:PORT/api/light/status/_Your_lightId_Here_ token:"unique token here"
 ```
 You can also update a light by sending a PUT request to
 ```
-https://localhost:PORT/api/light/update_Your_bridgeLightId_Here_
+http://localhost:PORT/api/light/update_Your_lightId_Here_
 ```
 The httpie call would look like this:
 ```
-http https://localhost:PORT/api/light/update_Your_bridgeLightId_Here_ token:"unique token here" lightName="new name here"
+http http://localhost:PORT/api/light/update_Your_lightId_Here_ token:"unique token here" lightName="new name here"
 ```
 
 ## Routes
-Let's start making requests! You can use [httpie](https://github.com/jkbrzt/httpie)
+Let's start making requests! You can use [httpie](https://github.com/jkbrzt/httpie). To make changes to the state of the light, you send get requests to
+```
+http://localhost:PORT/api/light/magic
+```
+Here is where the fun begins.  Properties on the light can be accessed through a simple query string appended to the end of the url, making it accessible through many places. The only mandatory field is the bridgeLightId.
+
+An httpie example would look like:
+```
+http GET http://localhost:PORT/api/light/magic token:"unique token here" lightId==3 hue==0 bri==254
+```
+This this request grabs light number 3, turns the hue to red (0) and the brightness to max (254).  You have access to the following properties (lightId required):
+* lightId (required)
+* on (true/false, turns light on or off)
+* hue (0 - 65535, color of the light)
+* sat (0 - 254, color saturation)
+* bri (0 - 254, light brightness)
