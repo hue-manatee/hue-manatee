@@ -5,6 +5,7 @@ const superAgent = require('superagent');
 const jwtAuth = require(__dirname + '/../lib/jwt_auth');
 const bodyParser = require('body-parser').json();
 const rgbToHue = require(__dirname + '/../lib/rgb_to_hue');
+const hexToHue = require(__dirname + '/../lib/hex_to_hue');
 
 const lightRouter = module.exports = exports = Router();
 
@@ -34,6 +35,11 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
     var hueObj = rgbToHue(req.query.red || 0, req.query.green || 0, req.query.blue || 0);
     lightObj.hue = hueObj.hue;
     lightObj.sat = hueObj.sat;
+  }
+  if (req.query.hex) {
+    var hexObj = hexToHue(req.query.hex);
+    lightObj.hue = hexObj.hue;
+    lightObj.sat = hexObj.sat;
   }
 
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
