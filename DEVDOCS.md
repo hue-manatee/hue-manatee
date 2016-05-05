@@ -59,6 +59,12 @@ The Light Test file includes:
 The Server Test file includes:
 > Bad route test (GET request)
 
+### Module Tests
+The Hex Module Test file includes:
+> Hex to Hue/Saturation conversion test
+
+The RGB Module Test file includes:
+> RGB to Hue/Saturation conversion test
 
 ## Running Locally
 ## How to use the API:
@@ -217,6 +223,7 @@ This this request grabs light number 3, turns the hue to red (0) and the brightn
 * red (0 - 255, rgb red value)
 * green (0 - 255, rgb green value)
 * blue (0 - 255, rgb blue value)
+* hex (hex value, can accept values with or without leading # symbol)
 * effect (colorloop, infinite looping of colors)
 * alert (select(single flash) or lselect (loop flash), of the current color)
 
