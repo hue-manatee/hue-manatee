@@ -46,7 +46,6 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
   if (req.query.group) lightObj.group = req.query.group;
 
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
-    console.log('this is our bridge', bridge);
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
     lightObj.ip = bridge.ip;
@@ -64,13 +63,12 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
         res.status(200).json(JSON.parse(superRes.text));
       });
     } else {
-      console.log('this is the lightObj.group', lightObj.group);
       Light.find({ groups: lightObj.group }, (err, light) => {
         if (err) return console.log('this is the light error', err);
+        if (!light.length) return res.status(408).json({ msg: 'no matching lights' });
         var superResponse = {};
         superResponse.count = 0;
         light.forEach((ele) => {
-          console.log('this is the light', ele.bridgeLightId);
           var groupAddress = 'http://' + lightObj.ip + '/api/' + lightObj.bridgeUserId +
           '/lights/' + ele.bridgeLightId + '/state';
           superAgent
@@ -78,7 +76,7 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
           .send({ 'on': lightObj.on, 'sat': lightObj.sat, 'bri': lightObj.bri, 'hue': lightObj.hue })
           .timeout(1000)
           .end(() => {
-
+            // TODO: error handling good luck
             // if (err && err.timeout) {
             //   superResponse.count +=1;
             //   myEmitter.emit('timeoutError');
