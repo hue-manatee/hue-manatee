@@ -144,7 +144,10 @@ http https://hue-manatee.herokuapp.com/api/light/update/_Your_lightId_Here_ toke
 ```
 
 ## Routes
-Let's start making requests! You can use [httpie](https://github.com/jkbrzt/httpie). To make changes to the state of the light, you send get requests to
+Let's start making requests! You can use [httpie](https://github.com/jkbrzt/httpie).
+
+### Change State of Light
+To make changes to the state of the light, you send get requests to
 ```
 https://hue-manatee.herokuapp.com/api/light/magic
 ```
@@ -160,5 +163,23 @@ This this request grabs light number 3, turns the hue to red (0) and the brightn
 * hue (0 - 65535, color of the light)
 * sat (0 - 254, color saturation)
 * bri (0 - 254, light brightness)
+* red (0 - 255, rgb red value)
+* green (0 - 255, rgb green value)
+* blue (0 - 255, rgb blue value)
 * effect (colorloop, infinite looping of colors)
 * alert (select(single flash) or lselect (loop flash), of the current color)
+
+Please note that the presence of an red, green, blue, or hex value will supersede the hue/sat values if both are passed.
+
+### Reset Light to default
+
+When you create or update a light you can set it's default: state, bri, hue, sat. By visiting the reset route the target light will return to whatever the default was upon creation. If you didn't set a default one was generated for you.
+
+```
+https://hue-manatee.herokuapp.com/api/light/reset/_Your_lightId_Here_
+```
+
+example
+```
+http GET https://hue-manatee.herokuapp.com/api/light/reset/3 token:_unique_token_here_
+```

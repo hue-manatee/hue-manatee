@@ -4,6 +4,7 @@ const Bridge = require(__dirname + '/../models/bridge');
 const superAgent = require('superagent');
 const jwtAuth = require(__dirname + '/../lib/jwt_auth');
 const bodyParser = require('body-parser').json();
+const rgbToHue = require(__dirname + '/../lib/rgb_to_hue');
 
 const lightRouter = module.exports = exports = Router();
 
@@ -29,6 +30,11 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
   if (req.query.effect) lightObj.effect = req.query.effect;
   if (req.query.alert) lightObj.alert = req.query.alert;
   if (req.query.lightId) lightObj.lightId = req.query.lightId;
+  if (req.query.red || req.query.green || req.query.blue) {
+    var hueObj = rgbToHue(req.query.red || 0, req.query.green || 0, req.query.blue || 0);
+    lightObj.hue = hueObj.hue;
+    lightObj.sat = hueObj.sat;
+  }
 
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
@@ -79,5 +85,26 @@ lightRouter.get('/light/status/:lightId', jwtAuth, (req, res) => {
       if (err) return console.log(err);
       res.status(200).json(JSON.parse(superRes.text).state);
     });
+  });
+});
+
+lightRouter.get('/light/reset/:lightId', jwtAuth, (req, res) => {
+  Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
+    if (!bridge) return res.status(401).json({ msg: 'not authorized' });
+    if (err) return console.log(err);
+    var address = 'http://' + bridge.ip + '/api/' + bridge.bridgeUserId +
+     '/lights/' + req.params.lightId + '/state';
+     Light.findOne({ bridgeLightId: req.params.lightId }, (err, light) => {
+       if (err) return console.log(err);
+       superAgent
+       .put(address)
+       .send({ 'on': light.state, 'sat': light.sat, 'bri': light.bri, 'hue': light.hue })
+       .timeout(1000)
+       .end((err, superRes) => {
+         if (err && err.timeout) return res.status(408).json({ msg: 'ip address not found' });
+         if (err) return console.log(err);
+         res.status(200).json(JSON.parse(superRes.text));
+       });
+     });
   });
 });
