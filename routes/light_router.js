@@ -21,10 +21,12 @@ lightRouter.post('/light/create', jwtAuth, bodyParser, (req, res) => {
     lightName: req.body.lightName,
     groups: []
   });
-  var groupArr = req.body.groups.split(',');
-  groupArr.forEach((ele) => {
-    newLight.groups.push(ele);
-  });
+  if (req.body.groups) {
+    var groupArr = req.body.groups.split(',');
+    groupArr.forEach((ele) => {
+      newLight.groups.push(ele);
+    });
+  }
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
