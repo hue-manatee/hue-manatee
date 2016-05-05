@@ -9,7 +9,6 @@ const hexToHue = require(__dirname + '/../lib/hex_to_hue');
 const lightRouter = module.exports = exports = Router();
 
 lightRouter.post('/light/create', jwtAuth, bodyParser, (req, res) => {
-  // var newLight = new Light(req.body);
   var newLight = new Light({
     bridgeLightId: req.body.bridgeLightId,
     state: req.body.state,
@@ -39,6 +38,7 @@ lightRouter.post('/light/create', jwtAuth, bodyParser, (req, res) => {
 
 lightRouter.get('/light/magic', jwtAuth, (req, res) => {
   var lightObj = {};
+  lightObj.effect = 'none';
   if (req.query.hue) lightObj.hue = parseInt(req.query.hue, 10);
   if (req.query.sat) lightObj.sat = parseInt(req.query.sat, 10);
   if (req.query.bri) lightObj.bri = parseInt(req.query.bri, 10);
@@ -87,8 +87,8 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
           '/lights/' + ele.bridgeLightId + '/state';
           superAgent
           .put(groupAddress)
-          .send({ 'on': lightObj.on, 'sat': lightObj.sat,
-          'bri': lightObj.bri, 'hue': lightObj.hue })
+          .send({ 'on': lightObj.on, 'sat': lightObj.sat, 'bri': lightObj.bri, 'hue': lightObj.hue,
+            'effect': lightObj.effect, 'alert': lightObj.alert })
           .timeout(1000)
           .end((err, superRes) => {
             superResponse.count += 1;
@@ -107,7 +107,16 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
 });
 
 lightRouter.put('/light/update/:lightId', jwtAuth, bodyParser, (req, res) => {
-  var lightData = req.body;
+    var lightData = req.body;
+    console.log(req.body.groups);
+  if (req.body.groups) {
+    var group = req.body.groups;
+    lightData.groups = [];
+    var groupArr = group.split(',');
+    groupArr.forEach((ele) => {
+      lightData.groups.push(ele);
+    });
+  }
   delete lightData._id;
 
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
