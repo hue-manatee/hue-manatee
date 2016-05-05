@@ -8,7 +8,9 @@ var lightSchema = new mongoose.Schema({
   bri: { type: Number, required: true, default: 100 },
   hue: { type: Number, required: true, default: 16000 },
   lightName: { type: String, require: true },
-  groups: [String]
+  groups: [String],
+  effect: { type: String, default: 'none' },
+  alert: { type: String, default: 'none' }
 });
 
 module.exports = mongoose.model('Light', lightSchema);

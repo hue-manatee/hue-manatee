@@ -59,6 +59,12 @@ The Light Test file includes:
 The Server Test file includes:
 > Bad route test (GET request)
 
+### Module Tests
+The Hex Module Test file includes:
+> Hex to Hue/Saturation conversion test
+
+The RGB Module Test file includes:
+> RGB to Hue/Saturation conversion test
 
 ## Running Locally
 ## How to use the API:
@@ -195,7 +201,10 @@ http http://localhost:PORT/api/light/update_Your_lightId_Here_ token:_unique_tok
 ```
 
 ## Routes
-Let's start making requests! You can use [httpie](https://github.com/jkbrzt/httpie). To make changes to the state of the light, you send get requests to
+Let's start making requests! You can use [httpie](https://github.com/jkbrzt/httpie).
+
+### Change State of Light
+To make changes to the state of the light, you send get requests to
 ```
 http://localhost:PORT/api/light/magic
 ```
@@ -211,3 +220,24 @@ This this request grabs light number 3, turns the hue to red (0) and the brightn
 * hue (0 - 65535, color of the light)
 * sat (0 - 254, color saturation)
 * bri (0 - 254, light brightness)
+* red (0 - 255, rgb red value)
+* green (0 - 255, rgb green value)
+* blue (0 - 255, rgb blue value)
+* hex (hex value, can accept values with or without leading # symbol)
+* effect (colorloop, infinite looping of colors)
+* alert (select(single flash) or lselect (loop flash), of the current color)
+
+Please note that the presence of an red, green, blue, or hex value will supersede the hue/sat values if both are passed.
+
+### Reset Light to default
+
+When you create or update a light you can set it's default: state, bri, hue, sat. By visiting the reset route the target light will return to whatever the default was upon creation. If you didn't set a default one was generated for you.
+
+```
+http://localhost:PORT/api/light/reset/_Your_lightId_Here_
+```
+
+example
+```
+http://localhost:PORT/api/light/reset/3 token:_unique_token_here_
+```
