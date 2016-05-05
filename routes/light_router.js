@@ -6,8 +6,6 @@ const jwtAuth = require(__dirname + '/../lib/jwt_auth');
 const bodyParser = require('body-parser').json();
 const rgbToHue = require(__dirname + '/../lib/rgb_to_hue');
 const hexToHue = require(__dirname + '/../lib/hex_to_hue');
-const EventEmitter = require('events');
-const myEmitter = new EventEmitter();
 const lightRouter = module.exports = exports = Router();
 
 lightRouter.post('/light/create', jwtAuth, bodyParser, (req, res) => {
@@ -84,38 +82,26 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
         if (!light.length) return res.status(408).json({ msg: 'no matching lights' });
         var superResponse = {};
         superResponse.count = 0;
+        superResponse.noError = true;
         light.forEach((ele) => {
           var groupAddress = 'http://' + lightObj.ip + '/api/' + lightObj.bridgeUserId +
           '/lights/' + ele.bridgeLightId + '/state';
           superAgent
           .put(groupAddress)
-          .send({ 'on': lightObj.on, 'sat': lightObj.sat, 'bri': lightObj.bri, 'hue': lightObj.hue })
+          .send({ 'on': lightObj.on, 'sat': lightObj.sat,
+          'bri': lightObj.bri, 'hue': lightObj.hue })
           .timeout(1000)
-          .end(() => {
-            // TODO: error handling good luck
-            // if (err && err.timeout) {
-            //   superResponse.count +=1;
-            //   myEmitter.emit('timeoutError');
-            // } else if (err) {
-            //   superResponse.count +=1;
-            //   myEmitter.emit('error');
-            // } else {
-            //   superResponse.count +=1;
-            //   myEmitter.emit('success');
-            // }
-
+          .end((err, superRes) => {
+            superResponse.count += 1;
+            console.log(superResponse.count);
+            if (superResponse.count === light.length) {
+              console.log('my if is supposedly true!');
+              if (err && err.timeout) return res.status(408).json({ msg: 'ip address not found' });
+              if (err) return console.log(err);
+              res.status(200).json(JSON.parse(superRes.text));
+            }
           });
         });
-        // myEmitter.on('timeoutError', () => {
-        //   if(superResponse.count === light.length) return res.status(408).json({ msg: 'ip address not found' });
-        // });
-        // myEmitter.on('error', () => {
-        //   if(superResponse.count === light.length) return res.status(408).json({ msg: 'server error' });
-        // });
-        // myEmitter.on('success', () => {
-        //   if(superResponse.count === light.length) res.status(200).json({ msg: 'success ' + lightObj.group + ' updated ' });
-        // });
-        res.status(200).json({ msg: 'success ' + lightObj.group + ' updated ' });
       });
     }
   });
