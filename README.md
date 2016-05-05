@@ -124,7 +124,7 @@ The post data should be sent in JSON format. Hue, sat, bri, on are the default p
 ```
 The httpie call would look like this:
 ```
-http POST https://hue-manatee.herokuapp.com/api/light/create token:"unique token here" lightName="name" bridgeLightId="3" groups="['livingroom','ceiling']" hue="10000" sat="254" bri="100" on="true"
+http POST https://hue-manatee.herokuapp.com/api/light/create token:"unique token here" lightName="name" bridgeLightId="3" groups="livingroom,ceiling" hue="10000" sat="254" bri="100" on="true"
 ```
 Once your light is added, you can get the connection status of that light from the bridge by sending a GET request to that individual lightId (1, 2, 3, etc)
 ```
@@ -159,6 +159,32 @@ http GET https://hue-manatee.herokuapp.com/api/light/magic token:"unique token h
 ```
 This this request grabs light number 3, turns the hue to red (0) and the brightness to max (254).  You have access to the following properties (lightId required):
 * lightId (required)
+* on (true/false, turns light on or off)
+* hue (0 - 65535, color of the light)
+* sat (0 - 254, color saturation)
+* bri (0 - 254, light brightness)
+* red (0 - 255, rgb red value)
+* green (0 - 255, rgb green value)
+* blue (0 - 255, rgb blue value)
+* hex (hex value, can accept values with or without leading # symbol)
+* effect (colorloop, infinite looping of colors)
+* alert (select(single flash) or lselect (loop flash), of the current color)
+
+Please note that the presence of an red, green, blue, or hex value will supersede the hue/sat values if both are passed.
+
+### Change State of Group
+To make changes to the state of the group, you send get requests to
+```
+https://hue-manatee.herokuapp.com/api/light/magic
+```
+Here is where the fun begins.  Properties on the light can be accessed through a simple query string appended to the end of the url, making it accessible through many places.
+
+An httpie example would look like:
+```
+http GET https://hue-manatee.herokuapp.com/api/light/magic token:"unique token here" group=='living room' hue==0 bri==254
+```
+This this request grabs the living room group, turns the hue to red (0) and the brightness to max (254).  You have access to the following properties (group required):
+* group (required)
 * on (true/false, turns light on or off)
 * hue (0 - 65535, color of the light)
 * sat (0 - 254, color saturation)
