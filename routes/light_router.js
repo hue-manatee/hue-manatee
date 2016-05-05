@@ -6,9 +6,9 @@ const jwtAuth = require(__dirname + '/../lib/jwt_auth');
 const bodyParser = require('body-parser').json();
 const rgbToHue = require(__dirname + '/../lib/rgb_to_hue');
 const hexToHue = require(__dirname + '/../lib/hex_to_hue');
-const EventEmitter = require('events');
-const myEmitter = new EventEmitter();
+const async = require('async');
 const lightRouter = module.exports = exports = Router();
+
 
 lightRouter.post('/light/create', jwtAuth, bodyParser, (req, res) => {
   // var newLight = new Light(req.body);
@@ -79,43 +79,36 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
         res.status(200).json(JSON.parse(superRes.text));
       });
     } else {
-      Light.find({ groups: lightObj.group }, (err, light) => {
+      Light.find({ groups: lightObj.group }, (err, lights) => {
         if (err) return console.log('this is the light error', err);
-        if (!light.length) return res.status(408).json({ msg: 'no matching lights' });
+        if (!lights.length) return res.status(408).json({ msg: 'no matching lights' });
         var superResponse = {};
         superResponse.count = 0;
-        light.forEach((ele) => {
+        async.each(lights, (light, callback) => {
           var groupAddress = 'http://' + lightObj.ip + '/api/' + lightObj.bridgeUserId +
-          '/lights/' + ele.bridgeLightId + '/state';
+          '/lights/' + light.bridgeLightId + '/state';
           superAgent
-          .put(groupAddress)
-          .send({ 'on': lightObj.on, 'sat': lightObj.sat, 'bri': lightObj.bri, 'hue': lightObj.hue })
-          .timeout(1000)
-          .end(() => {
-            // TODO: error handling good luck
-            // if (err && err.timeout) {
-            //   superResponse.count +=1;
-            //   myEmitter.emit('timeoutError');
-            // } else if (err) {
-            //   superResponse.count +=1;
-            //   myEmitter.emit('error');
-            // } else {
-            //   superResponse.count +=1;
-            //   myEmitter.emit('success');
-            // }
-
-          });
+            .put(groupAddress)
+            .send({ 'on': lightObj.on, 'sat': lightObj.sat,
+              'bri': lightObj.bri, 'hue': lightObj.hue })
+            .timeout(1000)
+            .end((err) => {
+              superResponse.count++;
+              if (err) {
+                callback(err);
+              } else {
+                callback();
+              }
+            });
+        }, (err) => {
+          if (err) {
+            console.log(err);
+            res.status(418).json({ msg: 'look at the teapot' });
+          } else {
+            res.status(200).json({ msg: 'success ' + lightObj.group + ' updated ('
+            + superResponse.count + ' lights updated)' });
+          }
         });
-        // myEmitter.on('timeoutError', () => {
-        //   if(superResponse.count === light.length) return res.status(408).json({ msg: 'ip address not found' });
-        // });
-        // myEmitter.on('error', () => {
-        //   if(superResponse.count === light.length) return res.status(408).json({ msg: 'server error' });
-        // });
-        // myEmitter.on('success', () => {
-        //   if(superResponse.count === light.length) res.status(200).json({ msg: 'success ' + lightObj.group + ' updated ' });
-        // });
-        res.status(200).json({ msg: 'success ' + lightObj.group + ' updated ' });
       });
     }
   });
