@@ -160,3 +160,5 @@ This this request grabs light number 3, turns the hue to red (0) and the brightn
 * hue (0 - 65535, color of the light)
 * sat (0 - 254, color saturation)
 * bri (0 - 254, light brightness)
+* effect (colorloop, infinite looping of colors)
+* alert (select(single flash) or lselect (loop flash), of the current color)
