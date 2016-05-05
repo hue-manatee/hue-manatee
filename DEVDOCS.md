@@ -137,29 +137,29 @@ The post data should be sent in JSON format, and you will need to send the follo
 ```
 {
   "name": "Your Name Here",
-  "ip": "hue bridge IP here (including http://)",
-  "bridgeUserId": "hue bridge unique username here"
+  "url": "hue bridge IP here (including http://)",
+  "bridgeKey": "hue bridge unique username here"
 }
 ```
 You can also use a tool like [httpie](https://github.com/jkbrzt/httpie) to make this request.  This would look like:
 ```
-http POST http://localhost:PORT/api/bridge/create name="Your name here" ip="your ip here" bridgeUserId="your hue bridge username here" token:_unique_token_here_
+http POST http://localhost:PORT/api/bridge/create token:_unique_token_here_ name="Your name here" url="your ip here" bridgeKey="your hue bridge username here"
 ```
 Once your bridge is registered, you can access information about the lights attached to that bridge by sending a GET request to
 ```
-http://localhost:PORT/api/bridge/status/_Your_bridgeUserId_Here_
+http://localhost:PORT/api/bridge/status/_Your_bridgeKey_Here_
 ```
 The httpie call would look like this:
 ```
-http http://localhost:PORT/api/bridge/status/_Your_bridgeUserId_Here_ token:_unique_token_here_
+http http://localhost:PORT/api/bridge/status/_Your_bridgeKey_Here_ token:_unique_token_here_
 ```
 You can also update your bridge by sending a PUT request to
 ```
-http://localhost:PORT/api/bridge/update/_Your_bridgeUserId_Here_
+http://localhost:PORT/api/bridge/update/_Your_bridgeKey_Here_
 ```
 The httpie call would look like this:
 ```
-http http://localhost:PORT/api/bridge/update/_Your_bridgeUserId_Here_ token:_unique_token_here_ name="new name here" ip="new bridge ip here"
+http http://localhost:PORT/api/bridge/update/_Your_bridgeKey_Here_ token:_unique_token_here_ name="new name here" url="new bridge ip here"
 ```
 
 ## Add Your Lights
@@ -167,10 +167,10 @@ After your bridge is registered you can find all lights associated with your bri
 ```
 http://localhost:PORT/api/light/create
 ```
-The post data should be sent in JSON format. Hue, sat, bri, on are the default properties of the light, so you can easily return to your default settings later. The only required fields are lightName and bridgeLightId, but all these fields are available.
+The post data should be sent in JSON format. Hue, sat, bri, on are the default properties of the light, so you can easily return to your default settings later. The only required fields are name and bridgeLightId, but all these fields are available.
 ```
 {
-  "lightName": "Your Name Here",
+  "name": "Your Name Here",
   "bridgeLightId": "#",
   "groups": "['array','of','groups']"
   "hue": "0 to 65535"
@@ -181,7 +181,7 @@ The post data should be sent in JSON format. Hue, sat, bri, on are the default p
 ```
 The httpie call would look like this:
 ```
-http POST http://localhost:PORT/api/light/create token:_unique_token_here_ lightName="name" bridgeLightId="3" groups="['livingroom','ceiling']" hue="10000" sat="254" bri="100" on="true"
+http POST http://localhost:PORT/api/light/create token:_unique_token_here_ name="name" bridgeLightId="3" groups="['livingroom','ceiling']" hue="10000" sat="254" bri="100" on="true"
 ```
 Once your light is added, you can get the connection status of that light from the bridge by sending a GET request to that individual lightId (1, 2, 3, etc)
 ```
@@ -197,7 +197,7 @@ http://localhost:PORT/api/light/update_Your_lightId_Here_
 ```
 The httpie call would look like this:
 ```
-http http://localhost:PORT/api/light/update_Your_lightId_Here_ token:_unique_token_here_ lightName="new name here"
+http http://localhost:PORT/api/light/update_Your_lightId_Here_ token:_unique_token_here_ name="new name here"
 ```
 
 ## Routes

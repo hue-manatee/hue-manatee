@@ -16,14 +16,13 @@ bridgeRouter.post('/bridge/create', jwtAuth, bodyParser, (req, res) => {
   });
 });
 
-bridgeRouter.get('/bridge/status/:bridgeId', jwtAuth, (req, res) => {
-  Bridge.findOne({ bridgeUserId: req.params.bridgeId, admin: req.user._id }, (err, bridge) => {
+bridgeRouter.get('/bridge/status/:bridgeKey', jwtAuth, (req, res) => {
+  Bridge.findOne({ bridgeKey: req.params.bridgeKey, admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
     superAgent
-      .get('http://' + bridge.ip + '/api/' + bridge.bridgeUserId + '/lights')
-      // TODO: lenghten timeout before production release
-      .timeout(1000)
+      .get(bridge.url + '/api/' + bridge.bridgeKey + '/lights')
+      .timeout(1800)
       .end((err, superRes) => {
         if (err && err.timeout) return res.status(408).json({ msg: 'too slow bro' });
         if (err) return console.log(err);
@@ -32,11 +31,11 @@ bridgeRouter.get('/bridge/status/:bridgeId', jwtAuth, (req, res) => {
   });
 });
 
-bridgeRouter.put('/bridge/update/:bridgeId', jwtAuth, bodyParser, (req, res) => {
+bridgeRouter.put('/bridge/update/:bridgeKey', jwtAuth, bodyParser, (req, res) => {
   var bridgeData = req.body;
   delete bridgeData._id;
 
-  Bridge.update({ _id: req.params.bridgeId, admin: req.user._id },
+  Bridge.update({ bridgeKey: req.params.bridgeKey, admin: req.user._id },
     bridgeData, (err, data) => {
     if (!data) return res.status(401).json({ msg: 'not authorized' });
     if (err) console.log(err);

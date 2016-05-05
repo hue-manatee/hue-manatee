@@ -7,7 +7,7 @@ var lightSchema = new mongoose.Schema({
   sat: { type: Number, required: true, default: 10 },
   bri: { type: Number, required: true, default: 100 },
   hue: { type: Number, required: true, default: 16000 },
-  lightName: { type: String, require: true },
+  name: { type: String, require: true },
   groups: [String],
   effect: { type: String, default: 'none' },
   alert: { type: String, default: 'none' }
