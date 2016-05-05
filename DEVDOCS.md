@@ -59,6 +59,12 @@ The Light Test file includes:
 The Server Test file includes:
 > Bad route test (GET request)
 
+### Module Tests
+The Hex Module Test file includes:
+> Hex to Hue/Saturation conversion test
+
+The RGB Module Test file includes:
+> RGB to Hue/Saturation conversion test
 
 ## Running Locally
 ## How to use the API:
