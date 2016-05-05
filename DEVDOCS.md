@@ -59,6 +59,12 @@ The Light Test file includes:
 The Server Test file includes:
 > Bad route test (GET request)
 
+### Module Tests
+The Hex Module Test file includes:
+> Hex to Hue/Saturation conversion test
+
+The RGB Module Test file includes:
+> RGB to Hue/Saturation conversion test
 
 ## Running Locally
 ## How to use the API:
@@ -131,29 +137,29 @@ The post data should be sent in JSON format, and you will need to send the follo
 ```
 {
   "name": "Your Name Here",
-  "ip": "hue bridge IP here (including http://)",
-  "bridgeUserId": "hue bridge unique username here"
+  "url": "hue bridge IP here (including http://)",
+  "bridgeKey": "hue bridge unique username here"
 }
 ```
 You can also use a tool like [httpie](https://github.com/jkbrzt/httpie) to make this request.  This would look like:
 ```
-http POST http://localhost:PORT/api/bridge/create name="Your name here" ip="your ip here" bridgeUserId="your hue bridge username here" token:_unique_token_here_
+http POST http://localhost:PORT/api/bridge/create token:_unique_token_here_ name="Your name here" url="your ip here" bridgeKey="your hue bridge username here"
 ```
 Once your bridge is registered, you can access information about the lights attached to that bridge by sending a GET request to
 ```
-http://localhost:PORT/api/bridge/status/_Your_bridgeUserId_Here_
+http://localhost:PORT/api/bridge/status/_Your_bridgeKey_Here_
 ```
 The httpie call would look like this:
 ```
-http http://localhost:PORT/api/bridge/status/_Your_bridgeUserId_Here_ token:_unique_token_here_
+http http://localhost:PORT/api/bridge/status/_Your_bridgeKey_Here_ token:_unique_token_here_
 ```
 You can also update your bridge by sending a PUT request to
 ```
-http://localhost:PORT/api/bridge/update/_Your_bridgeUserId_Here_
+http://localhost:PORT/api/bridge/update/_Your_bridgeKey_Here_
 ```
 The httpie call would look like this:
 ```
-http http://localhost:PORT/api/bridge/update/_Your_bridgeUserId_Here_ token:_unique_token_here_ name="new name here" ip="new bridge ip here"
+http http://localhost:PORT/api/bridge/update/_Your_bridgeKey_Here_ token:_unique_token_here_ name="new name here" url="new bridge ip here"
 ```
 
 ## Add Your Lights
@@ -161,10 +167,10 @@ After your bridge is registered you can find all lights associated with your bri
 ```
 http://localhost:PORT/api/light/create
 ```
-The post data should be sent in JSON format. Hue, sat, bri, on are the default properties of the light, so you can easily return to your default settings later. The only required fields are lightName and bridgeLightId, but all these fields are available.
+The post data should be sent in JSON format. Hue, sat, bri, on are the default properties of the light, so you can easily return to your default settings later. The only required fields are name and bridgeLightId, but all these fields are available.
 ```
 {
-  "lightName": "Your Name Here",
+  "name": "Your Name Here",
   "bridgeLightId": "#",
   "groups": "['array','of','groups']"
   "hue": "0 to 65535"
@@ -175,7 +181,7 @@ The post data should be sent in JSON format. Hue, sat, bri, on are the default p
 ```
 The httpie call would look like this:
 ```
-http POST http://localhost:PORT/api/light/create token:_unique_token_here_ lightName="name" bridgeLightId="3" groups="['livingroom','ceiling']" hue="10000" sat="254" bri="100" on="true"
+http POST http://localhost:PORT/api/light/create token:_unique_token_here_ name="name" bridgeLightId="3" groups="['livingroom','ceiling']" hue="10000" sat="254" bri="100" on="true"
 ```
 Once your light is added, you can get the connection status of that light from the bridge by sending a GET request to that individual lightId (1, 2, 3, etc)
 ```
@@ -191,11 +197,14 @@ http://localhost:PORT/api/light/update_Your_lightId_Here_
 ```
 The httpie call would look like this:
 ```
-http http://localhost:PORT/api/light/update_Your_lightId_Here_ token:_unique_token_here_ lightName="new name here"
+http http://localhost:PORT/api/light/update_Your_lightId_Here_ token:_unique_token_here_ name="new name here"
 ```
 
 ## Routes
-Let's start making requests! You can use [httpie](https://github.com/jkbrzt/httpie). To make changes to the state of the light, you send get requests to
+Let's start making requests! You can use [httpie](https://github.com/jkbrzt/httpie).
+
+### Change State of Light
+To make changes to the state of the light, you send get requests to
 ```
 http://localhost:PORT/api/light/magic
 ```
@@ -211,3 +220,50 @@ This this request grabs light number 3, turns the hue to red (0) and the brightn
 * hue (0 - 65535, color of the light)
 * sat (0 - 254, color saturation)
 * bri (0 - 254, light brightness)
+* red (0 - 255, rgb red value)
+* green (0 - 255, rgb green value)
+* blue (0 - 255, rgb blue value)
+* hex (hex value, can accept values with or without leading # symbol)
+* effect (colorloop, infinite looping of colors)
+* alert (select(single flash) or lselect (loop flash), of the current color)
+
+Please note that the presence of an red, green, blue, or hex value will supersede the hue/sat values if both are passed.
+
+### Change State of Group
+To make changes to the state of the group, you send get requests to
+```
+http://localhost:PORT/api/light/magic
+```
+Here is where the fun begins.  Properties on the light can be accessed through a simple query string appended to the end of the url, making it accessible through many places.
+
+An httpie example would look like:
+```
+http GET http://localhost:PORT/api/light/magic token:_unique_token_here_ group=='living room' hue==0 bri==254
+```
+This this request grabs light number 3, turns the hue to red (0) and the brightness to max (254).  You have access to the following properties (group required):
+* group (required)
+* on (true/false, turns light on or off)
+* hue (0 - 65535, color of the light)
+* sat (0 - 254, color saturation)
+* bri (0 - 254, light brightness)
+* red (0 - 255, rgb red value)
+* green (0 - 255, rgb green value)
+* blue (0 - 255, rgb blue value)
+* hex (hex value, can accept values with or without leading # symbol)
+* effect (colorloop, infinite looping of colors)
+* alert (select(single flash) or lselect (loop flash), of the current color)
+
+Please note that the presence of an red, green, blue, or hex value will supersede the hue/sat values if both are passed.
+
+### Reset Light to default
+
+When you create or update a light you can set it's default: state, bri, hue, sat. By visiting the reset route the target light will return to whatever the default was upon creation. If you didn't set a default one was generated for you.
+
+```
+http://localhost:PORT/api/light/reset/_Your_lightId_Here_
+```
+
+example
+```
+http://localhost:PORT/api/light/reset/3 token:_unique_token_here_
+```
