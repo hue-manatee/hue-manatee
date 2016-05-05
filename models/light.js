@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 var lightSchema = new mongoose.Schema({
   bridgeId: String,
-  bridgeLightId: { type: String, required: true },
+  bridgeLightId: { type: String, required: true, unique: true },
   state: { type: Boolean, required: true, default: true },
   sat: { type: Number, required: true, default: 10 },
   bri: { type: Number, required: true, default: 100 },
