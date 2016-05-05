@@ -56,11 +56,13 @@ describe('the bridge post', () => {
       .set('token', this.token)
       .send({
         name: 'slothlight',
-        bridgeLightId: '3'
+        bridgeLightId: '3',
+        groups: 'livingroom,kitchen'
       })
       .end((err, res) => {
         expect(err).to.eql(null);
         expect(res.body.name).to.eql('slothlight');
+        expect(res.body.groups).to.eql([ 'livingroom', 'kitchen' ]);
         expect(res.body.bridgeId).to.eql(this.bridge._id.toString());
         done();
       });
@@ -85,7 +87,8 @@ describe('the bridge post', () => {
         .put('/api/light/update/' + this.light.bridgeLightId)
         .set('token', this.token)
         .send({
-          name: 'not test'
+          name: 'not test',
+          groups: 'bathroom'
         })
         .end((err, res) => {
           expect(err).to.eql(null);
