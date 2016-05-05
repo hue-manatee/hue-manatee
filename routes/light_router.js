@@ -4,6 +4,8 @@ const Bridge = require(__dirname + '/../models/bridge');
 const superAgent = require('superagent');
 const jwtAuth = require(__dirname + '/../lib/jwt_auth');
 const bodyParser = require('body-parser').json();
+const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
 
 const lightRouter = module.exports = exports = Router();
 
@@ -65,26 +67,43 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
       console.log('this is the lightObj.group', lightObj.group);
       Light.find({ groups: lightObj.group }, (err, light) => {
         if (err) return console.log('this is the light error', err);
-        console.log('this is the light', light);
+        var superResponse = {};
+        superResponse.count = 0;
+        light.forEach((ele) => {
+          console.log('this is the light', ele.bridgeLightId);
+          var groupAddress = 'http://' + lightObj.ip + '/api/' + lightObj.bridgeUserId +
+          '/lights/' + ele.bridgeLightId + '/state';
+          superAgent
+          .put(groupAddress)
+          .send({ 'on': lightObj.on, 'sat': lightObj.sat, 'bri': lightObj.bri, 'hue': lightObj.hue })
+          .timeout(1000)
+          .end(() => {
+
+            // if (err && err.timeout) {
+            //   superResponse.count +=1;
+            //   myEmitter.emit('timeoutError');
+            // } else if (err) {
+            //   superResponse.count +=1;
+            //   myEmitter.emit('error');
+            // } else {
+            //   superResponse.count +=1;
+            //   myEmitter.emit('success');
+            // }
+
+          });
+        });
+        // myEmitter.on('timeoutError', () => {
+        //   if(superResponse.count === light.length) return res.status(408).json({ msg: 'ip address not found' });
+        // });
+        // myEmitter.on('error', () => {
+        //   if(superResponse.count === light.length) return res.status(408).json({ msg: 'server error' });
+        // });
+        // myEmitter.on('success', () => {
+        //   if(superResponse.count === light.length) res.status(200).json({ msg: 'success ' + lightObj.group + ' updated ' });
+        // });
+        res.status(200).json({ msg: 'success ' + lightObj.group + ' updated ' });
       });
     }
-      // for (var i = 0; i < lightObj.group.length; i++) {
-      //   var groupId = lightObj.group[i];
-      // console.log(groupId);
-      //   var groupAddress = 'http://' + lightObj.ip + '/api/' + lightObj.bridgeUserId +
-      //   '/lights/' + groupId + '/state';
-      //   console.log(groupAddress);
-      //   superAgent
-      //   .put(groupAddress)
-      //   .send({ 'on': lightObj.on, 'sat': lightObj.sat, 'bri': lightObj.bri, 'hue': lightObj.hue })
-      //   .timeout(1000)
-      //   .end((err, superRes) => {
-      //     if (err && err.timeout) return res.status(408).json({ msg: 'ip address not found' });
-      //     if (err) return console.log(err);
-      //     res.status(200).json(JSON.parse(superRes.text));
-      //   });
-      // }
-    // }
   });
 });
 
