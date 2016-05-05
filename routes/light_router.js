@@ -8,11 +8,25 @@ const bodyParser = require('body-parser').json();
 const lightRouter = module.exports = exports = Router();
 
 lightRouter.post('/light/create', jwtAuth, bodyParser, (req, res) => {
-  var newLight = new Light(req.body);
+  // var newLight = new Light(req.body);
+  var newLight = new Light({
+    bridgeLightId: req.body.bridgeLightId,
+    state: req.body.state,
+    sat: req.body.sat,
+    bri: req.body.bri,
+    hue: req.body.hue,
+    lightName: req.body.lightName,
+    groups: []
+  });
+  var groupArr = req.body.groups.split(',');
+  groupArr.forEach((ele) => {
+    newLight.groups.push(ele);
+  });
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
     newLight.bridgeId = bridge._id;
+
   });
   newLight.save((err, data) => {
     if (err) return console.log(err);
@@ -27,23 +41,50 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
   if (req.query.bri) lightObj.bri = parseInt(req.query.bri, 10);
   if (req.query.on) lightObj.on = Boolean(req.query.on);
   if (req.query.lightId) lightObj.lightId = req.query.lightId;
+  if (req.query.group) lightObj.group = req.query.group;
 
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
+    console.log('this is our bridge', bridge);
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
     lightObj.ip = bridge.ip;
     lightObj.bridgeUserId = bridge.bridgeUserId;
-    var address = 'http://' + lightObj.ip + '/api/' + lightObj.bridgeUserId +
-     '/lights/' + lightObj.lightId + '/state';
-    superAgent
-    .put(address)
-    .send({ 'on': lightObj.on, 'sat': lightObj.sat, 'bri': lightObj.bri, 'hue': lightObj.hue })
-    .timeout(1000)
-    .end((err, superRes) => {
-      if (err && err.timeout) return res.status(408).json({ msg: 'ip address not found' });
-      if (err) return console.log(err);
-      res.status(200).json(JSON.parse(superRes.text));
-    });
+    if (!req.query.group) {
+      var address = 'http://' + lightObj.ip + '/api/' + lightObj.bridgeUserId +
+       '/lights/' + lightObj.lightId + '/state';
+      superAgent
+      .put(address)
+      .send({ 'on': lightObj.on, 'sat': lightObj.sat, 'bri': lightObj.bri, 'hue': lightObj.hue })
+      .timeout(1000)
+      .end((err, superRes) => {
+        if (err && err.timeout) return res.status(408).json({ msg: 'ip address not found' });
+        if (err) return console.log(err);
+        res.status(200).json(JSON.parse(superRes.text));
+      });
+    } else {
+      console.log('this is the lightObj.group', lightObj.group);
+      Light.find({ groups: lightObj.group }, (err, light) => {
+        if (err) return console.log('this is the light error', err);
+        console.log('this is the light', light);
+      });
+    }
+      // for (var i = 0; i < lightObj.group.length; i++) {
+      //   var groupId = lightObj.group[i];
+      // console.log(groupId);
+      //   var groupAddress = 'http://' + lightObj.ip + '/api/' + lightObj.bridgeUserId +
+      //   '/lights/' + groupId + '/state';
+      //   console.log(groupAddress);
+      //   superAgent
+      //   .put(groupAddress)
+      //   .send({ 'on': lightObj.on, 'sat': lightObj.sat, 'bri': lightObj.bri, 'hue': lightObj.hue })
+      //   .timeout(1000)
+      //   .end((err, superRes) => {
+      //     if (err && err.timeout) return res.status(408).json({ msg: 'ip address not found' });
+      //     if (err) return console.log(err);
+      //     res.status(200).json(JSON.parse(superRes.text));
+      //   });
+      // }
+    // }
   });
 });
 
