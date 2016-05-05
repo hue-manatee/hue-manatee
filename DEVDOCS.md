@@ -229,6 +229,32 @@ This this request grabs light number 3, turns the hue to red (0) and the brightn
 
 Please note that the presence of an red, green, blue, or hex value will supersede the hue/sat values if both are passed.
 
+### Change State of Group
+To make changes to the state of the group, you send get requests to
+```
+http://localhost:PORT/api/light/magic
+```
+Here is where the fun begins.  Properties on the light can be accessed through a simple query string appended to the end of the url, making it accessible through many places.
+
+An httpie example would look like:
+```
+http GET http://localhost:PORT/api/light/magic token:_unique_token_here_ group=='living room' hue==0 bri==254
+```
+This this request grabs light number 3, turns the hue to red (0) and the brightness to max (254).  You have access to the following properties (group required):
+* group (required)
+* on (true/false, turns light on or off)
+* hue (0 - 65535, color of the light)
+* sat (0 - 254, color saturation)
+* bri (0 - 254, light brightness)
+* red (0 - 255, rgb red value)
+* green (0 - 255, rgb green value)
+* blue (0 - 255, rgb blue value)
+* hex (hex value, can accept values with or without leading # symbol)
+* effect (colorloop, infinite looping of colors)
+* alert (select(single flash) or lselect (loop flash), of the current color)
+
+Please note that the presence of an red, green, blue, or hex value will supersede the hue/sat values if both are passed.
+
 ### Reset Light to default
 
 When you create or update a light you can set it's default: state, bri, hue, sat. By visiting the reset route the target light will return to whatever the default was upon creation. If you didn't set a default one was generated for you.
