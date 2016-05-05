@@ -80,29 +80,29 @@ The post data should be sent in JSON format, and you will need to send the follo
 ```
 {
   "name": "Your Name Here",
-  "ip": "access to bridge IP here (ngrok url)",
-  "bridgeUserId": "hue bridge unique username here"
+  "url": "access to bridge IP here (ngrok url)",
+  "bridgeKey": "hue bridge unique username here"
 }
 ```
 You can also use a tool like [httpie](https://github.com/jkbrzt/httpie) to make this request.  This would look like:
 ```
-http POST https://hue-manatee.herokuapp.com/api/bridge/create name="Your bridge name here" ip="access to bridge IP here" bridgeUserId="your hue bridge username here" token:"your unique token here"
+http POST https://hue-manatee.herokuapp.com/api/bridge/create token:"your unique token here" name="Your bridge name here" url="access to bridge IP here" bridgeKey="your hue bridge username here"
 ```
 Once your bridge is registered, you can access information about the lights attached to that bridge by sending a GET request to
 ```
-https://hue-manatee.herokuapp.com/api/bridge/status/_Your_bridgeUserId_Here_
+https://hue-manatee.herokuapp.com/api/bridge/status/_Your_bridgeKey_Here_
 ```
 The httpie call would look like this:
 ```
-http https://hue-manatee.herokuapp.com/api/bridge/status_Your_bridgeUserId_Here_ token:"unique token here"
+http https://hue-manatee.herokuapp.com/api/bridge/status_Your_bridgeKey_Here_ token:"unique token here"
 ```
 You can also update your bridge by sending a PUT request to
 ```
-https://hue-manatee.herokuapp.com/api/bridge/update/_Your_bridgeUserId_Here_
+https://hue-manatee.herokuapp.com/api/bridge/update/_Your_bridgeKey_Here_
 ```
 The httpie call would look like this:
 ```
-http https://hue-manatee.herokuapp.com/api/bridge/update/_Your_bridgeUserId_Here_ token:"unique token here" name="new name here" ip="new ngrok url"
+http https://hue-manatee.herokuapp.com/api/bridge/update/_Your_bridgeKey_Here_ token:"unique token here" name="new name here" url="new ngrok url"
 ```
 
 ## Add Your Lights
@@ -110,10 +110,10 @@ After your bridge is registered you can find all lights associated with your bri
 ```
 https://hue-manatee.herokuapp.com/api/light/create
 ```
-The post data should be sent in JSON format. Hue, sat, bri, on are the default properties of the light, so you can easily return to your default settings later. The only required fields are lightName and bridgeLightId, but all these fields are available.
+The post data should be sent in JSON format. Hue, sat, bri, on are the default properties of the light, so you can easily return to your default settings later. The only required fields are name and bridgeLightId, but all these fields are available.
 ```
 {
-  "lightName": "Your Name Here",
+  "name": "Your Name Here",
   "bridgeLightId": "#",
   "groups": "['array','of','groups']"
   "hue": "0 to 65535"
@@ -124,7 +124,7 @@ The post data should be sent in JSON format. Hue, sat, bri, on are the default p
 ```
 The httpie call would look like this:
 ```
-http POST https://hue-manatee.herokuapp.com/api/light/create token:"unique token here" lightName="name" bridgeLightId="3" groups="livingroom,ceiling" hue="10000" sat="254" bri="100" on="true"
+http POST https://hue-manatee.herokuapp.com/api/light/create token:"unique token here" name="name" bridgeLightId="3" groups="livingroom,ceiling" hue="10000" sat="254" bri="100" on="true"
 ```
 Once your light is added, you can get the connection status of that light from the bridge by sending a GET request to that individual lightId (1, 2, 3, etc)
 ```
@@ -140,7 +140,7 @@ https://hue-manatee.herokuapp.com/api/light/update/_Your_lightId_Here_
 ```
 The httpie call would look like this:
 ```
-http https://hue-manatee.herokuapp.com/api/light/update/_Your_lightId_Here_ token:"unique token here" lightName="new name here"
+http https://hue-manatee.herokuapp.com/api/light/update/_Your_lightId_Here_ token:"unique token here" name="new name here"
 ```
 
 ## Routes

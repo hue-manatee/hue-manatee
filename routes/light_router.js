@@ -15,7 +15,7 @@ lightRouter.post('/light/create', jwtAuth, bodyParser, (req, res) => {
     sat: req.body.sat,
     bri: req.body.bri,
     hue: req.body.hue,
-    lightName: req.body.lightName,
+    name: req.body.name,
     groups: []
   });
   if (req.body.groups) {
@@ -61,10 +61,10 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
-    lightObj.ip = bridge.ip;
-    lightObj.bridgeUserId = bridge.bridgeUserId;
+    lightObj.url = bridge.url;
+    lightObj.bridgeKey = bridge.bridgeKey;
     if (!req.query.group) {
-      var address = 'http://' + lightObj.ip + '/api/' + lightObj.bridgeUserId +
+      var address = lightObj.url + '/api/' + lightObj.bridgeKey +
        '/lights/' + lightObj.lightId + '/state';
       superAgent
       .put(address)
@@ -83,7 +83,7 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
         var superResponse = {};
         superResponse.count = 0;
         light.forEach((ele) => {
-          var groupAddress = 'http://' + lightObj.ip + '/api/' + lightObj.bridgeUserId +
+          var groupAddress = lightObj.url + '/api/' + lightObj.bridgeKey +
           '/lights/' + ele.bridgeLightId + '/state';
           superAgent
           .put(groupAddress)
@@ -134,7 +134,7 @@ lightRouter.get('/light/status/:lightId', jwtAuth, (req, res) => {
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
-    var address = 'http://' + bridge.ip + '/api/' + bridge.bridgeUserId +
+    var address = bridge.url + '/api/' + bridge.bridgeKey +
      '/lights/' + req.params.lightId;
     superAgent
     .get(address)
@@ -151,7 +151,7 @@ lightRouter.get('/light/reset/:lightId', jwtAuth, (req, res) => {
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
-    var address = 'http://' + bridge.ip + '/api/' + bridge.bridgeUserId +
+    var address = bridge.url + '/api/' + bridge.bridgeKey +
      '/lights/' + req.params.lightId + '/state';
      Light.findOne({ bridgeLightId: req.params.lightId }, (err, light) => {
        if (err) return console.log(err);

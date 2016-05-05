@@ -2,7 +2,6 @@ const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const mocha = require('gulp-mocha');
 
-// initial app directories, will need to add more as repo expands
 var appFiles = ['*.js', './lib/**/*.js', './routes/**/*.js', './models/**/*.js'];
 var testFiles = ['./test/**/*.js'];
 
@@ -25,9 +24,5 @@ gulp.task('lint:appFiles', () => {
 
 gulp.task('test', ['test:mocha']);
 gulp.task('lint', ['lint:testFiles', 'lint:appFiles']);
-gulp.task('watch', () => {
-  gulp.watch(testFiles, ['test:mocha', 'lint:testFiles']);
-  gulp.watch(appFiles, ['test:mocha', 'lint:appFiles']);
-});
 
-gulp.task('default', ['watch', 'lint', 'test']);
+gulp.task('default', ['lint', 'test']);

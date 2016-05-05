@@ -39,8 +39,8 @@ describe('the bridge post', () => {
   before((done) => {
     var newBridge = new Bridge({
       name: 'bridge test name',
-      ip: '192.0.0.0',
-      bridgeUserId: 'afdfafdfafdfadf',
+      url: '192.0.0.0',
+      bridgeKey: 'afdfafdfafdfadf',
       admin: this.user._id
     });
     newBridge.save((err, bridge) => {
@@ -55,13 +55,13 @@ describe('the bridge post', () => {
       .post('/api/light/create')
       .set('token', this.token)
       .send({
-        lightName: 'slothlight',
+        name: 'slothlight',
         bridgeLightId: '3',
         groups: 'livingroom,kitchen'
       })
       .end((err, res) => {
         expect(err).to.eql(null);
-        expect(res.body.lightName).to.eql('slothlight');
+        expect(res.body.name).to.eql('slothlight');
         expect(res.body.groups).to.eql([ 'livingroom', 'kitchen' ]);
         expect(res.body.bridgeId).to.eql(this.bridge._id.toString());
         done();
@@ -71,7 +71,7 @@ describe('the bridge post', () => {
   describe('routes that need a light', () => {
     beforeEach((done) => {
       var newLight = new Light({
-        lightName: 'test',
+        name: 'test',
         bridgeId: this.bridge._id,
         bridgeLightId: '1'
       });
@@ -87,7 +87,7 @@ describe('the bridge post', () => {
         .put('/api/light/update/' + this.light.bridgeLightId)
         .set('token', this.token)
         .send({
-          lightName: 'not test',
+          name: 'not test',
           groups: 'bathroom'
         })
         .end((err, res) => {

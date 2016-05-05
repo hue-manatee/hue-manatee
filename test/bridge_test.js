@@ -37,15 +37,15 @@ describe('the bridge post', () => {
     .set('token', this.token)
     .send({
       name: 'test testerson',
-      ip: '192.168.2.2',
-      bridgeUserId: 'afdfafdfafdfadf'
+      url: '192.168.2.2',
+      bridgeKey: 'afdfafdfafdfadf'
     })
     .end((err, res) => {
       expect(err).to.eql(null);
       expect(res.body.admin).to.eql(this.user._id.toString());
       expect(res.body.name).to.eql('test testerson');
-      expect(res.body.ip).to.eql('192.168.2.2');
-      expect(res.body.bridgeUserId).to.eql('afdfafdfafdfadf');
+      expect(res.body.url).to.eql('192.168.2.2');
+      expect(res.body.bridgeKey).to.eql('afdfafdfafdfadf');
       done();
     });
   });
@@ -76,8 +76,8 @@ describe('the bridge get requests', () => {
   beforeEach((done) => {
     var newBridge = new Bridge({
       name: 'bridge test name',
-      ip: '192.0.0.0',
-      bridgeUserId: 'afdfafdfafdfadf',
+      url: '192.0.0.0',
+      bridgeKey: 'afdfafdfafdfadf',
       admin: this.user._id
     });
     newBridge.save((err, bridge) => {
@@ -94,7 +94,7 @@ describe('the bridge get requests', () => {
   });
   it('should show appropriate errors for an unconnected bridge', (done) => {
     request('localhost:' + port)
-    .get('/api/bridge/status/' + this.bridge.bridgeUserId)
+    .get('/api/bridge/status/' + this.bridge.bridgeKey)
     .set('token', this.token)
     .end((err, res) => {
       expect(err.toString()).to.eql('Error: Request Timeout');
@@ -105,12 +105,12 @@ describe('the bridge get requests', () => {
   });
   it('should update the bridge on a put command', (done) => {
     request('localhost:' + port)
-    .put('/api/bridge/update/' + this.bridge._id)
+    .put('/api/bridge/update/' + this.bridge.bridgeKey)
     .set('token', this.token)
     .send({
       name: 'updated bridge',
-      ip: 'updated ip',
-      bridgeUserId: 'diff user id'
+      url: 'updated ip',
+      bridgeKey: 'diff user id'
     })
     .end((err, res) => {
       expect(err).to.eql(null);
