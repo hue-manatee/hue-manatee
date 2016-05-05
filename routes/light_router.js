@@ -9,17 +9,11 @@ const hexToHue = require(__dirname + '/../lib/hex_to_hue');
 const lightRouter = module.exports = exports = Router();
 
 lightRouter.post('/light/create', jwtAuth, bodyParser, (req, res) => {
-  var newLight = new Light({
-    bridgeLightId: req.body.bridgeLightId,
-    state: req.body.state,
-    sat: req.body.sat,
-    bri: req.body.bri,
-    hue: req.body.hue,
-    name: req.body.name,
-    groups: []
-  });
+  var newLight = new Light(req.body);
   if (req.body.groups) {
-    var groupArr = req.body.groups.split(',');
+    newLight.groups = [];
+    var groups = req.body.groups;
+    var groupArr = groups.split(',');
     groupArr.forEach((ele) => {
       newLight.groups.push(ele);
     });
