@@ -27,6 +27,8 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
   if (req.query.sat) lightObj.sat = parseInt(req.query.sat, 10);
   if (req.query.bri) lightObj.bri = parseInt(req.query.bri, 10);
   if (req.query.on) lightObj.on = Boolean(req.query.on);
+  if (req.query.effect) lightObj.effect = req.query.effect;
+  if (req.query.alert) lightObj.alert = req.query.alert;
   if (req.query.lightId) lightObj.lightId = req.query.lightId;
   if (req.query.red || req.query.green || req.query.blue) {
     var hueObj = rgbToHue(req.query.red || 0, req.query.green || 0, req.query.blue || 0);
@@ -43,7 +45,8 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
      '/lights/' + lightObj.lightId + '/state';
     superAgent
     .put(address)
-    .send({ 'on': lightObj.on, 'sat': lightObj.sat, 'bri': lightObj.bri, 'hue': lightObj.hue })
+    .send({ 'on': lightObj.on, 'sat': lightObj.sat, 'bri': lightObj.bri, 'hue': lightObj.hue,
+      'effect': lightObj.effect, 'alert': lightObj.alert })
     .timeout(1000)
     .end((err, superRes) => {
       if (err && err.timeout) return res.status(408).json({ msg: 'ip address not found' });

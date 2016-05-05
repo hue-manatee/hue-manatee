@@ -166,6 +166,8 @@ This this request grabs light number 3, turns the hue to red (0) and the brightn
 * red (0 - 255, rgb red value)
 * green (0 - 255, rgb green value)
 * blue (0 - 255, rgb blue value)
+* effect (colorloop, infinite looping of colors)
+* alert (select(single flash) or lselect (loop flash), of the current color)
 
 Please note that the presence of an red, green, blue, or hex value will supersede the hue/sat values if both are passed.
 
