@@ -82,7 +82,6 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
         if (!light.length) return res.status(408).json({ msg: 'no matching lights' });
         var superResponse = {};
         superResponse.count = 0;
-        superResponse.noError = true;
         light.forEach((ele) => {
           var groupAddress = 'http://' + lightObj.ip + '/api/' + lightObj.bridgeUserId +
           '/lights/' + ele.bridgeLightId + '/state';
