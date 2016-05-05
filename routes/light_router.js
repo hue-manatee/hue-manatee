@@ -147,6 +147,23 @@ lightRouter.get('/light/status/:lightId', jwtAuth, (req, res) => {
   });
 });
 
+lightRouter.get('/light/status', jwtAuth, (req, res) => {
+  Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
+    if (!bridge) return res.status(401).json({ msg: 'not authorized' });
+    if (err) return console.log(err);
+    var address = bridge.url + '/api/' + bridge.bridgeKey +
+     '/lights';
+    superAgent
+    .get(address)
+    .timeout(1000)
+    .end((err, superRes) => {
+      if (err && err.timeout) return res.status(408).json({ msg: 'ip address not found' });
+      if (err) return console.log('this was an error', err);
+      res.status(200).json(JSON.parse(superRes.text));
+    });
+  });
+});
+
 lightRouter.get('/light/reset/:lightId', jwtAuth, (req, res) => {
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
@@ -157,7 +174,8 @@ lightRouter.get('/light/reset/:lightId', jwtAuth, (req, res) => {
        if (err) return console.log(err);
        superAgent
        .put(address)
-       .send({ 'on': light.state, 'sat': light.sat, 'bri': light.bri, 'hue': light.hue })
+       .send({ 'on': light.state, 'sat': light.sat, 'bri': light.bri,
+       'hue': light.hue, 'effect': light.effect, 'alert': light.alert })
        .timeout(1000)
        .end((err, superRes) => {
          if (err && err.timeout) return res.status(408).json({ msg: 'ip address not found' });
