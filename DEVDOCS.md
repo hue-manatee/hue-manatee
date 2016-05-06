@@ -151,7 +151,7 @@ http://localhost:PORT/api/bridge/status/_Your_bridgeKey_Here_
 ```
 The httpie call would look like this:
 ```
-http http://localhost:PORT/api/bridge/status/_Your_bridgeKey_Here_ token:_unique_token_here_
+http GET http://localhost:PORT/api/bridge/status/_Your_bridgeKey_Here_ token:_unique_token_here_
 ```
 You can also update your bridge by sending a PUT request to
 ```
@@ -159,7 +159,7 @@ http://localhost:PORT/api/bridge/update/_Your_bridgeKey_Here_
 ```
 The httpie call would look like this:
 ```
-http http://localhost:PORT/api/bridge/update/_Your_bridgeKey_Here_ token:_unique_token_here_ name="new name here" url="new bridge ip here"
+http PUT http://localhost:PORT/api/bridge/update/_Your_bridgeKey_Here_ token:_unique_token_here_ name="new name here" url="new bridge ip here"
 ```
 
 ## Add Your Lights
@@ -189,7 +189,7 @@ http://localhost:PORT/api/light/status/_Your_lightId_Here_
 ```
 The httpie call would look like this:
 ```
-http http://localhost:PORT/api/light/status/_Your_lightId_Here_ token:_unique_token_here_
+http GET http://localhost:PORT/api/light/status/_Your_lightId_Here_ token:_unique_token_here_
 ```
 You can also update a light by sending a PUT request to
 ```
@@ -197,7 +197,7 @@ http://localhost:PORT/api/light/update_Your_lightId_Here_
 ```
 The httpie call would look like this:
 ```
-http http://localhost:PORT/api/light/update_Your_lightId_Here_ token:_unique_token_here_ name="new name here"
+http PUT http://localhost:PORT/api/light/update_Your_lightId_Here_ token:_unique_token_here_ name="new name here"
 ```
 
 ## Routes
@@ -258,12 +258,10 @@ Please note that the presence of an red, green, blue, or hex value will supersed
 ### Reset Light to default
 
 When you create or update a light you can set it's default: state, bri, hue, sat. By visiting the reset route the target light will return to whatever the default was upon creation. If you didn't set a default one was generated for you.
-
 ```
 http://localhost:PORT/api/light/reset/_Your_lightId_Here_
 ```
-
-example
+An httpie example would look like:
 ```
-http://localhost:PORT/api/light/reset/3 token:_unique_token_here_
+http GET http://localhost:PORT/api/light/reset/3 token:_unique_token_here_
 ```

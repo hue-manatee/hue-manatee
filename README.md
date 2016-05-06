@@ -94,7 +94,7 @@ https://hue-manatee.herokuapp.com/api/bridge/status/_Your_bridgeKey_Here_
 ```
 The httpie call would look like this:
 ```
-http https://hue-manatee.herokuapp.com/api/bridge/status_Your_bridgeKey_Here_ token:"unique token here"
+http GET https://hue-manatee.herokuapp.com/api/bridge/status_Your_bridgeKey_Here_ token:"unique token here"
 ```
 You can also update your bridge by sending a PUT request to
 ```
@@ -102,7 +102,7 @@ https://hue-manatee.herokuapp.com/api/bridge/update/_Your_bridgeKey_Here_
 ```
 The httpie call would look like this:
 ```
-http https://hue-manatee.herokuapp.com/api/bridge/update/_Your_bridgeKey_Here_ token:"unique token here" name="new name here" url="new ngrok url"
+http PUT https://hue-manatee.herokuapp.com/api/bridge/update/_Your_bridgeKey_Here_ token:"unique token here" name="new name here" url="new ngrok url"
 ```
 
 ## Add Your Lights
@@ -132,7 +132,7 @@ https://hue-manatee.herokuapp.com/api/light/status/_Your_lightId_Here_
 ```
 The httpie call would look like this:
 ```
-http https://hue-manatee.herokuapp.com/api/light/status/_Your_lightId_Here_ token:"unique token here"
+http GET https://hue-manatee.herokuapp.com/api/light/status/_Your_lightId_Here_ token:"unique token here"
 ```
 You can also update a light by sending a PUT request to
 ```
@@ -140,7 +140,7 @@ https://hue-manatee.herokuapp.com/api/light/update/_Your_lightId_Here_
 ```
 The httpie call would look like this:
 ```
-http https://hue-manatee.herokuapp.com/api/light/update/_Your_lightId_Here_ token:"unique token here" name="new name here"
+http PUT https://hue-manatee.herokuapp.com/api/light/update/_Your_lightId_Here_ token:"unique token here" name="new name here"
 ```
 
 ## Routes
@@ -201,11 +201,9 @@ Please note that the presence of an red, green, blue, or hex value will supersed
 ### Reset Light to default
 
 When you create or update a light you can set it's default: state, bri, hue, sat. By visiting the reset route the target light will return to whatever the default was upon creation. If you didn't set a default one was generated for you.
-
 ```
 https://hue-manatee.herokuapp.com/api/light/reset/_Your_lightId_Here_
 ```
-
 example
 ```
 http GET https://hue-manatee.herokuapp.com/api/light/reset/3 token:_unique_token_here_
