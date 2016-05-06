@@ -15,11 +15,9 @@ describe('the bridge post', () => {
   before((done) => {
     setup(done);
   });
-
   after((done) => {
     teardown(done);
   });
-
   before((done) => {
     var newUser = new User({
       username: 'awesomeUser',
@@ -35,7 +33,6 @@ describe('the bridge post', () => {
       });
     });
   });
-
   before((done) => {
     var newBridge = new Bridge({
       name: 'bridge test name',
@@ -49,25 +46,23 @@ describe('the bridge post', () => {
       done();
     });
   });
-
   it('should create a light', (done) => {
     request('localhost:' + port)
-      .post('/api/light/create')
-      .set('token', this.token)
-      .send({
-        name: 'slothlight',
-        bridgeLightId: '3',
-        groups: 'livingroom,kitchen'
-      })
-      .end((err, res) => {
-        expect(err).to.eql(null);
-        expect(res.body.name).to.eql('slothlight');
-        expect(res.body.groups).to.eql([ 'livingroom', 'kitchen' ]);
-        expect(res.body.bridgeId).to.eql(this.bridge._id.toString());
-        done();
-      });
+    .post('/api/light/create')
+    .set('token', this.token)
+    .send({
+      name: 'slothlight',
+      bridgeLightId: '3',
+      groups: 'livingroom,kitchen'
+    })
+    .end((err, res) => {
+      expect(err).to.eql(null);
+      expect(res.body.name).to.eql('slothlight');
+      expect(res.body.groups).to.eql([ 'livingroom', 'kitchen' ]);
+      expect(res.body.bridgeId).to.eql(this.bridge._id.toString());
+      done();
+    });
   });
-
   describe('routes that need a light', () => {
     beforeEach((done) => {
       var newLight = new Light({
@@ -81,51 +76,48 @@ describe('the bridge post', () => {
         done();
       });
     });
-
     it('should PUT an update into the light', (done) => {
       request('localhost:' + port)
-        .put('/api/light/update/' + this.light.bridgeLightId)
-        .set('token', this.token)
-        .send({
-          name: 'not test',
-          groups: 'bathroom'
-        })
-        .end((err, res) => {
-          expect(err).to.eql(null);
-          expect(res).to.have.status(200);
-          expect(res.body.n).to.eql(1);
-          done();
-        });
+      .put('/api/light/update/' + this.light.bridgeLightId)
+      .set('token', this.token)
+      .send({
+        name: 'not test',
+        groups: 'bathroom'
+      })
+      .end((err, res) => {
+        expect(err).to.eql(null);
+        expect(res).to.have.status(200);
+        expect(res.body.n).to.eql(1);
+        done();
+      });
     });
-
     it('should attempt to send a GET to the bridge', (done) => {
       request('localhost:' + port)
-        .get('/api/light/magic')
-        .set('token', this.token)
-        .end((err) => {
-          expect(err.response.body.msg).to.eql('ip address not found');
-          done();
-        });
+      .get('/api/light/magic')
+      .set('token', this.token)
+      .end((err) => {
+        expect(err.response.body.msg).to.eql('ip address not found');
+        done();
+      });
     });
-
     it('should attempt to GET status of a single light', (done) => {
       request('localhost:' + port)
-        .get('/api/light/status/' + this.light._id)
-        .set('token', this.token)
-        .end((err) => {
-          expect(err.response.body.msg).to.eql('ip address not found');
-          done();
-        });
+      .get('/api/light/status/' + this.light._id)
+      .set('token', this.token)
+      .end((err) => {
+        expect(err.response.body.msg).to.eql('ip address not found');
+        done();
+      });
     });
     it('should attempt to send a GET to reset the light', (done) => {
       request('localhost:' + port)
-        .get('/api/light/reset/3')
-        .set('token', this.token)
-        .end((err, res) => {
-          expect(res).to.have.status(408);
-          expect(err.response.body.msg).to.eql('ip address not found');
-          done();
-        });
+      .get('/api/light/reset/3')
+      .set('token', this.token)
+      .end((err, res) => {
+        expect(res).to.have.status(408);
+        expect(err.response.body.msg).to.eql('ip address not found');
+        done();
+      });
     });
   });
 });

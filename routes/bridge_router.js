@@ -20,14 +20,15 @@ bridgeRouter.get('/bridge/status/:bridgeKey', jwtAuth, (req, res) => {
   Bridge.findOne({ bridgeKey: req.params.bridgeKey, admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
+
     superAgent
-      .get(bridge.url + '/api/' + bridge.bridgeKey + '/lights')
-      .timeout(1800)
-      .end((err, superRes) => {
-        if (err && err.timeout) return res.status(408).json({ msg: 'too slow bro' });
-        if (err) return console.log(err);
-        res.status(200).json(JSON.parse(superRes.text));
-      });
+    .get(bridge.url + '/api/' + bridge.bridgeKey + '/lights')
+    .timeout(1800)
+    .end((err, superRes) => {
+      if (err && err.timeout) return res.status(408).json({ msg: 'too slow bro' });
+      if (err) return console.log(err);
+      res.status(200).json(JSON.parse(superRes.text));
+    });
   });
 });
 
