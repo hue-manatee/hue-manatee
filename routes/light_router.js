@@ -39,7 +39,7 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
   if (req.query.hue) lightObj.hue = parseInt(req.query.hue, 10);
   if (req.query.sat) lightObj.sat = parseInt(req.query.sat, 10);
   if (req.query.bri) lightObj.bri = parseInt(req.query.bri, 10);
-  if (req.query.on) lightObj.on = Boolean(req.query.on);
+  if (req.query.on) lightObj.on = req.query.on === 'true';
   if (req.query.effect) lightObj.effect = req.query.effect;
   if (req.query.alert) lightObj.alert = req.query.alert;
   if (req.query.lightId) lightObj.lightId = req.query.lightId;
