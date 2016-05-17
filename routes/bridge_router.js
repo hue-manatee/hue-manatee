@@ -38,8 +38,8 @@ bridgeRouter.put('/bridge/update/:bridgeKey', jwtAuth, bodyParser, (req, res) =>
 
   Bridge.update({ bridgeKey: req.params.bridgeKey, admin: req.user._id },
     bridgeData, (err, data) => {
-    if (!data) return res.status(401).json({ msg: 'not authorized' });
-    if (err) console.log(err);
-    res.status(200).json(data);
-  });
+      if (!data) return res.status(401).json({ msg: 'not authorized' });
+      if (err) console.log(err);
+      res.status(200).json(data);
+    });
 });

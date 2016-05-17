@@ -72,6 +72,10 @@ You need to npm install dependencies and create a folder for your database.
 ```
 npm install
 ```
+Hue-manatee utilizes authentication that pulls a secret element you define from your local system.  You will need to set an environment variable (in your .bash_profile or equivalent).  You can also set the secret on your specific bash instance by setting it in the terminal before running the app, but that will only be accessible by that specific bash instance.
+```
+APP-SECRET=_my_unique_super_secret_thing_
+```
 You need to use mongod to run this application. Please refer to documentation for installation and use [mongod documentation](https://docs.mongodb.org/manual/reference/program/mongod/)
 ```
 mongod --dbpath=./db
