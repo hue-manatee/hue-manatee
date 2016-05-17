@@ -6,7 +6,7 @@ const request = chai.request;
 const setup = require(__dirname + '/test_setup');
 const teardown = require(__dirname + '/test_teardown');
 const port = process.env.PORT = 5000;
-var User = require(__dirname + '/../models/user');
+const User = require(__dirname + '/../models/user');
 
 describe('the login route tests', () => {
   before((done) => {
