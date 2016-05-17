@@ -72,6 +72,11 @@ You need to npm install dependencies and create a folder for your database.
 ```
 npm install
 ```
+Update your .bash_profile. Our authentication looks for a process.env variable of APP_SECRET, set this in your .bash_profile or wherever your process.env variables are stored.
+```
+APP_SECRET=somesecretstring
+```
+
 You need to use mongod to run this application. Please refer to documentation for installation and use [mongod documentation](https://docs.mongodb.org/manual/reference/program/mongod/)
 ```
 mongod --dbpath=./db
