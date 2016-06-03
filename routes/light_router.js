@@ -26,9 +26,16 @@ lightRouter.post('/light/create', jwtAuth, bodyParser, (req, res) => {
     newLight.bridgeId = bridge._id;
   });
 
+  Light.findOne({ bridgeLightId: req.body.bridgeLightId }, (error, light) => {
+    if (error) return console.log(error);
+    if (light) {
+    return res.status(405)
+    .json({ msg: 'Light with ID of ' + light.bridgeLightId + ' already exists' });
+  }
   newLight.save((err, data) => {
     if (err) return console.log(err);
-    res.status(200).json(data);
+    return res.status(200).json(data);
+  });
   });
 });
 
