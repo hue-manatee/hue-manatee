@@ -60,7 +60,7 @@ gulp.task('sass:dev', () => {
     .pipe(sass().on('error', sass.logError))
     .pipe(minifyCss())
     .pipe(maps.write())
-    .pipe(gulp.dest('./appgit/css'));
+    .pipe(gulp.dest('./app/css'));
 });
 
 gulp.task('sass:watch', ['sass:dev'], () => {
