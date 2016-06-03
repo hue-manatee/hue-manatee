@@ -1,8 +1,12 @@
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const mocha = require('gulp-mocha');
+const cp = require('child_process');
 const webpack = require('webpack-stream');
-
+const sass = require('gulp-sass');
+const maps = require('gulp-sourcemaps');
+const minifyCss = require('gulp-minify-css');
+var children = [];
 var appFiles = ['*.js', './lib/**/*.js', './routes/**/*.js', './models/**/*.js'];
 var testFiles = ['./test/**/*.js'];
 
@@ -48,6 +52,27 @@ gulp.task('lint:appFiles', () => {
   return gulp.src(appFiles)
     .pipe(eslint())
     .pipe(eslint.format());
+});
+
+gulp.task('sass:dev', () => {
+  return gulp.src('app/sass/**/*.scss')
+    .pipe(maps.init())
+    .pipe(sass().on('error', sass.logError))
+    .pipe(minifyCss())
+    .pipe(maps.write())
+    .pipe(gulp.dest('./appgit/css'));
+});
+
+gulp.task('sass:watch', ['sass:dev'], () => {
+  gulp.watch('./app/sass/**/*.scss');
+});
+
+gulp.task('start:server', () => {
+  children.push(cp.fork('server.js'));
+  children.push(cp.spawn('mongod', ['--dbpath=./db']));
+  children.push(cp.fork('app_server.js', [], { env: {
+    MONGODB_URI: 'mongodb://localhost/hue_test_db' } }));
+  children.push(cp.spawn('webdriver-manager', ['start']));
 });
 
 gulp.task('build:dev', ['webpack:dev', 'static:dev']);
