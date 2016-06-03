@@ -11,7 +11,9 @@ app.use('/api', authRouter);
 app.use('/api', bridgeRouter);
 app.use('/api', lightRouter);
 
+app.use(express.static(__dirname + '/build'));
 app.use((req, res) => {
   res.status(404).send('Page not found!');
 });
+
 module.exports = app.listen(PORT, () => console.log('server up on port:' + PORT));
