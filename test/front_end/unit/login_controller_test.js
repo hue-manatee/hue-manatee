@@ -32,7 +32,6 @@ it('It should login a user', () => {
   loginController.user = { username: '', password: '' };
   loginController.user.password = 'TestPassword123';
   loginController.user.username = 'TestUser';
-  console.log(loginController.user);
   loginController.authenticate(loginController.user);
   $httpBackend.flush();
   expect(window.localStorage.token).toBe('testResponse');
