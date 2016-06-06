@@ -2,7 +2,7 @@ const angular = require('angular');
 const hueApp = angular.module('hueApp', [require('angular-route')]);
 
 require('./controllers')(hueApp);
-// require('./directives')(hueApp);
+require('./directives')(hueApp);
 require('./services')(hueApp);
 
 hueApp.config(['$routeProvider', function($routing) {
@@ -21,8 +21,10 @@ hueApp.config(['$routeProvider', function($routing) {
     .when('/all', {
       templateUrl: 'templates/views/all_lights_view.html'
     })
-    .when('/light', {
-      templateUrl: 'templates/views/light_view.html'
+    .when('/light/:id', {
+      templateUrl: 'templates/views/light_view.html',
+      controller: 'LightController',
+      controllerAs: 'lightCtrl'
     })
     .when('/logout', {
       templateUrl: 'templates/views/auth/logout_view.html',
