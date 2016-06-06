@@ -22,14 +22,14 @@ gulp.task('webpack:dev', () => {
 });
 
 gulp.task('webpack:test', () => {
-  gulp.src('test/unit/test_entry.js')
+  gulp.src('./test/front_end/unit/test_entry.js')
    .pipe(webpack({
      devtool: 'source-map',
      output: {
        filename: 'bundle.js'
      }
    }))
-    .pipe(gulp.dest('./build'));
+    .pipe(gulp.dest('./test'));
 });
 
 gulp.task('static:dev', ['webpack:dev'], () => {

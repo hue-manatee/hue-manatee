@@ -6,7 +6,7 @@ describe('Signup Controller test', function() {
 
   beforeEach(angular.mock.module('hueApp'));
 
-  beforeEach(anguar.mock.inject(function(_$controller_) {
+  beforeEach(angular.mock.inject(function(_$controller_) {
     $controller = _$controller_;
   }));
 
