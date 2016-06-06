@@ -21,17 +21,24 @@ describe('Signup Controller test', function() {
     $httpBackend.verifyNoOutstandingRequest();
   });
 
-  it('should be a controller', function() {
+  it('should be a controller', () => {
     expect(typeof signupController).toBe('object');
     expect(typeof signupController.authenticate).toBe('function');
   });
 
-  it('should create a user', function() {
+  it('should create a user', () => {
     $httpBackend.expectPOST('/api/signup', {
       username: 'TestMcgee', password: 'SuperTest1'
     }).respond(200, { token: 'this is a tolkien' });
     signupController.authenticate({ username: 'TestMcgee', password: 'SuperTest1' } );
     $httpBackend.flush();
     expect(window.localStorage.token).toBe('this is a tolkien');
+  });
+
+  it('should confirm passwords are the same', () => {
+    signupController.user = { password: '' };
+    signupController.user.password = 'MostSecurePassword';
+    signupController.confirm('MostSecurePassword');
+    expect(signupController.invalid).toBe(false);
   });
 });
