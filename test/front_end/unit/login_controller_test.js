@@ -21,21 +21,19 @@ describe('LoginController Test', () => {
     $httpBackend.verifyNoOutstandingRequest();
   });
 
-it('should be a controller', () => {
-  expect(typeof loginController).toBe('object');
-  expect(typeof loginController.authenticate).toBe('function');
-});
+  it('should be a controller', () => {
+    expect(typeof loginController).toBe('object');
+    expect(typeof loginController.authenticate).toBe('function');
+  });
 
-it('It should login a user', () => {
-  $httpBackend.expectGET('api/login')
-  .respond(200, { token: 'testResponse' });
-  loginController.user = { username: '', password: '' };
-  loginController.user.password = 'TestPassword123';
-  loginController.user.username = 'TestUser';
-  console.log(loginController.user);
-  loginController.authenticate(loginController.user);
-  $httpBackend.flush();
-  expect(window.localStorage.token).toBe('testResponse');
-});
-
+  it('It should login a user', () => {
+    $httpBackend.expectGET('api/login')
+    .respond(200, { token: 'testResponse' });
+    loginController.user = { username: '', password: '' };
+    loginController.user.password = 'TestPassword123';
+    loginController.user.username = 'TestUser';
+    loginController.authenticate(loginController.user);
+    $httpBackend.flush();
+    expect(window.localStorage.token).toBe('testResponse');
+  });
 });
