@@ -1,17 +1,17 @@
 var angular = require('angular');
 
-describe('Signup Controller test', function() {
+describe('Signup Controller test', () => {
   var $httpBackend;
   var $controller;
   var signupController;
 
   beforeEach(angular.mock.module('hueApp'));
 
-  beforeEach(angular.mock.inject(function(_$controller_) {
+  beforeEach(angular.mock.inject((_$controller_) => {
     $controller = _$controller_;
   }));
 
-  beforeEach(angular.mock.inject(function(_$httpBackend_) {
+  beforeEach(angular.mock.inject((_$httpBackend_) => {
     $httpBackend = _$httpBackend_;
     signupController = $controller('SignUpController');
   }));
