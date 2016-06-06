@@ -8,12 +8,12 @@
     <label for="password">Password:</label>
     <input name="password" type="password" required data-ng-model="authCtrl.user.password">
 
-    <label for="confirmation">Confirm Password:</label>
-    <input name="confirmation" required type="password" data-ng-keyup="authCtrl.confirm(authCtrl.user.confirmation)" data-ng-model="authCtrl.user.confirmation">
+    <label data-ng-if="authCtrl.signup" for="confirmation">Confirm Password:</label>
+    <input data-ng-if="authCtrl.signup" name="confirmation" required type="password" data-ng-keyup="authCtrl.confirm(authCtrl.user.confirmation)" data-ng-model="authCtrl.user.confirmation">
 
     <button type="submit" name="button" data-ng-model="button" data-ng-disabled="authCtrl.invalid">{{authCtrl.buttonText}}</button>
-    <p>{{authCtrl.signup ? "Don't have an account, ":"Already have an account, "}}
-      <a href="/#/{{authCtrl.signup ? 'signup':'login'}}">{{authCtrl.signup ? "Create Account":"Login"}}</a>
+    <p>{{authCtrl.signup ? "Already have an account, ":"Don't have an account, "}}
+      <a href="/#/{{authCtrl.signup ? 'login':'signup'}}">{{authCtrl.signup ? "Login":"Create Account"}}</a>
     </p>
   </form>
 </section>
