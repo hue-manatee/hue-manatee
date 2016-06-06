@@ -15,8 +15,8 @@ module.exports = function(app) {
           $http.defaults.headers.common.token = res.data.token;
           window.localStorage.token = res.data.token;
           $location.path('/dashboard');
-        }, () => {
-          console.log('failed signup');
+        }, (reason) => {
+          console.log(reason.data.msg);
         });
     };
   }]);
