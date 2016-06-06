@@ -1,7 +1,9 @@
 module.exports = function(app) {
-  app.controller('SignUpController', ['$http', '$location', function($http, $location) {
+  app.controller('SignUpController', ['$http', '$location', 'hueHandleError',
+  function($http, $location, hueHandleError) {
     this.signup = true;
     this.invalid = true;
+    this.errors = [];
     this.buttonText = 'Create Account';
     this.confirm = function(password) {
       if (this.user.password === password && password) {
@@ -15,9 +17,9 @@ module.exports = function(app) {
           $http.defaults.headers.common.token = res.data.token;
           window.localStorage.token = res.data.token;
           $location.path('/dashboard');
-        }, (reason) => {
-          console.log(reason.data.msg);
-        });
+        },
+          hueHandleError(this.errors, 'Cannot Create Account')
+        );
     };
   }]);
 };

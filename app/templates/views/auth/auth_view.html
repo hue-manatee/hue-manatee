@@ -1,5 +1,5 @@
 <section>
-  <h1>SIGNUP/LOGIN BRO</h1>
+  <h1>{{authCtrl.signup ? "Create Account":"Login"}}</h1>
 
   <form data-ng-submit="authCtrl.authenticate(authCtrl.user)">
     <label for="username">Username:</label>
@@ -12,5 +12,8 @@
     <input name="confirmation" required type="password" data-ng-keyup="authCtrl.confirm(authCtrl.user.confirmation)" data-ng-model="authCtrl.user.confirmation">
 
     <button type="submit" name="button" data-ng-model="button" data-ng-disabled="authCtrl.invalid">{{authCtrl.buttonText}}</button>
+    <p>{{authCtrl.signup ? "Don't have an account, ":"Already have an account, "}}
+      <a href="/#/{{authCtrl.signup ? 'signup':'login'}}">{{authCtrl.signup ? "Create Account":"Login"}}</a>
+    </p>
   </form>
 </section>

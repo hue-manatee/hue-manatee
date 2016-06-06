@@ -1,5 +1,6 @@
 module.exports = function(app) {
-  app.controller('LoginController', ['$http', '$location', function($http, $location) {
+  app.controller('LoginController', ['$http', '$location', 'hueHandleError',
+  function($http, $location, hueHandleError) {
     this.buttonText = 'Login';
     this.invalid = false;
     this.errors = [];
@@ -15,9 +16,9 @@ module.exports = function(app) {
         $http.defaults.headers.common.token = res.data.token;
         window.localStorage.token = res.data.token;
         $location.path('/dashboard');
-      }, function(reason) {
-        console.log(reason);
-      });
+      },
+        hueHandleError(this.errors, 'Cannot Login')
+      );
     };
   }]);
 };
