@@ -8,7 +8,9 @@ require('./services')(hueApp);
 hueApp.config(['$routeProvider', function($routing) {
   $routing
     .when('/dashboard', {
-      templateUrl: 'templates/views/dashboard_view.html'
+      templateUrl: 'templates/views/dashboard_view.html',
+      controller: 'DashboardController',
+      controllerAs: 'dashCtrl'
     })
     .when('/bridge', {
       templateUrl: 'templates/views/bridge_view.html'
@@ -21,6 +23,11 @@ hueApp.config(['$routeProvider', function($routing) {
     })
     .when('/light', {
       templateUrl: 'templates/views/light_view.html'
+    })
+    .when('/logout', {
+      templateUrl: 'templates/views/auth/logout_view.html',
+      controller: 'LogoutController',
+      controllerAs: 'authCtrl'
     })
     .when('/signup', {
       templateUrl: 'templates/views/auth/auth_view.html',
