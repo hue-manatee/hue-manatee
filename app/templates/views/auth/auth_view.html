@@ -1,16 +1,16 @@
 <section>
   <h1>SIGNUP/LOGIN BRO</h1>
 
-  <form>
+  <form data-ng-submit="authCtrl.authenticate(authCtrl.user)">
     <label for="username">Username:</label>
-    <input type="text">
+    <input name="username" type="text" required data-ng-model="authCtrl.user.username">
 
     <label for="password">Password:</label>
-    <input type="password">
+    <input name="password" type="password" required data-ng-model="authCtrl.user.password">
 
-    <label for="confirmation">Confirmation:</label>
-    <input required type="password">
+    <label for="confirmation">Confirm Password:</label>
+    <input name="confirmation" required type="password" data-ng-keyup="authCtrl.confirm(authCtrl.user.confirmation)" data-ng-model="authCtrl.user.confirmation">
 
-    <button type="submit" name="button">SUBMIT</button>
+    <button type="submit" name="button" data-ng-model="button" data-ng-disabled="authCtrl.invalid">{{authCtrl.buttonText}}</button>
   </form>
 </section>
