@@ -25,7 +25,7 @@ hueApp.config(['$routeProvider', function($routing) {
     .when('/signup', {
       templateUrl: 'templates/views/auth/auth_view.html',
       controller: 'SignUpController',
-      controllerAs:'authCtrl'
+      controllerAs: 'authCtrl'
     })
     .when('/login', {
       templateUrl: 'templates/views/auth/auth_view.html'
