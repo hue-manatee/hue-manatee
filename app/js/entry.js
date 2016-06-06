@@ -1,7 +1,7 @@
 const angular = require('angular');
 const hueApp = angular.module('hueApp', [require('angular-route')]);
 
-// require('./controllers')(hueApp);
+require('./controllers')(hueApp);
 // require('./directives')(hueApp);
 // require('./services')(hueApp);
 
@@ -23,7 +23,9 @@ hueApp.config(['$routeProvider', function($routing) {
       templateUrl: 'templates/views/light_view.html'
     })
     .when('/signup', {
-      templateUrl: 'templates/views/auth/auth_view.html'
+      templateUrl: 'templates/views/auth/auth_view.html',
+      controller: 'SignUpController',
+      controllerAs: 'authCtrl'
     })
     .when('/login', {
       templateUrl: 'templates/views/auth/auth_view.html'
