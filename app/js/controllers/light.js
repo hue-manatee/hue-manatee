@@ -1,7 +1,7 @@
 module.exports = function(app) {
   app.controller('LightController', ['$routeParams', '$http', function($routeParams, $http) {
     this.id = $routeParams.id;
-    this.update = function(target) {
+    this.update = function(target, alert) {
       $http({
         method: 'GET',
         url: '/api/light/magic',
@@ -9,7 +9,8 @@ module.exports = function(app) {
           hex: this.color,
           lightId: target,
           on: this.state,
-          bri: this.brightness
+          bri: this.brightness,
+          alert: alert
         },
         headers: {
           token: window.localStorage.token
