@@ -16,6 +16,19 @@ bridgeRouter.post('/bridge/create', jwtAuth, bodyParser, (req, res) => {
   });
 });
 
+bridgeRouter.get('/bridge/exists', jwtAuth, (req, res) => {
+  Bridge.findOne({}, (err, bridge) => {
+    if (err) return console.log(err);
+    if (!bridge) {
+      return res.status(401).json({
+      msg: 'no bridge found, please create a new bridge',
+      bridgeExists: false
+    });
+  }
+  res.status(200, bridge);
+  });
+});
+
 bridgeRouter.get('/bridge/status/:bridgeKey', jwtAuth, (req, res) => {
   Bridge.findOne({ bridgeKey: req.params.bridgeKey, admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
