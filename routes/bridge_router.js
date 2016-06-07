@@ -17,15 +17,15 @@ bridgeRouter.post('/bridge/create', jwtAuth, bodyParser, (req, res) => {
 });
 
 bridgeRouter.get('/bridge/exists', jwtAuth, (req, res) => {
-  Bridge.findOne({}, (err, bridge) => {
-    if (err) return console.log(err);
+  Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) {
       return res.status(401).json({
       msg: 'no bridge found, please create a new bridge',
       bridgeExists: false
     });
   }
-  res.status(200, bridge);
+  if (err) return console.log(err);
+  return res.status(200).json(bridge);
   });
 });
 
