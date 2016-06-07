@@ -4,7 +4,7 @@
 
   <h3>Groups</h3>
   <ul data-ng-init="lightCtrl.getGroups(lightCtrl.id)">
-    <li data-ng-repeat="group in lightCtrl.groups"><a href="/#/group">
+    <li data-ng-repeat="group in lightCtrl.groups"><a href="/#/group/{{group}}">
       {{group}}
     </a></li>
   </ul>
