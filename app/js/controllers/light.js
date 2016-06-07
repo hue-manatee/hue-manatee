@@ -22,5 +22,19 @@ module.exports = function(app) {
         console.log('fail no light change :( ', response);
       });
     };
+    this.reset = function(target) {
+      $http({
+        method: 'GET',
+        url: '/api/light/reset/' + target,
+        headers: {
+          token: window.localStorage.token
+        }
+      })
+      .then((res) => {
+        console.log('successful reset: ', res);
+      }, (response) => {
+        console.log('reset failed', response);
+      });
+    };
   }]);
 };
