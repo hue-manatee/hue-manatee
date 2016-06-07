@@ -157,6 +157,18 @@ lightRouter.get('/light/status/:lightId', jwtAuth, (req, res) => {
   });
 });
 
+lightRouter.get('/light/all', jwtAuth, (req, res) => {
+  Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
+    if (!bridge) return res.status(401).json({ msg: 'not authorized' });
+    if (err) return console.log(err);
+    Light.find({}, (err, lights) => {
+      debugger;
+      if (err) return console.log(err);
+        res.status(200).json(lights);
+      });
+  });
+});
+
 lightRouter.get('/light/status', jwtAuth, (req, res) => {
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
