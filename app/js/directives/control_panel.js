@@ -1,5 +1,5 @@
 module.exports = function(app) {
-  app.directive('controlPanel', function() {
+  app.directive('controlPanel', () => {
     return {
       restrict: 'EAC',
       require: '^ngController',

@@ -41,7 +41,6 @@
     "default-case": 1,
     "dot-notation": 1,
     "eqeqeq": 1,
-    "guard-for-in": 1,
     "no-alert": 1,
     "no-caller": 2,
     "no-div-regex": 2,
