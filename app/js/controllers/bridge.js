@@ -47,13 +47,8 @@ module.exports = function(app) {
        }
      })
       .then((res) => {
-        debugger;
         this.editing = false;
         this.bridgeExists = true;
-        this.bridge.bridgeKey = res.data.bridgeKey;
-        this.bridge.url = res.data.url;
-        this.bridge.name = res.data.name;
-        this.check();
       }, (response) => {
         console.log(response);
       });

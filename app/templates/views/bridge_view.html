@@ -6,7 +6,7 @@
   <p>
     Bridge Key: {{bridgeCtrl.bridge.bridgeKey}}
   </p>
-  <form data-ng-submit="bridgeCtrl.update()" data-ng-if="bridgeCtrl.editing || !bridgeCtrl.bridgeExists">
+  <form data-ng-submit="bridgeCtrl.bridgeExists ? bridgeCtrl.update() : bridgeCtrl.save()" data-ng-if="bridgeCtrl.editing || !bridgeCtrl.bridgeExists">
     <label for="name">Bridge Name</label>
     <input data-ng-model="bridgeCtrl.bridge.name" type="text" name="name">
 
