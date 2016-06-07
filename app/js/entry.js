@@ -22,7 +22,9 @@ hueApp.config(['$routeProvider', function($routing) {
       // TODO: Create a route and view for the group/thisgroupnamething
     })
     .when('/all', {
-      templateUrl: 'templates/views/all_lights_view.html'
+      templateUrl: 'templates/views/all_lights_view.html',
+      controller: 'AllLightsController',
+      controllerAs: 'allCtrl'
     })
     .when('/light/:id', {
       templateUrl: 'templates/views/light_view.html',
