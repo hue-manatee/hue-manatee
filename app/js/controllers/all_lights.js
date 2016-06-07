@@ -1,5 +1,5 @@
 module.exports = function(app) {
-  app.controller('AllLightsController', ['$http', '$location', function($http, $location) {
+  app.controller('AllLightsController', ['$http', '$location', function($http) {
     // this.all = [];
     this.getAll = function() {
       $http({
@@ -11,7 +11,7 @@ module.exports = function(app) {
       })
       .then((res) => {
         this.all = res.data;
-        console.log("have recieved the lights");
+        console.log('have recieved the lights');
         console.log(res.data);
       }, (response) => {
         console.log(response);
