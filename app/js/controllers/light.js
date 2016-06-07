@@ -37,5 +37,23 @@ module.exports = function(app) {
         console.log('reset failed: ', response);
       });
     };
+    this.getGroups = function(target) {
+      $http({
+        method: 'GET',
+        url: '/api/light/groups',
+        headers: {
+          token: window.localStorage.token
+        },
+        params: {
+          lightId: target
+        }
+      })
+      .then((res) => {
+        this.groups = res.data.groups;
+        console.log(this.groups);
+      }, (response) => {
+        console.log('there are no groups here:', response);
+      });
+    };
   }]);
 };
