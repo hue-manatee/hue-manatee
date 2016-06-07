@@ -12,6 +12,7 @@ module.exports = function(app) {
         scope.color = controller.color;
         scope.state = controller.state;
         scope.brightness = controller.brightness;
+        scope.reset = controller.reset;
       }
     };
   });
