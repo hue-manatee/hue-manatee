@@ -5,4 +5,5 @@ module.exports = function(app) {
   require('./dashboard')(app);
   require('./light')(app);
   require('./bridge')(app);
+  require('./all_lights')(app);
 };

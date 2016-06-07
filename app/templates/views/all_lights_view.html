@@ -1,39 +1,9 @@
-<article class="lights">
-  <section>
-    <h3>All Lights</h3>
-    <ul>
-      <li>Color Pattern</li>
-      <li>Dim</li>
-      <li>On/Off</li>
-      <li>Alert</li>
-      <li>Effect</li>
-    </ul>
-  </section>
-  <section>
-    <h4>Light 1</h4>
-    <ul>
-      <li>Color Pattern</li>
-      <li>Dim</li>
-      <li>On/Off</li>
-      <li>Details</li>
-    </ul>
-  </section>
-  <section>
-    <h4>Light 2</h4>
-    <ul>
-      <li>Color Pattern</li>
-      <li>Dim</li>
-      <li>On/Off</li>
-      <li>Details</li>
-    </ul>
-  </section>
-  <section>
-    <h4>Light 3</h4>
-    <ul>
-      <li>Color Pattern</li>
-      <li>Dim</li>
-      <li>On/Off</li>
-      <li>Details</li>
-    </ul>
-  </section>
+<article data-ng-init="allCtrl.getAll()">
+  <h2>All Lights</h2>
+  <control-panel data-target="lightCtrl.id"></control-panel>
+  <!-- <h3>{{allCtrl.all}}</h3> -->
+  <ul>
+    <li data-ng-repeat="light in allCtrl.all"><a href='/#/light/{{light.bridgeLightId}}'>{{light.bridgeLightId}}</a></li>
+  </ul>
+  <a href="/#/light/create">Add Light</a>
 </article>
