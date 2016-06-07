@@ -1,5 +1,5 @@
 module.exports = function(app) {
-  app.factory('hueHandleError', function() {
+  app.factory('hueHandleError', () => {
     return function(errorsArr, message) {
       return function(err) {
         console.log(err.data.msg);

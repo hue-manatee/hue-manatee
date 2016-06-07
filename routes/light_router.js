@@ -162,7 +162,6 @@ lightRouter.get('/light/all', jwtAuth, (req, res) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
     Light.find({}, (err, lights) => {
-      debugger;
       if (err) return console.log(err);
         res.status(200).json(lights);
       });
