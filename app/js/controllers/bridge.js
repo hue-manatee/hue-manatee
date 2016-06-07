@@ -15,19 +15,49 @@ module.exports = function(app) {
      this.editing = true;
      this.backup = copy(this.bridge);
    };
-  //  this.update = function() {
-  //    $http.post('/api/bridge/create', bridge)
-   //
-  //  }
-  //  this.save = function() {
-  //   $http({
-  //     method: 'PUT',
-  //     url: 'api/bridge???',
-  //     headers: {
-  //       token:
-  //     }
-  //   })
-  //  };
+   this.save = function() {
+     $http({
+       method: 'POST',
+       url: '/api/bridge/create',
+       dataType: 'json',
+       data: this.bridge,
+       headers: {
+         token: window.localStorage.token
+       }
+     })
+      .then((res) => {
+        this.editing = false;
+        this.bridgeExists = true;
+        this.bridge.bridgeKey = res.data.bridgeKey;
+        this.bridge.url = res.data.url;
+        this.bridge.name = res.data.name;
+      }, (response) => {
+        console.log(response);
+      });
+   };
+   this.update = function() {
+     console.log(this.bridge);
+     $http({
+       method: 'PUT',
+       url: 'api/bridge/update/' + this.bridge.bridgeKey,
+       dataType: 'json',
+       data: this.bridge,
+       headers: {
+         token: window.localStorage.token
+       }
+     })
+      .then((res) => {
+        debugger;
+        this.editing = false;
+        this.bridgeExists = true;
+        this.bridge.bridgeKey = res.data.bridgeKey;
+        this.bridge.url = res.data.url;
+        this.bridge.name = res.data.name;
+        this.check();
+      }, (response) => {
+        console.log(response);
+      });
+   };
    this.check = function() {
      $http({
        method: 'GET',
@@ -40,7 +70,7 @@ module.exports = function(app) {
        if (res.data.bridgeExists) {
          this.bridgeExists = true;
          this.bridge.bridgeKey = res.data.bridge.bridgeKey;
-         this.bridge.URL = res.data.bridge.url;
+         this.bridge.url = res.data.bridge.url;
          this.bridge.name = res.data.bridge.name;
        }
      }, (response) => {

@@ -8,7 +8,6 @@ var bridgeRouter = module.exports = exports = Router();
 
 bridgeRouter.post('/bridge/create', jwtAuth, bodyParser, (req, res) => {
   var newBridge = new Bridge(req.body);
-
   newBridge.admin = req.user._id;
   newBridge.save((err, data) => {
     if (err) return console.log(err);
@@ -50,7 +49,7 @@ bridgeRouter.get('/bridge/status/:bridgeKey', jwtAuth, (req, res) => {
 bridgeRouter.put('/bridge/update/:bridgeKey', jwtAuth, bodyParser, (req, res) => {
   var bridgeData = req.body;
   delete bridgeData._id;
-
+  console.log('Request to update bridge via' + req.body.bridgeKey);
   Bridge.update({ bridgeKey: req.params.bridgeKey, admin: req.user._id },
     bridgeData, (err, data) => {
       if (!data) return res.status(401).json({ msg: 'not authorized' });
