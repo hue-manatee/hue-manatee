@@ -13,7 +13,9 @@ hueApp.config(['$routeProvider', function($routing) {
       controllerAs: 'dashCtrl'
     })
     .when('/bridge', {
-      templateUrl: 'templates/views/bridge_view.html'
+      templateUrl: 'templates/views/bridge_view.html',
+      controller: 'BridgeController',
+      controllerAs: 'bridgeCtrl'
     })
     .when('/group', {
       templateUrl: 'templates/views/group_view.html'

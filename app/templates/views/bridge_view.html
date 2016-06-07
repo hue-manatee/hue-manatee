@@ -1,5 +1,21 @@
 <article>
-  <ul>
-    <li>Bridge ID</li>
-  </ul>
+  <h2>{{bridgeCtrl.name}}</h2>
+  <p>
+    URL: {{bridgeCtrl.URL}}
+  </p>
+  <p>
+    Bridge Key: {{bridgeCtrl.bridgeKey}}
+  </p>
+  <form>
+    <label for="name">Bridge Name</label>
+    <input data-ng-model="bridgeCtrl.name" type="text" name="name">
+
+    <label for="url">URL</label>
+    <input data-ng-model="bridgeCtrl.URL" type="text" name="url">
+
+    <label for="bridge-key">Bridge Key</label>
+    <input data-ng-model="bridgeCtrl.bridgeKey" type="text" name="bridge-key">
+
+    <button type="button">Save Changes</button>
+  </form>
 </article>
