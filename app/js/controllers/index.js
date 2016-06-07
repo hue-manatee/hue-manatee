@@ -4,4 +4,5 @@ module.exports = function(app) {
   require('./auth/logout')(app);
   require('./dashboard')(app);
   require('./light')(app);
+  require('./bridge')(app);
 };

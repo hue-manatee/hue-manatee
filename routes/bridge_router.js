@@ -8,11 +8,25 @@ var bridgeRouter = module.exports = exports = Router();
 
 bridgeRouter.post('/bridge/create', jwtAuth, bodyParser, (req, res) => {
   var newBridge = new Bridge(req.body);
-
   newBridge.admin = req.user._id;
   newBridge.save((err, data) => {
     if (err) return console.log(err);
     res.status(200).json(data);
+  });
+});
+
+bridgeRouter.get('/bridge/exists', jwtAuth, (req, res) => {
+  Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
+    if (!bridge) {
+      return res.status(401).json({
+      msg: 'no bridge found, please create a new bridge',
+      bridgeExists: false
+    });
+  }
+  if (err) return console.log(err);
+  return res.status(200).json({ bridge,
+    bridgeExists: true }
+    );
   });
 });
 
@@ -35,7 +49,6 @@ bridgeRouter.get('/bridge/status/:bridgeKey', jwtAuth, (req, res) => {
 bridgeRouter.put('/bridge/update/:bridgeKey', jwtAuth, bodyParser, (req, res) => {
   var bridgeData = req.body;
   delete bridgeData._id;
-
   Bridge.update({ bridgeKey: req.params.bridgeKey, admin: req.user._id },
     bridgeData, (err, data) => {
       if (!data) return res.status(401).json({ msg: 'not authorized' });
