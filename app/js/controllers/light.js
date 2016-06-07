@@ -33,7 +33,7 @@ module.exports = function(app) {
       .then((res) => {
         console.log('successful reset: ', res);
       }, (response) => {
-        console.log('reset failed', response);
+        console.log('reset failed: ', response);
       });
     };
   }]);
