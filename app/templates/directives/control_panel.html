@@ -16,4 +16,9 @@
   <button data-ng-click="update(target, 'lselect')">15x</button>
   <button data-ng-click="reset(target)">Reset</button>
 
+  <form>
+    <label for="colorloop">Color Loop: </label>
+    <input type="radio" name="colorloop" value="true" data-ng-model="colorloop" data-ng-click="update(target, null, 'colorloop')"> ON <br>
+    <input type="radio" name="colorloop" value="false" data-ng-model="colorloop" data-ng-click="update(target, null, 'none')"> OFF <br>
+  </form>
 </section>
