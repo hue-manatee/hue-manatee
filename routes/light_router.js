@@ -176,6 +176,14 @@ lightRouter.get('/light/status', jwtAuth, (req, res) => {
   });
 });
 
+lightRouter.get('/light/groups', jwtAuth, (req, res) => {
+  Light.find({ bridgeLightId: req.query.lightId }, (err, data) => {
+    if (err) return console.log(err);
+    if (!data) return res.status(401).json({ msg: 'light not found' });
+    res.status(200).json({ groups: data[0].groups });
+  });
+});
+
 lightRouter.get('/light/reset/:lightId', jwtAuth, (req, res) => {
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
