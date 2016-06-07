@@ -1,7 +1,7 @@
 const copy = require('angular').copy;
 
 module.exports = function(app) {
- app.controller('BridgeController', ['$http', '$location', function($http, $location) {
+ app.controller('BridgeController', ['$http', function($http) {
    this.bridge = {};
    this.bridgeExists = false;
    this.editing = false;
