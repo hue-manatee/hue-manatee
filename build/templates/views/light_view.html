@@ -1,0 +1,11 @@
+<article class="light">
+  <h3>Light Name</h3>
+  <control-panel data-target="lightCtrl.id"></control-panel>
+
+  <h3>Groups</h3>
+  <ul data-ng-init="lightCtrl.getGroups(lightCtrl.id)">
+    <li data-ng-repeat="group in lightCtrl.groups"><a href="/#/group/{{group}}">
+      {{group}}
+    </a></li>
+  </ul>
+</article>
