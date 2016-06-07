@@ -1,9 +1,9 @@
 <article data-ng-init="bridgeCtrl.check()">
-  <h2 data-ng-if="!bridgeCtrl.editing">{{bridgeCtrl.bridge.name}}</h2>
-  <p data-ng-if="!bridgeCtrl.editing">
+  <h2 data-ng-if="bridgeCtrl.bridgeExists && !bridgeCtrl.editing">{{bridgeCtrl.bridge.name}}</h2>
+  <p data-ng-if="bridgeCtrl.bridgeExists && !bridgeCtrl.editing">
     URL: {{bridgeCtrl.bridge.url}}
   </p>
-  <p data-ng-if="!bridgeCtrl.editing">
+  <p data-ng-if="bridgeCtrl.bridgeExists && !bridgeCtrl.editing">
     Bridge Key: {{bridgeCtrl.bridge.bridgeKey}}
   </p>
   <form data-ng-submit="bridgeCtrl.bridgeExists ? bridgeCtrl.update() : bridgeCtrl.save()" data-ng-if="bridgeCtrl.editing || !bridgeCtrl.bridgeExists">
