@@ -25,7 +25,9 @@ bridgeRouter.get('/bridge/exists', jwtAuth, (req, res) => {
     });
   }
   if (err) return console.log(err);
-  return res.status(200).json(bridge);
+  return res.status(200).json({ bridge,
+    bridgeExists: true }
+    );
   });
 });
 
