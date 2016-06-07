@@ -32436,7 +32436,6 @@
 
 	module.exports = function(app) {
 	  app.controller('AllLightsController', ['$http', '$location', function($http) {
-	    // this.all = [];
 	    this.update = function(target, alert, colorLoop) {
 	      $http({
 	        method: 'GET',
