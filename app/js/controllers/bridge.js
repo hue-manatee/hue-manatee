@@ -46,7 +46,7 @@ module.exports = function(app) {
          token: window.localStorage.token
        }
      })
-      .then((res) => {
+      .then(() => {
         this.editing = false;
         this.bridgeExists = true;
       }, (response) => {
