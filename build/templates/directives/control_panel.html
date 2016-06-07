@@ -1,0 +1,25 @@
+<section>
+  <form data-ng-submit="update(target)">
+    <input type="radio" name="state" value="true" data-ng-model="state"> ON <br>
+    <input type="radio" name="state" value="false" data-ng-model="state"> OFF <br>
+
+    <label for="color">Color:</label>
+    <input type="text" name="color" data-ng-model="color">
+
+    <label for="brightness">Brightness:</label>
+    <input type="text" name="brightness" data-ng-model="brightness">
+
+    <button type="submit">Apply Changes</button>
+  </form>
+
+  <button data-ng-click="update(target, 'select')">1x</button>
+  <button data-ng-click="update(target, 'lselect')">15x</button>
+
+  <form>
+    <label for="colorloop">Color Loop: </label>
+    <input type="radio" name="colorloop" value="true" data-ng-model="colorloop" data-ng-click="update(target, null, 'colorloop')"> ON <br>
+    <input type="radio" name="colorloop" value="false" data-ng-model="colorloop" data-ng-click="update(target, null, 'none')"> OFF <br>
+  </form>
+  <button data-ng-click="reset(target)">Reset Light/Default</button>
+
+</section>

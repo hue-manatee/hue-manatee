@@ -1,0 +1,24 @@
+<article data-ng-init="bridgeCtrl.check()">
+  <h2 data-ng-if="bridgeCtrl.bridgeExists && !bridgeCtrl.editing">{{bridgeCtrl.bridge.name}}</h2>
+  <p data-ng-if="bridgeCtrl.bridgeExists && !bridgeCtrl.editing">
+    URL: {{bridgeCtrl.bridge.url}}
+  </p>
+  <p data-ng-if="bridgeCtrl.bridgeExists && !bridgeCtrl.editing">
+    Bridge Key: {{bridgeCtrl.bridge.bridgeKey}}
+  </p>
+  <form data-ng-submit="bridgeCtrl.bridgeExists ? bridgeCtrl.update() : bridgeCtrl.save()" data-ng-if="bridgeCtrl.editing || !bridgeCtrl.bridgeExists">
+    <label for="name">Bridge Name</label>
+    <input data-ng-model="bridgeCtrl.bridge.name" type="text" name="name">
+
+    <label for="url">URL</label>
+    <input data-ng-model="bridgeCtrl.bridge.url" type="text" name="url">
+
+    <label for="bridge-key">Bridge Key</label>
+    <input data-ng-model="bridgeCtrl.bridge.bridgeKey" type="text" name="bridge-key">
+
+    <button type="submit">Save Changes</button>
+    <button data-ng-click="bridgeCtrl.cancel()" data-ng-if="bridgeCtrl.editing" type="button" name="cancel">Cancel Update</button>
+  </form>
+
+  <button data-ng-if="bridgeCtrl.bridgeExists" type="button" data-ng-click="bridgeCtrl.edit()">Edit</button>
+</article>
