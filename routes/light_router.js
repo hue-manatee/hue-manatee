@@ -82,6 +82,34 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
         if (err) return console.log(err);
         res.status(200).json(JSON.parse(superRes.text));
       });
+      } else if (req.query.group === 'all') {
+      Light.find({}, (err, lights) => {
+        if (err) return console.log('this is the light error', err);
+        if (!lights.length) return res.status(408).json({ msg: 'no matching lights' });
+
+        var superResponse = {};
+        superResponse.count = 0;
+
+        lights.forEach((ele) => {
+          var groupAddress = lightObj.url + '/api/' + lightObj.bridgeKey +
+          '/lights/' + ele.bridgeLightId + '/state';
+
+          superAgent
+          .put(groupAddress)
+          .send({ 'on': lightObj.on, 'sat': lightObj.sat, 'bri': lightObj.bri, 'hue': lightObj.hue,
+            'effect': lightObj.effect, 'alert': lightObj.alert })
+          .timeout(1000)
+          .end((err, superRes) => {
+            superResponse.count += 1;
+
+            if (superResponse.count === lights.length) {
+              if (err && err.timeout) return res.status(408).json({ msg: 'ip address not found' });
+              if (err) return console.log(err);
+              res.status(200).json(JSON.parse(superRes.text));
+            }
+          });
+        });
+      });
     } else {
       Light.find({ groups: lightObj.group }, (err, light) => {
         if (err) return console.log('this is the light error', err);
@@ -165,6 +193,36 @@ lightRouter.get('/light/all', jwtAuth, (req, res) => {
       if (err) return console.log(err);
         res.status(200).json(lights);
       });
+  });
+});
+lightRouter.get('/light/all/reset', jwtAuth, (req, res) => {
+  Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
+    if (!bridge) return res.status(401).json({ msg: 'not authorized' });
+    if (err) return console.log(err);
+    Light.find({}, (err, lights) => {
+      if (err) return console.log('this is the light error', err);
+      if (!lights.length) return res.status(408).json({ msg: 'no matching lights' });
+
+      var superResponse = {};
+      superResponse.count = 0;
+      lights.forEach((light) => {
+        var address = bridge.url + '/api/' + bridge.bridgeKey +
+         '/lights/' + light.bridgeLightId + '/state';
+        superAgent
+        .put(address)
+        .send({ 'on': light.state, 'sat': light.sat, 'bri': light.bri,
+        'hue': light.hue, 'effect': light.effect, 'alert': light.alert })
+        .timeout(1000)
+        .end((err, superRes) => {
+          superResponse.count += 1;
+          if (superResponse.count === lights.length) {
+            if (err && err.timeout) return res.status(408).json({ msg: 'ip address not found' });
+            if (err) return console.log(err);
+            res.status(200).json(JSON.parse(superRes.text));
+          }
+        });
+      });
+    });
   });
 });
 
