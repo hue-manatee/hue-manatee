@@ -1,21 +1,9 @@
-<article class="group">
-  <section>
-    <h3>Group Name</h3>
-    <ul>
-      <li>Color Pattern</li>
-      <li>Dim</li>
-      <li>On/Off</li>
-      <li>Alert</li>
-      <li>Effect</li>
-    </ul>
-  </section>
-  <section>
-    <h4>Light Name</h4>
-    <ul>
-      <li>Color Pattern</li>
-      <li>Dim</li>
-      <li>On/Off</li>
-      <li>Details</li>
-    </ul>
-  </section>
+<article data-ng-init="groupDetailCtrl.getAll()">
+  <h2>Group Name: {{groupDetailCtrl.groupName.toUpperCase()}}</h2>
+  <control-panel data-target="lightCtrl.id"></control-panel>
+  <ul>
+    <li data-ng-repeat="light in groupDetailCtrl.group"><a href='/#/light/{{light.bridgeLightId}}'>{{light.bridgeLightId}}</a></li>
+  </ul>
+  <a href="/#/light/create">Add Light</a>
+  <!-- TODO automatically have the group field populated to the group you are on -->
 </article>
