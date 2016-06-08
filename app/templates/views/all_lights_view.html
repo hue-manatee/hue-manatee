@@ -1,7 +1,6 @@
 <article data-ng-init="allCtrl.getAll()">
   <h2>All Lights</h2>
   <control-panel data-target="lightCtrl.id"></control-panel>
-  <!-- <h3>{{allCtrl.all}}</h3> -->
   <ul>
     <li data-ng-repeat="light in allCtrl.all"><a href='/#/light/{{light.bridgeLightId}}'>{{light.bridgeLightId}}</a></li>
   </ul>
