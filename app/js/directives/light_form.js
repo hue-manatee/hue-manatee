@@ -14,6 +14,7 @@ module.exports = function(app) {
         scope.alert = controller.alert;
         scope.effect = controller.effect;
         scope.groups = controller.groups;
+        scope.save = controller.save;
       }
     };
   });

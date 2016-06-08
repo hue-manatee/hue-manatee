@@ -1,13 +1,13 @@
-<form>
+<form data-ng-submit="save()">
   <label for="name">Light Name</label>
   <input type="text" name="name" data-ng-model="name">
 
   <label for="bridgelightid">Bridge Light Id</label>
   <input type="text" name="bridgelightid" data-ng-model="bridgeLightId">
-
+<!--
   <h3>Groups</h3>
   <label for="groups">Groups</label>
-  <input type="text" name="groups" data-ng-repeat="groups"> <!-- TODO: Fill in with correct grouping stuff-->
+  <input type="text" name="groups" data-ng-repeat="groups">--> <!-- TODO: Fill in with correct grouping stuff-->
 
   <h3>Defaults</h3>
   <label for="light">Light</label>
@@ -28,8 +28,8 @@
   </select>
 
   <label for="colorloop">Color Loop: </label>
-  <input type="radio" name="colorloop" value="true" data-ng-model="colorloop"> ON <br>
-  <input type="radio" name="colorloop" value="false" data-ng-model="colorloop"> OFF <br>
+  <input type="radio" name="colorloop" value="colorloop" data-ng-model="colorloop"> ON <br>
+  <input type="radio" name="colorloop" value="none" data-ng-model="colorloop"> OFF <br>
 
   <button type="submit" name="save">Save Changes</button>
 

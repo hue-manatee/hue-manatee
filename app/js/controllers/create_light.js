@@ -11,10 +11,10 @@ module.exports = function(app) {
           name: self.name,
           color: self.color,
           state: self.state,
-          brightness: self.brightness,
+          bri: self.brightness,
           alert: self.alert,
-          effects: self.effects,
-          groups: self.groups
+          effect: self.effect,
+          groups: 'moose,i am girl'
         },
         headers: {
           token: window.localStorage.token
