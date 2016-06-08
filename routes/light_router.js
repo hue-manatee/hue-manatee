@@ -203,6 +203,37 @@ lightRouter.get('/light/all', jwtAuth, (req, res) => {
   });
 });
 
+
+lightRouter.get('/group/all', jwtAuth, (req, res) => {
+  Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
+    if (!bridge) return res.status(401).json({ msg: 'not authorized' });
+    if (err) return console.log(err);
+    Light.find({}, (err, lights) => {
+      if (err) return console.log(err);
+      var data = {};
+      data.counter = 0;
+      data.groups = [];
+      lights.forEach((ele) => {
+        data.counter += 1
+        ele.groups.forEach((groupName) => {
+          data.groups.push(groupName)
+        });
+        if (count.counter === lights.length) {
+          res.status(200).json(data.groups);
+        }
+      });
+  });
+});
+//
+// if (req.body.groups) {
+//   var group = req.body.groups;
+//   lightData.groups = [];
+//   var groupArr = group.split(',');
+//   groupArr.forEach((ele) => {
+//     lightData.groups.push(ele);
+//   });
+
+
 lightRouter.get('/group', jwtAuth, (req, res) => {
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
