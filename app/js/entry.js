@@ -17,6 +17,12 @@ hueApp.config(['$routeProvider', function($routing) {
       controller: 'BridgeController',
       controllerAs: 'bridgeCtrl'
     })
+    .when('/group', {
+      templateUrl: 'templates/views/group_list_view.html',
+      controller: 'GroupListController',
+      controllerAs: 'groupListCtrl'
+      // TODO: Create a route and view for the group/thisgroupnamething
+    })
     .when('/group/:groupName', {
       templateUrl: 'templates/views/group_view.html',
       controller: 'GroupDetailController',

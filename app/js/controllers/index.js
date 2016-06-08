@@ -8,4 +8,5 @@ module.exports = function(app) {
   require('./bridge')(app);
   require('./all_lights')(app);
   require('./group_detail')(app);
+  require('./group_list')(app);
 };
