@@ -33,7 +33,7 @@ hueApp.config(['$routeProvider', function($routing) {
       controller: 'GroupDetailController',
       controllerAs: 'groupDetailCtrl'
     })
-    .when('/all', {
+    .when('/light/all', {
       templateUrl: 'templates/views/all_lights_view.html',
       controller: 'AllLightsController',
       controllerAs: 'allCtrl'
