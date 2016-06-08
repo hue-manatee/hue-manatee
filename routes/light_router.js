@@ -168,6 +168,9 @@ lightRouter.put('/light/update/:lightId', jwtAuth, bodyParser, (req, res) => {
 
     Light.update({ bridgeLightId: req.params.lightId }, lightData, (err, data) => {
       if (err) return console.log(err);
+      if (!data) {
+        console.log('light not found');
+      }
       res.status(200).json(data);
     });
   });

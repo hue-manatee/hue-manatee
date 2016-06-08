@@ -5,7 +5,9 @@ module.exports = function(app) {
       require: '^ngController',
       transclude: true,
       templateUrl: 'templates/directives/light_form.html',
-      scope: {},
+      scope: {
+        target: '='
+      },
       link: function(scope, elements, attrs, controller) {
         scope.bridgeLightId = controller.bridgeLightId;
         scope.name = controller.name;
@@ -19,6 +21,7 @@ module.exports = function(app) {
         scope.addGroup = controller.addGroup;
         scope.newGroup = controller.newGroup;
         scope.removeGroup = controller.removeGroup;
+        scope.editing = controller.editing;
       }
     };
   });

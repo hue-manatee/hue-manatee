@@ -1,5 +1,7 @@
 module.exports = function(app) {
-  app.controller('LightController', ['$routeParams', '$http', function($routeParams, $http) {
+  app.controller('LightController', ['$routeParams', '$http', '$route',
+  function($routeParams, $http, $route) {
+    var self = this;
     this.id = $routeParams.id;
     this.update = function(target, alert, colorLoop) {
       $http({
@@ -75,6 +77,37 @@ module.exports = function(app) {
         this.colorloop = light.effect;
       }, (response) => {
         console.log('there are no light here:', response);
+      });
+    };
+    this.save = function(target) {
+      if (this.groups.length > 0 ) {
+        this.groupString = this.groups.join();
+      }
+      console.log(target);
+      $http({
+        method: 'PUT',
+        url: '/api/light/update/' + target,
+        dataType: 'json',
+        data: {
+          bridgeLightId: this.bridgeLightId,
+          name: this.name,
+          color: this.color,
+          state: this.state,
+          bri: this.brightness,
+          alert: this.alert,
+          effect: this.effect,
+          groups: this.groupString
+        },
+        headers: {
+          token: window.localStorage.token
+        }
+      })
+      .then((res) => {
+        console.log(res);
+        self.editing = false;
+        $route.reload();
+      }, (response) => {
+        console.log(response);
       });
     };
   }]);
