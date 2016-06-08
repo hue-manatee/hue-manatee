@@ -2,20 +2,22 @@ module.exports = function(app) {
   app.controller('CreateLightController', ['$http', '$location', function($http, $location) {
     this.groups = [];
     this.save = function() {
-      var self = this;
+      if (this.groups.length > 0 ) {
+        this.groupString = this.groups.join();
+      }
       $http({
         method: 'POST',
         url: '/api/light/create',
         dataType: 'json',
         data: {
-          bridgeLightId: self.bridgeLightId,
-          name: self.name,
-          color: self.color,
-          state: self.state,
-          bri: self.brightness,
-          alert: self.alert,
-          effect: self.effect,
-          groups: 'moose,i am girl'
+          bridgeLightId: this.bridgeLightId,
+          name: this.name,
+          color: this.color,
+          state: this.state,
+          bri: this.brightness,
+          alert: this.alert,
+          effect: this.effect,
+          groups: this.groupString
         },
         headers: {
           token: window.localStorage.token
@@ -34,7 +36,6 @@ module.exports = function(app) {
     };
     this.removeGroup = function(group) {
       this.groups.splice(this.groups.indexOf(group), 1);
-      console.log(this.groups);
     };
   }]);
 };
