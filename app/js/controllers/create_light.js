@@ -1,5 +1,6 @@
 module.exports = function(app) {
   app.controller('CreateLightController', ['$http', '$location', function($http, $location) {
+    this.groups = [];
     this.save = function() {
       var self = this;
       $http({
@@ -26,6 +27,14 @@ module.exports = function(app) {
       }, (response) => {
         console.log(response);
       });
+    };
+    this.addGroup = function() {
+      this.groups.push(this.newGroup);
+      this.newGroup = null;
+    };
+    this.removeGroup = function(group) {
+      this.groups.splice(this.groups.indexOf(group), 1);
+      console.log(this.groups);
     };
   }]);
 };

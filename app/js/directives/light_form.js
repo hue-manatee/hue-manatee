@@ -15,6 +15,9 @@ module.exports = function(app) {
         scope.effect = controller.effect;
         scope.groups = controller.groups;
         scope.save = controller.save;
+        scope.addGroup = controller.addGroup;
+        scope.newGroup = controller.newGroup;
+        scope.removeGroup = controller.removeGroup;
       }
     };
   });

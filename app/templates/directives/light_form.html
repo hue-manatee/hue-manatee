@@ -4,10 +4,17 @@
 
   <label for="bridgelightid">Bridge Light Id</label>
   <input type="text" name="bridgelightid" data-ng-model="bridgeLightId">
-<!--
+
   <h3>Groups</h3>
-  <label for="groups">Groups</label>
-  <input type="text" name="groups" data-ng-repeat="groups">--> <!-- TODO: Fill in with correct grouping stuff-->
+  <div data-ng-repeat="group in groups" data-ng-if="groups && groups.length > 0">
+    <input type="text" name="groups" data-ng-model="group">
+    <button type="button" name="button" data-ng-click="removeGroup(group)">X</button>
+  </div>
+
+  <div>
+    <input type="text" name="groups" data-ng-model="newGroup">
+    <button type="button" name="button" data-ng-click="addGroup()">+</button>
+  </div>
 
   <h3>Defaults</h3>
   <label for="light">Light</label>
