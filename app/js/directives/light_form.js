@@ -6,6 +6,7 @@ module.exports = function(app) {
       templateUrl: 'templates/directives/light_form.html',
       scope: {},
       link: function(scope, elements, attrs, controller) {
+        scope.bridgeLightId = controller.bridgeLightId;
         scope.name = controller.name;
         scope.color = controller.color;
         scope.state = controller.state;

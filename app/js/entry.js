@@ -26,6 +26,11 @@ hueApp.config(['$routeProvider', function($routing) {
       controller: 'AllLightsController',
       controllerAs: 'allCtrl'
     })
+    .when('/light/create', {
+      templateUrl: 'templates/views/create_light.html',
+      controller: 'CreateLightController',
+      controllerAs: 'lightCtrl'
+    })
     .when('/light/:id', {
       templateUrl: 'templates/views/light_view.html',
       controller: 'LightController',
