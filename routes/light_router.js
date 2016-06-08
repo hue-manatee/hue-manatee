@@ -202,7 +202,6 @@ lightRouter.get('/light/all', jwtAuth, (req, res) => {
       });
   });
 });
-// group / all, should get back data.groups array of strings
 
 lightRouter.get('/group/all', jwtAuth, (req, res) => {
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
