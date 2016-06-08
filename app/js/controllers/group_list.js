@@ -2,7 +2,23 @@ module.exports = function(app) {
   app.controller('GroupListController', ['$http', function($http) {
     this.groupNames = [];
     var arrayResult = [];
-    
+    this.reset = function(target) {
+      $http({
+        method: 'GET',
+        url: '/api/group/reset',
+        headers: {
+          token: window.localStorage.token
+        },
+        params: {
+          groupName: target
+        }
+      })
+      .then((res) => {
+        console.log('successful reset: ', res);
+      }, (response) => {
+        console.log('reset failed: ', response);
+      });
+    };
     this.update = function(target, alert, colorLoop) {
         $http({
           method: 'GET',
