@@ -3,8 +3,8 @@
   <button type="button" data-ng-click="lightCtrl.editing=true" data-ng-if="!lightCtrl.editing">edit</button>
   <control-panel data-target="lightCtrl.id" data-ng-if="!lightCtrl.editing"></control-panel>
   <light-form data-target="lightCtrl.id" data-ng-if="lightCtrl.editing"><button type="button" data-ng-click="lightCtrl.editing=false">Cancel</button></light-form>
-  <h3>Groups</h3>
-  <ul data-ng-init="lightCtrl.getGroups(lightCtrl.id)">
+  <h3 data-ng-if="!lightCtrl.editing">Groups</h3>
+  <ul data-ng-init="lightCtrl.getGroups(lightCtrl.id)" data-ng-if="!lightCtrl.editing">
     <li data-ng-repeat="group in lightCtrl.groups"><a href="/#/group/{{group}}">
       {{group}}
     </a></li>

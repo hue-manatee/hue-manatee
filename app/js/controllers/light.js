@@ -1,9 +1,9 @@
 module.exports = function(app) {
 
-  app.controller('LightController', ['hueAuth', '$location', '$routeParams', '$route', '$http',
+  app.controller('LightController', ['hueAuth', '$location', '$routeParams', '$http', '$route',
   function(hueAuth, $location, $routeParams, $http, $route) {
     if (!hueAuth.getToken()) $location.path('/');
-
+    this.groups = [];
     var self = this;
     this.id = $routeParams.id;
     this.update = function(target, alert, colorLoop) {
@@ -55,13 +55,11 @@ module.exports = function(app) {
       })
       .then((res) => {
         this.groups = res.data.groups;
-        console.log(this.groups);
       }, (response) => {
         console.log('there are no groups here:', response);
       });
     };
     this.getLight = function() {
-      console.log('get light happens');
       $http({
         method: 'GET',
         url: '/api/light/detail/' + this.id,
@@ -75,6 +73,7 @@ module.exports = function(app) {
         this.bridgeLightId = light.bridgeLightId;
         this.brightness = light.bri;
         this.alert = light.alert;
+        this.color = light.color;
         if (light.state) this.state = 'true';
         if (!light.state) this.state = 'false';
         this.colorloop = light.effect;
@@ -86,7 +85,6 @@ module.exports = function(app) {
       if (this.groups.length > 0 ) {
         this.groupString = this.groups.join();
       }
-      console.log(target);
       $http({
         method: 'PUT',
         url: '/api/light/update/' + target,
@@ -112,6 +110,13 @@ module.exports = function(app) {
       }, (response) => {
         console.log(response);
       });
+    };
+    this.addGroup = function() {
+      this.groups.push(this.newGroup);
+      this.newGroup = null;
+    };
+    this.removeGroup = function(group) {
+      this.groups.splice(this.groups.indexOf(group), 1);
     };
   }]);
 };
