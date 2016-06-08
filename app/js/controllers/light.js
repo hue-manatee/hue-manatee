@@ -1,5 +1,7 @@
 module.exports = function(app) {
-  app.controller('LightController', ['$routeParams', '$http', function($routeParams, $http) {
+  app.controller('LightController', ['hueAuth', '$location', '$routeParams', '$http',
+  function(hueAuth, $location, $routeParams, $http) {
+    if (!hueAuth.getToken()) $location.path('/');
     this.id = $routeParams.id;
     this.update = function(target, alert, colorLoop) {
       $http({

@@ -3,7 +3,7 @@ module.exports = function(app) {
     this.logout = function() {
       hueAuth.removeToken();
       // TODO: change this path to the choose signup or login page
-      $location.path('/signup');
+      $location.path('/');
     };
   }]);
 };

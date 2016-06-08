@@ -1,5 +1,7 @@
 module.exports = function(app) {
-  app.controller('GroupListController', ['$http', function($http) {
+  app.controller('GroupListController', ['hueAuth', '$location', '$http',
+  function(hueAuth, $location, $http) {
+    if (!hueAuth.getToken()) $location.path('/');
     this.groupNames = [];
     var arrayResult = [];
     this.reset = function(target) {

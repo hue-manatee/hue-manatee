@@ -1,5 +1,7 @@
 module.exports = function(app) {
-  app.controller('CreateLightController', ['$http', '$location', function($http, $location) {
+  app.controller('CreateLightController', ['hueAuth', '$http', '$location',
+  function(hueAuth, $http, $location) {
+    if (!hueAuth.getToken()) $location.path('/');
     this.groups = [];
     this.save = function() {
       if (this.groups.length > 0 ) {

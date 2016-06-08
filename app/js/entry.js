@@ -7,6 +7,10 @@ require('./services')(hueApp);
 
 hueApp.config(['$routeProvider', function($routing) {
   $routing
+
+    .when('/', {
+      templateUrl: 'templates/views/root_view.html'
+    })
     .when('/dashboard', {
       templateUrl: 'templates/views/dashboard_view.html',
       controller: 'DashboardController',
@@ -60,6 +64,6 @@ hueApp.config(['$routeProvider', function($routing) {
       controllerAs: 'authCtrl'
     })
     .otherwise({
-      redirectTo: '/signup'
+      redirectTo: '/'
     });
 }]);
