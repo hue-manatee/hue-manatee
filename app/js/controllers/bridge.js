@@ -1,7 +1,9 @@
 const copy = require('angular').copy;
 
 module.exports = function(app) {
- app.controller('BridgeController', ['$http', function($http) {
+ app.controller('BridgeController', ['hueAuth', '$location', '$http',
+ function(hueAuth, $location, $http) {
+   if (!hueAuth.getToken()) $location.path('/');
    this.bridge = {};
    this.bridgeExists = false;
    this.editing = false;
