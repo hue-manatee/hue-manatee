@@ -1,10 +1,8 @@
 <form data-ng-submit="save(target)">
   <label for="name">Light Name</label>
   <input type="text" name="name" data-ng-model="name">
-
-  <label data-ng-if="!editing" for="bridgelightid">Bridge Light Id</label>
-  <input data-ng-if="!editing" type="text" name="bridgelightid" data-ng-model="bridgeLightId">
-
+  <label for="bridgeLightId">Bridge Light Id</label>
+  <input type="text" name="bridgeLightId" data-ng-model="bridgeLightId">
   <h3>Groups</h3>
   <div data-ng-repeat="group in groups" data-ng-if="groups && groups.length > 0">
     <input type="text" name="groups" data-ng-model="group">
