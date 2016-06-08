@@ -2,6 +2,29 @@ module.exports = function(app) {
   app.controller('GroupListController', ['$http', function($http) {
     this.groupNames = [];
     var arrayResult = [];
+    
+    this.update = function(target, alert, colorLoop) {
+        $http({
+          method: 'GET',
+          url: '/api/light/magic',
+          params: {
+            hex: this.color,
+            on: this.state,
+            bri: this.brightness,
+            alert: alert,
+            effect: colorLoop,
+            group: target
+          },
+          headers: {
+            token: window.localStorage.token
+          }
+        })
+        .then((res) => {
+          console.log('success light change: ', res);
+        }, (response) => {
+          console.log('fail no light change :( ', response);
+        });
+      };
     this.getGroupNames = function() {
       $http({
         method: 'GET',
