@@ -55,5 +55,27 @@ module.exports = function(app) {
         console.log('there are no groups here:', response);
       });
     };
+    this.getLight = function() {
+      console.log('get light happens');
+      $http({
+        method: 'GET',
+        url: '/api/light/detail/' + this.id,
+        headers: {
+          token: window.localStorage.token
+        }
+      })
+      .then((res) => {
+        var light = res.data.light;
+        this.name = light.name;
+        this.bridgeLightId = light.bridgeLightId;
+        this.brightness = light.bri;
+        this.alert = light.alert;
+        if (light.state) this.state = 'true';
+        if (!light.state) this.state = 'false';
+        this.colorloop = light.effect;
+      }, (response) => {
+        console.log('there are no light here:', response);
+      });
+    };
   }]);
 };

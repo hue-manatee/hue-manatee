@@ -326,3 +326,24 @@ lightRouter.get('/light/reset/:lightId', jwtAuth, (req, res) => {
     });
   });
 });
+
+lightRouter.get('/light/detail/:lightId', jwtAuth, (req, res) => {
+  Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
+    if (!bridge) return res.status(401).json({ msg: 'not authorized' });
+    if (err) return console.log(err);
+
+    Light.findOne({ bridgeLightId: req.params.lightId }, (err, light) => {
+      if (err) return console.log(err);
+      if (!light) {
+        return res.status(401).json({
+          msg: 'no light found, please create new light',
+          lightExists: true
+        });
+      }
+      return res.status(200).json({
+        light,
+        lightExists: true
+      });
+    });
+  });
+});
