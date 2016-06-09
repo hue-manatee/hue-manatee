@@ -17,8 +17,10 @@ module.exports = function(app) {
       })
       .then((res) => {
         console.log('successful reset: ', res);
+        this.status = 'success';
       }, (response) => {
         console.log('reset failed: ', response);
+        this.status = 'fail';
       });
     };
     this.update = function(target, alert, colorLoop) {
@@ -40,8 +42,10 @@ module.exports = function(app) {
       })
       .then((res) => {
         console.log('success light change: ', res);
+        this.status = 'success';
       }, (response) => {
         console.log('fail no light change :( ', response);
+        this.status = 'fail';
       });
     };
     this.getAll = function() {
@@ -57,6 +61,7 @@ module.exports = function(app) {
       })
       .then((res) => {
         this.group = res.data;
+        console.log(this.group);
       }, (response) => {
         console.log(response);
       });
