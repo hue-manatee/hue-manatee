@@ -1,5 +1,6 @@
 <article data-ng-init="bridgeCtrl.check()">
   <h2 data-ng-if="bridgeCtrl.bridgeExists && !bridgeCtrl.editing">{{bridgeCtrl.bridge.name}}</h2>
+  <button  class="edit-button" data-ng-if="bridgeCtrl.bridgeExists && !bridgeCtrl.editing" type="button" data-ng-click="bridgeCtrl.edit()"><i class="fa fa-pencil" aria-hidden="true"></i></button>
   <p data-ng-if="bridgeCtrl.bridgeExists && !bridgeCtrl.editing">
     URL: {{bridgeCtrl.bridge.url}}
   </p>
@@ -20,5 +21,4 @@
     <button data-ng-click="bridgeCtrl.cancel()" data-ng-if="bridgeCtrl.editing" type="button" name="cancel">Cancel Update</button>
   </form>
 
-  <button data-ng-if="bridgeCtrl.bridgeExists" type="button" data-ng-click="bridgeCtrl.edit()">Edit</button>
 </article>

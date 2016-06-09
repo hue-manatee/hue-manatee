@@ -1,6 +1,6 @@
 <article class="light" data-ng-init="lightCtrl.getLight()">
   <h3 data-ng-if="!lightCtrl.editing">{{lightCtrl.settings.name}}</h3>
-  <button type="button" data-ng-click="lightCtrl.editing=true" data-ng-if="!lightCtrl.editing">edit</button>
+  <button class="edit-button" type="button" data-ng-click="lightCtrl.editing=true" data-ng-if="!lightCtrl.editing"><i class="fa fa-pencil" aria-hidden="true"></i></button>
   <control-panel data-target="lightCtrl.id" data-ng-if="!lightCtrl.editing"></control-panel>
   <light-form data-target="lightCtrl.id" data-ng-if="lightCtrl.editing"><button type="button" data-ng-click="lightCtrl.editing=false">Cancel</button></light-form>
   <h3 data-ng-if="!lightCtrl.editing">Groups</h3>
