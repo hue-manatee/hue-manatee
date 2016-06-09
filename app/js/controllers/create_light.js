@@ -27,10 +27,11 @@ module.exports = function(app) {
         }
       })
       .then((res) => {
-        console.log(res);
+        this.status = 'success';
         $location.path('/light/' + this.settings.bridgeLightId);
       }, (response) => {
         console.log(response);
+        this.status = 'fail';
       });
     };
     this.addGroup = function() {

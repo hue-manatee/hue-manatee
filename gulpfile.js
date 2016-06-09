@@ -25,6 +25,12 @@ gulp.task('webpack:test', () => {
   gulp.src('./test/front_end/unit/test_entry.js')
    .pipe(webpack({
      devtool: 'source-map',
+     module: {
+        loaders: [{
+          test: /\.html$/,
+          loader: 'html'
+        }]
+      },
      output: {
        filename: 'bundle.js'
      }
