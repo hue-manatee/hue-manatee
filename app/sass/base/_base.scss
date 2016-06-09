@@ -1,6 +1,9 @@
 * {
   box-sizing: border-box;
 }
+body {
+  background-color: $backgroundColor;
+}
 label {
   width: 100%;
   color: $darkgrey;
@@ -18,6 +21,7 @@ button {
   color: black;
   width: 100%;
   margin-bottom: $margin;
+  cursor: pointer;
 }
 p {
   margin: $margin 0px;
