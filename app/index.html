@@ -3,12 +3,13 @@
   <head>
     <meta charset="utf-8">
     <title>hue-manatee</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/style.css" charset="utf-8">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
   </head>
   <body data-ng-app="hueApp">
     <header>
       <img class="logo" src="images/hue-logo.png" alt="Hue Logo"></img>
+      <i data-ng-controller="LogoutController as authCtrl" class="fa fa-sign-out" aria-hidden="true"></i>
     </header>
     <main data-ng-view>
 
