@@ -24,6 +24,8 @@ describe('AllLightsController Test', () => {
   it('should be a controller', () => {
     expect(typeof allLightsCtrl).toBe('object');
     expect(typeof allLightsCtrl.getAll).toBe('function');
+    expect(typeof allLightsCtrl.update).toBe('function');
+    expect(typeof allLightsCtrl.reset).toBe('function');
   });
 
   it('It should get all of the light', () => {

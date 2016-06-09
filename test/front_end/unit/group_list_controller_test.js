@@ -24,25 +24,17 @@ describe('GroupListController Test', () => {
   it('should be a controller', () => {
     expect(typeof groupListCtrl).toBe('object');
     expect(typeof groupListCtrl.getGroupNames).toBe('function');
+    expect(typeof groupListCtrl.update).toBe('function');
+    expect(typeof groupListCtrl.reset).toBe('function');
   });
 
-  it('It should get all of the group names', () => {
+  it('It should get all of the group names without duplicates', () => {
     $httpBackend.expectGET('/api/group/all')
-    .respond(200, [{ msg: 'test light' }]);
-    window.localStorage.token = 'testResponse';
+    .respond(200, ['test', 'test', 'moose']);
     groupListCtrl.getGroupNames();
     $httpBackend.flush();
-    expect(groupListCtrl.totalGroupNames[0].msg).toBe('test light');
+    expect(groupListCtrl.groupNames[0]).toBe('moose');
+    expect(groupListCtrl.groupNames[1]).toBe('test');
+    expect(groupListCtrl.groupNames[2]).toBe(undefined);
   });
-
-  it('It should get rid of duplicates in an array', () => {
-    var arrayResult = [];
-    var testArray = ['test', 'moose', 'test'];
-    var resultArray = ['moose', 'test'];
-    groupListCtrl.arrayCompress(testArray);
-    console.log('arrayResult mooooo', arrayResult);
-    console.log('testArray mooooo', testArray);
-    expect(arrayResult).toBe(resultArray);
-  });
-
 });

@@ -1,9 +1,9 @@
 var angular = require('angular');
 
-describe('AllLightsController Test', () => {
+describe('GroupDetailController Test', () => {
   var $httpBackend;
   var $controller;
-  var allLightsCtrl;
+  var groupDetailCtrl;
 
   beforeEach(angular.mock.module('hueApp'));
 
@@ -13,7 +13,7 @@ describe('AllLightsController Test', () => {
 
   beforeEach(angular.mock.inject((_$httpBackend_) => {
     $httpBackend = _$httpBackend_;
-    allLightsCtrl = $controller('AllLightsController');
+    groupDetailCtrl = $controller('GroupDetailController');
   }));
 
   afterEach(() => {
@@ -22,29 +22,18 @@ describe('AllLightsController Test', () => {
   });
 
   it('should be a controller', () => {
-    expect(typeof allLightsCtrl).toBe('object');
-    expect(typeof allLightsCtrl.getAll).toBe('function');
+    expect(typeof groupDetailCtrl).toBe('object');
+    expect(typeof groupDetailCtrl.getAll).toBe('function');
+    expect(typeof groupDetailCtrl.update).toBe('function');
+    expect(typeof groupDetailCtrl.reset).toBe('function');
   });
 
   it('It should get all of the light', () => {
-    $httpBackend.expectGET('api/light/all')
-    .respond(200, [{ lightId: 'test light' }]);
-    window.localStorage.token = 'testResponse';
-    allLightsCtrl.getAll();
+    $httpBackend.expectGET('/api/group')
+    .respond(200, [{ lightId: 'test' }]);
+    groupDetailCtrl.getAll();
     $httpBackend.flush();
-    expect(allLightsCtrl.all[0].lightId).toBe('test light');
+    expect(groupDetailCtrl.group[0].lightId).toBe('test');
   });
-
- //  it('It should a res of 200 when updated', () => {
- //    $httpBackend.expectGET('/api/light/magic?group=all')
- //    .respond(200);
- //    var succeeded;
- //    window.localStorage.token = 'testResponse';
- //    allLightsCtrl.update().then(function() {
- //     succeeded = true;
- //    });
- //    $httpBackend.flush();
- //    expect(succeeded).toBe(true);
- // });
 
 });
