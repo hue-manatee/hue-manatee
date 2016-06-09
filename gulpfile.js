@@ -8,7 +8,11 @@ const maps = require('gulp-sourcemaps');
 const minifyCss = require('gulp-minify-css');
 var children = [];
 var appFiles = ['*.js', './lib/**/*.js', './routes/**/*.js', './models/**/*.js'];
-var testFiles = ['./test/**/*.js'];
+var testFiles = [
+  './test/auth_test.js', './test/bridge_test.js', './test/hex_module_test.js',
+   './test/light_test.js', './test/rgb_module_test.js',
+   './test/server_test.js', './test/test_setup.js', './test/test_teardown.js'
+];
 
 gulp.task('webpack:dev', () => {
   gulp.src('app/js/entry.js')
