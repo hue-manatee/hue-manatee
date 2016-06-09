@@ -90,7 +90,7 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
         res.status(200).json(JSON.parse(superRes.text));
       });
       } else if (req.query.group === 'all') {
-      Light.find({}, (err, lights) => {
+      Light.find({ bridgeId: bridge._id }, (err, lights) => {
         if (err) return console.log('this is the light error', err);
         if (!lights.length) return res.status(408).json({ msg: 'no matching lights' });
 
@@ -118,7 +118,7 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
         });
       });
     } else {
-      Light.find({ groups: lightObj.group }, (err, light) => {
+      Light.find({ groups: lightObj.group, bridgeId: bridge._id }, (err, light) => {
         if (err) return console.log('this is the light error', err);
         if (!light.length) return res.status(408).json({ msg: 'no matching lights' });
 
@@ -199,7 +199,7 @@ lightRouter.get('/light/all', jwtAuth, (req, res) => {
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
-    Light.find({}, (err, lights) => {
+    Light.find({ bridgeId: bridge._id }, (err, lights) => {
       if (err) return console.log(err);
         res.status(200).json(lights);
       });
@@ -210,7 +210,7 @@ lightRouter.get('/group/all', jwtAuth, (req, res) => {
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
-    Light.find({}, (err, lights) => {
+    Light.find({ bridgeId: bridge._id }, (err, lights) => {
       if (err) return console.log(err);
       var data = {};
       data.counter = 0;
@@ -232,7 +232,7 @@ lightRouter.get('/group', jwtAuth, (req, res) => {
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
-    Light.find({ groups: req.query.groupName }, (err, lights) => {
+    Light.find({ groups: req.query.groupName, bridgeId: bridge._id }, (err, lights) => {
       if (err) return console.log(err);
         res.status(200).json(lights);
       });
@@ -243,7 +243,7 @@ lightRouter.get('/group/reset', jwtAuth, (req, res) => {
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
-    Light.find({ groups: req.query.groupName }, (err, lights) => {
+    Light.find({ groups: req.query.groupName, bridgeId: bridge._id }, (err, lights) => {
       if (err) return console.log('this is the light error', err);
       if (!lights.length) return res.status(408).json({ msg: 'no matching lights' });
 
@@ -274,7 +274,7 @@ lightRouter.get('/light/all/reset', jwtAuth, (req, res) => {
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
-    Light.find({}, (err, lights) => {
+    Light.find({ bridgeId: bridge._id }, (err, lights) => {
       if (err) return console.log('this is the light error', err);
       if (!lights.length) return res.status(408).json({ msg: 'no matching lights' });
 
@@ -321,10 +321,14 @@ lightRouter.get('/light/status', jwtAuth, (req, res) => {
 });
 
 lightRouter.get('/light/groups', jwtAuth, (req, res) => {
-  Light.find({ bridgeLightId: req.query.lightId }, (err, data) => {
+  Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
+    if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
-    if (!data) return res.status(401).json({ msg: 'light not found' });
-    res.status(200).json({ groups: data[0].groups });
+    Light.find({ bridgeLightId: req.query.lightId, bridgeId: bridge._id }, (err, data) => {
+      if (err) return console.log(err);
+      if (!data) return res.status(401).json({ msg: 'light not found' });
+      res.status(200).json({ groups: data[0].groups });
+    });
   });
 });
 
@@ -336,7 +340,7 @@ lightRouter.get('/light/reset/:lightId', jwtAuth, (req, res) => {
     var address = bridge.url + '/api/' + bridge.bridgeKey +
      '/lights/' + req.params.lightId + '/state';
 
-    Light.findOne({ bridgeLightId: req.params.lightId }, (err, light) => {
+    Light.findOne({ bridgeLightId: req.params.lightId, bridgeId: bridge._id }, (err, light) => {
       if (err) return console.log(err);
       superAgent
       .put(address)
@@ -357,7 +361,7 @@ lightRouter.get('/light/detail/:lightId', jwtAuth, (req, res) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
 
-    Light.findOne({ bridgeLightId: req.params.lightId }, (err, light) => {
+    Light.findOne({ bridgeLightId: req.params.lightId, bridgeId: bridge._id }, (err, light) => {
       if (err) return console.log(err);
       if (!light) {
         return res.status(401).json({
