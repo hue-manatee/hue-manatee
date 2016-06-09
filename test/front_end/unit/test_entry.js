@@ -10,3 +10,4 @@ require('./group_list_controller_test.js');
 require('./group_detail_controller_test.js');
 require('./control_panel_directive_test.js');
 require('./light_form_directive_test.js');
+require('./create_light_controller_test.js');
