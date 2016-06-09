@@ -2,7 +2,7 @@
   <h3 data-ng-if="!lightCtrl.editing">{{lightCtrl.settings.name}}</h3>
   <button class="edit-button" type="button" data-ng-click="lightCtrl.editing=true" data-ng-if="!lightCtrl.editing"><i class="fa fa-pencil" aria-hidden="true"></i></button>
   <control-panel data-target="lightCtrl.id" data-ng-if="!lightCtrl.editing"></control-panel>
-  <light-form data-target="lightCtrl.id" data-ng-if="lightCtrl.editing"><button type="button" data-ng-click="lightCtrl.editing=false">Cancel</button></light-form>
+  <light-form data-target="lightCtrl.id" data-ng-if="lightCtrl.editing"><button class="secondary" type="button" data-ng-click="lightCtrl.editing=false">Cancel</button></light-form>
   <h3 data-ng-if="!lightCtrl.editing">Groups</h3>
   <ul data-ng-init="lightCtrl.getGroups(lightCtrl.id)" data-ng-if="!lightCtrl.editing">
     <li data-ng-repeat="group in lightCtrl.groups track by $index"><a href="/#/group/{{group}}">
