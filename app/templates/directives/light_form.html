@@ -1,12 +1,10 @@
 <form data-ng-submit="save(target)">
   <label for="name">Light Name</label>
-  <input type="text" name="name" data-ng-model="name">
-
-  <label data-ng-if="!editing" for="bridgelightid">Bridge Light Id</label>
-  <input data-ng-if="!editing" type="text" name="bridgelightid" data-ng-model="bridgeLightId">
-
+  <input type="text" name="name" data-ng-model="settings.name">
+  <label for="bridgeLightId" data-ng-if="!editing">Bridge Light Id</label>
+  <input type="text" name="bridgeLightId" data-ng-if="!editing" data-ng-model="$parent.settings.bridgeLightId">
   <h3>Groups</h3>
-  <div data-ng-repeat="group in groups" data-ng-if="groups && groups.length > 0">
+  <div data-ng-repeat="group in groups track by $index" data-ng-if="groups && groups.length > 0">
     <input type="text" name="groups" data-ng-model="group">
     <button type="button" name="button" data-ng-click="removeGroup(group)">X</button>
   </div>
@@ -18,25 +16,25 @@
 
   <h3>Defaults</h3>
   <label for="light">Light</label>
-  <input type="radio" name="state" value="true" data-ng-model="state"> ON <br>
-  <input type="radio" name="state" value="false" data-ng-model="state"> OFF <br>
+  <input type="radio" name="state" value="true" data-ng-model="settings.state"> ON <br>
+  <input type="radio" name="state" value="false" data-ng-model="settings.state"> OFF <br>
 
   <label for="color">Color:</label>
-  <input type="text" name="color" data-ng-model="color">
+  <input type="text" name="color" data-ng-model="settings.color">
 
   <label for="brightness">Brightness:</label>
-  <input type="text" name="brightness" data-ng-model="brightness">
+  <input type="text" name="brightness" data-ng-model="settings.brightness">
 
   <label for="alert">Alert</label>
-  <select name="alert" data-ng-model="alert">
+  <select name="alert" data-ng-model="settings.alert">
     <option value="none">None</option>
     <option value="select">1x</option>
     <option value="lselect">15x</option>
   </select>
 
   <label for="colorloop">Color Loop: </label>
-  <input type="radio" name="colorloop" value="colorloop" data-ng-model="colorloop"> ON <br>
-  <input type="radio" name="colorloop" value="none" data-ng-model="colorloop"> OFF <br>
+  <input type="radio" name="colorloop" value="colorloop" data-ng-model="settings.colorloop"> ON <br>
+  <input type="radio" name="colorloop" value="none" data-ng-model="settings.colorloop"> OFF <br>
 
   <button type="submit" name="save">Save Changes</button>
   <ng-transclude></ng-transclude>

@@ -9,13 +9,7 @@ module.exports = function(app) {
         target: '='
       },
       link: function(scope, elements, attrs, controller) {
-        scope.bridgeLightId = controller.bridgeLightId;
-        scope.name = controller.name;
-        scope.color = controller.color;
-        scope.state = controller.state;
-        scope.brightness = controller.brightness;
-        scope.alert = controller.alert;
-        scope.colorloop = controller.colorloop;
+        scope.settings = controller.settings;
         scope.groups = controller.groups;
         scope.save = controller.save;
         scope.addGroup = controller.addGroup;
