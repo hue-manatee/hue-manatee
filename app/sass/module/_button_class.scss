@@ -8,9 +8,21 @@
   transition: all 0.5s ease;
   display: block;
   text-decoration: none;
+  :hover {
+    background-color: darken($green, 15%);
+    border-color: $green;
+  }
+}
+.button:hover {
+  background-color: darken($green, 15%);
+  border-color: $green;
 }
 .secondary {
   background-color: $blue;
+  border-color: $blue;
+}
+.secondary:hover {
+  background-color: darken($blue, 15%);
   border-color: $blue;
 }
 // move to layout
