@@ -4,14 +4,14 @@
   <label for="bridgeLightId" data-ng-if="!editing">Bridge Light Id</label>
   <input type="text" name="bridgeLightId" data-ng-if="!editing" data-ng-model="$parent.settings.bridgeLightId">
   <h3>Groups</h3>
-  <div data-ng-repeat="group in groups track by $index" data-ng-if="groups && groups.length > 0">
+  <div class="group-item" data-ng-repeat="group in groups track by $index" data-ng-if="groups && groups.length > 0">
     <input type="text" name="groups" data-ng-model="group">
-    <button type="button" name="button" data-ng-click="removeGroup(group)">X</button>
+    <button type="button" name="button" data-ng-click="removeGroup(group)"><i class="fa fa-times" aria-hidden="true"></i></button>
   </div>
 
-  <div>
+  <div class="group-item-new">
     <input type="text" name="groups" data-ng-model="newGroup">
-    <button type="button" name="button" data-ng-click="addGroup()">+</button>
+    <button type="button" name="button" data-ng-click="addGroup()"><i class="fa fa-plus" aria-hidden="true"></i></button>
   </div>
 
   <h3>Defaults</h3>
