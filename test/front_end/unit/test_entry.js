@@ -4,3 +4,4 @@ require('../../../app/js/entry');
 
 require('./signup_controller_test.js');
 require('./login_controller_test.js');
+require('./light_controller_test.js');

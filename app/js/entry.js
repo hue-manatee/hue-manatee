@@ -62,8 +62,8 @@ hueApp.config(['$routeProvider', function($routing) {
       templateUrl: 'templates/views/auth/auth_view.html',
       controller: 'LoginController',
       controllerAs: 'authCtrl'
-    })
-    .otherwise({
-      redirectTo: '/'
     });
+    // .otherwise({
+    //   redirectTo: '/'
+    // });
 }]);
