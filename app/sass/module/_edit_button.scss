@@ -1,0 +1,15 @@
+.edit-button {
+  width: 45px;
+  background-color: $blue;
+  border-color: $blue;
+  color: #ffffff;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1.2em;
+}
+
+.edit-button:hover {
+  background-color: darken($blue, 15%);
+  border-color: $blue;
+}
