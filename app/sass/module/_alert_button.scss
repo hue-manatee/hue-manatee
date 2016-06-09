@@ -1,0 +1,11 @@
+.alert-button {
+  width: 40px;
+  margin-right: 10px;
+  float: left;
+  background-color: $blue;
+  border-color: $blue;
+  color: #ffffff;
+}
+.alert-button:hover {
+  background-color: darken($blue, 15%);
+}
