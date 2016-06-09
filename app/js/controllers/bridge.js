@@ -38,7 +38,6 @@ module.exports = function(app) {
       });
    };
    this.update = function() {
-     console.log(this.bridge);
      $http({
        method: 'PUT',
        url: 'api/bridge/update/' + this.bridge.bridgeKey,
