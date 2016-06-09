@@ -39,9 +39,9 @@ describe('GroupListController Test', () => {
     var arrayResult = [];
     var testArray = ['test', 'moose', 'test'];
     var resultArray = ['moose', 'test'];
-    groupListCtrl.arrayCompress(testArray).then(() => {
-      console.log('arrayResult mooooo', arrayResult);
-    });
+    groupListCtrl.arrayCompress(testArray);
+    console.log('arrayResult mooooo', arrayResult);
+    console.log('testArray mooooo', testArray);
     expect(arrayResult).toBe(resultArray);
   });
 
