@@ -3,6 +3,7 @@ module.exports = function(app) {
   function(hueAuth, $http, $location) {
     if (!hueAuth.getToken()) $location.path('/');
     this.groups = [];
+    this.settings = {};
     this.save = function() {
       if (this.groups.length > 0 ) {
         this.groupString = this.groups.join();
@@ -12,13 +13,13 @@ module.exports = function(app) {
         url: '/api/light/create',
         dataType: 'json',
         data: {
-          bridgeLightId: this.bridgeLightId,
-          name: this.name,
-          color: this.color,
-          state: this.state,
-          bri: this.brightness,
-          alert: this.alert,
-          effect: this.effect,
+          bridgeLightId: this.settings.bridgeLightId,
+          name: this.settings.name,
+          color: this.settings.color,
+          state: this.settings.state,
+          bri: this.settings.brightness,
+          alert: this.settings.alert,
+          effect: this.settings.effect,
           groups: this.groupString
         },
         headers: {
@@ -26,10 +27,11 @@ module.exports = function(app) {
         }
       })
       .then((res) => {
-        console.log(res);
-        $location.path('/light/' + this.bridgeLightId);
+        this.status = 'success';
+        $location.path('/light/' + this.settings.bridgeLightId);
       }, (response) => {
         console.log(response);
+        this.status = 'fail';
       });
     };
     this.addGroup = function() {

@@ -4,6 +4,7 @@ module.exports = function(app) {
   function(hueAuth, $location, $http, $routeParams) {
     if (!hueAuth.getToken()) $location.path('/');
     this.groups = [];
+    this.settings = {};
     var self = this;
     this.id = $routeParams.id;
     this.update = function(target, alert, colorLoop) {
@@ -73,14 +74,14 @@ module.exports = function(app) {
       })
       .then((res) => {
         var light = res.data.light;
-        this.name = light.name;
-        this.bridgeLightId = light.bridgeLightId;
-        this.brightness = light.bri;
-        this.alert = light.alert;
-        this.color = light.color;
-        if (light.state) this.state = 'true';
-        if (!light.state) this.state = 'false';
-        this.colorloop = light.effect;
+        this.settings.name = light.name;
+        this.settings.bridgeLightId = light.bridgeLightId;
+        this.settings.brightness = light.bri;
+        this.settings.alert = light.alert;
+        this.settings.color = light.color;
+        if (light.state) this.settings.state = 'true';
+        if (!light.state) this.settings.state = 'false';
+        this.settings.colorloop = light.effect;
       }, (response) => {
         console.log('there are no light here:', response);
       });
@@ -94,13 +95,13 @@ module.exports = function(app) {
         url: '/api/light/update/' + target,
         dataType: 'json',
         data: {
-          bridgeLightId: this.bridgeLightId,
-          name: this.name,
-          color: this.color,
-          state: this.state,
-          bri: this.brightness,
-          alert: this.alert,
-          effect: this.effect,
+          bridgeLightId: this.settings.bridgeLightId,
+          name: this.settings.name,
+          color: this.settings.color,
+          state: this.settings.state,
+          bri: this.settings.brightness,
+          alert: this.settings.alert,
+          effect: this.settings.effect,
           groups: this.groupString
         },
         headers: {
