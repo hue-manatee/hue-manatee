@@ -57,6 +57,7 @@
     "gulp-mocha": "^2.2.0",
     "gulp-sass": "^2.3.1",
     "gulp-sourcemaps": "^1.6.0",
+    "html-loader": "^0.4.3",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^1.0.1",
