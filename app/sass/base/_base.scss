@@ -3,6 +3,7 @@
 }
 body {
   background-color: $backgroundColor;
+  font-family: 'Open Sans', sans-serif;
 }
 select {
   margin-bottom: $margin;
@@ -15,6 +16,7 @@ label {
   color: $darkgrey;
   clear: both;
   display: block;
+  margin-bottom: $margin/2;
 }
 input {
   @include rounded($darkgrey);
