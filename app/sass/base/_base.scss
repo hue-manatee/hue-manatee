@@ -4,9 +4,17 @@
 body {
   background-color: $backgroundColor;
 }
+select {
+  margin-bottom: $margin;
+}
+form {
+  clear: both;
+}
 label {
   width: 100%;
   color: $darkgrey;
+  clear: both;
+  display: block;
 }
 input {
   @include rounded($darkgrey);
@@ -22,6 +30,10 @@ button {
   width: 100%;
   margin-bottom: $margin;
   cursor: pointer;
+  transition: all 0.5s ease;
+}
+button:hover {
+  background-color: darken($green, 15%);
 }
 p {
   margin: $margin 0px;
