@@ -1,0 +1,8 @@
+@mixin rounded ($borderColor) {
+  border: 1px solid $borderColor;
+  -webkit-border-radius: $corner;
+  -moz-border-radius: $corner;
+  -ms-border-radius: $corner;
+  border-radius: $corner;
+  padding: $padding;
+}
