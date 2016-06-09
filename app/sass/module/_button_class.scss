@@ -1,0 +1,19 @@
+.button {
+  @include rounded($green);
+  background-color: $green;
+  color: black;
+  width: 100%;
+  margin-bottom: $margin;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  display: block;
+  text-decoration: none;
+}
+.secondary {
+  background-color: $blue;
+  border-color: $blue;
+}
+// move to layout
+.center {
+  text-align: center;
+}
