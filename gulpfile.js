@@ -77,6 +77,16 @@ gulp.task('sass:watch', ['sass:dev'], () => {
   gulp.watch('./app/sass/**/*.scss');
 });
 
+gulp.task('image:dev', () => {
+  gulp.src('app/images/*')
+    .pipe(gulp.dest('./build/images'));
+});
+
+gulp.task('css:dev', () => {
+  gulp.src('app/css/*')
+    .pipe(gulp.dest('./build/css'));
+});
+
 gulp.task('start:server', () => {
   children.push(cp.fork('server.js'));
   children.push(cp.spawn('mongod', ['--dbpath=./db']));
@@ -86,6 +96,7 @@ gulp.task('start:server', () => {
 });
 
 gulp.task('build:dev', ['webpack:dev', 'static:dev', 'sass:dev']);
+gulp.task('style:dev', ['sass:dev', 'css:dev', 'image:dev', 'build:dev']);
 gulp.task('test', ['test:mocha']);
 gulp.task('lint', ['lint:testFiles', 'lint:appFiles']);
 
