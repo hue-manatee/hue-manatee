@@ -4,8 +4,13 @@ describe('GroupDetailController Test', () => {
   var $httpBackend;
   var $controller;
   var groupDetailCtrl;
+  var $routeParams;
 
   beforeEach(angular.mock.module('hueApp'));
+
+  beforeEach(angular.mock.inject((_$routeParams_) => {
+    $routeParams = _$routeParams_;
+  }));
 
   beforeEach(angular.mock.inject((_$controller_) => {
     $controller = _$controller_;
@@ -19,6 +24,7 @@ describe('GroupDetailController Test', () => {
   afterEach(() => {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
+    groupDetailCtrl.status = ' ';
   });
 
   it('should be a controller', () => {
@@ -36,4 +42,21 @@ describe('GroupDetailController Test', () => {
     expect(groupDetailCtrl.group[0].lightId).toBe('test');
   });
 
-});
+   it('It should return a status of success when updated', () => {
+     $httpBackend.expectGET('/api/light/magic')
+     .respond(200);
+     $routeParams.groupDetailCtrl = 'test';
+     groupDetailCtrl.update();
+     $httpBackend.flush();
+     expect(groupDetailCtrl.status).toBe('success');
+   });
+
+   it('It should return a status of success when reset', () => {
+     $httpBackend.expectGET('/api/group/reset')
+     .respond(200);
+     $routeParams.groupDetailCtrl = 'test';
+     groupDetailCtrl.reset();
+     $httpBackend.flush();
+     expect(groupDetailCtrl.status).toBe('success');
+   });
+  });

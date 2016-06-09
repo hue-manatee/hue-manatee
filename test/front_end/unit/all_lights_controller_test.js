@@ -4,11 +4,16 @@ describe('AllLightsController Test', () => {
   var $httpBackend;
   var $controller;
   var allLightsCtrl;
+  var $routeParams;
 
   beforeEach(angular.mock.module('hueApp'));
 
   beforeEach(angular.mock.inject((_$controller_) => {
     $controller = _$controller_;
+  }));
+
+  beforeEach(angular.mock.inject((_$routeParams_) => {
+    $routeParams = _$routeParams_;
   }));
 
   beforeEach(angular.mock.inject((_$httpBackend_) => {
@@ -19,6 +24,8 @@ describe('AllLightsController Test', () => {
   afterEach(() => {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
+    $routeParams.allLightsCtrl = ' ';
+    allLightsCtrl.status = ' ';
   });
 
   it('should be a controller', () => {
@@ -37,16 +44,22 @@ describe('AllLightsController Test', () => {
     expect(allLightsCtrl.all[0].lightId).toBe('test light');
   });
 
- //  it('It should a res of 200 when updated', () => {
- //    $httpBackend.expectGET('/api/light/magic?group=all')
- //    .respond(200);
- //    var succeeded;
- //    window.localStorage.token = 'testResponse';
- //    allLightsCtrl.update().then(function() {
- //     succeeded = true;
- //    });
- //    $httpBackend.flush();
- //    expect(succeeded).toBe(true);
- // });
+  it('It should return a status of success when updated', () => {
+    $httpBackend.expectGET('/api/light/magic?group=all')
+    .respond(200);
+    $routeParams.allLightsCtrl = 'test';
+    allLightsCtrl.update();
+    $httpBackend.flush();
+    expect(allLightsCtrl.status).toBe('success');
+  });
+
+  it('It should return a status of success when reset', () => {
+    $httpBackend.expectGET('/api/light/all/reset')
+    .respond(200);
+    $routeParams.allLightsCtrl = 'test';
+    allLightsCtrl.reset();
+    $httpBackend.flush();
+    expect(allLightsCtrl.status).toBe('success');
+  });
 
 });

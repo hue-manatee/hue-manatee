@@ -4,11 +4,16 @@ describe('GroupListController Test', () => {
   var $httpBackend;
   var $controller;
   var groupListCtrl;
+  var $routeParams;
 
   beforeEach(angular.mock.module('hueApp'));
 
   beforeEach(angular.mock.inject((_$controller_) => {
     $controller = _$controller_;
+  }));
+
+  beforeEach(angular.mock.inject((_$routeParams_) => {
+    $routeParams = _$routeParams_;
   }));
 
   beforeEach(angular.mock.inject((_$httpBackend_) => {
@@ -19,6 +24,7 @@ describe('GroupListController Test', () => {
   afterEach(() => {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
+    groupListCtrl.status = ' ';
   });
 
   it('should be a controller', () => {
@@ -37,4 +43,23 @@ describe('GroupListController Test', () => {
     expect(groupListCtrl.groupNames[1]).toBe('test');
     expect(groupListCtrl.groupNames[2]).toBe(undefined);
   });
+
+  it('It should return a status of success when updated', () => {
+    $httpBackend.expectGET('/api/light/magic')
+    .respond(200);
+    $routeParams.groupListCtrl = 'test';
+    groupListCtrl.update();
+    $httpBackend.flush();
+    expect(groupListCtrl.status).toBe('success');
+  });
+
+  it('It should return a status of success when reset', () => {
+    $httpBackend.expectGET('/api/group/reset')
+    .respond(200);
+    $routeParams.groupListCtrl = 'test';
+    groupListCtrl.reset();
+    $httpBackend.flush();
+    expect(groupListCtrl.status).toBe('success');
+  });
+
 });
