@@ -8,8 +8,10 @@
   </head>
   <body data-ng-app="hueApp">
     <header>
+      <div class="logout" data-ng-controller="LogoutController as authCtrl">
+        <a data-ng-if="authCtrl.reveal()" href=/#/logout><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+      </div>
       <img class="logo" src="images/hue-logo.png" alt="Hue Logo"></img>
-      <i data-ng-controller="LogoutController as authCtrl" class="fa fa-sign-out" aria-hidden="true"></i>
     </header>
     <main data-ng-view>
 
