@@ -1,0 +1,21 @@
+header {
+  width: 100%;
+  background-color: $headerColor;
+  height: 125px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.logo {
+  height: 160px;
+  position: relative;
+  margin-left: 20px;
+}
+
+.logout {
+  color: black;
+  margin-top: 30px;
+  font-size: 70px;
+  position: absolute;
+  right: 100px;
+}

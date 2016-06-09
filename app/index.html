@@ -8,9 +8,12 @@
     <link rel="stylesheet" href="./css/style.css" charset="utf-8">
   </head>
   <body data-ng-app="hueApp">
-    <section>
-      <h1>Hue Manatee!</h1>
-    </section>
+    <header>
+      <div class="logout" data-ng-controller="LogoutController as authCtrl">
+        <a data-ng-if="authCtrl.reveal()" href=/#/logout><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+      </div>
+      <img class="logo" src="images/hue-logo.png" alt="Hue Logo"></img>
+    </header>
     <main data-ng-view>
 
     </main>
