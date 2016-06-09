@@ -1,12 +1,10 @@
 <form data-ng-submit="save(target)">
   <label for="name">Light Name</label>
   <input type="text" name="name" data-ng-model="name">
-
-  <label data-ng-if="!editing" for="bridgelightid">Bridge Light Id</label>
-  <input data-ng-if="!editing" type="text" name="bridgelightid" data-ng-model="bridgeLightId">
-
+  <label for="bridgeLightId" data-ng-if="!editing">Bridge Light Id</label>
+  <input type="text" name="bridgeLightId" data-ng-if="!editing" data-ng-model="$parent.bridgeLightId">
   <h3>Groups</h3>
-  <div data-ng-repeat="group in groups" data-ng-if="groups && groups.length > 0">
+  <div data-ng-repeat="group in groups track by $index" data-ng-if="groups && groups.length > 0">
     <input type="text" name="groups" data-ng-model="group">
     <button type="button" name="button" data-ng-click="removeGroup(group)">X</button>
   </div>
