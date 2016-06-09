@@ -1,7 +1,7 @@
 module.exports = function(app) {
 
-  app.controller('LightController', ['hueAuth', '$location', '$routeParams', '$http', '$route',
-  function(hueAuth, $location, $routeParams, $http, $route) {
+  app.controller('LightController', ['hueAuth', '$location', '$http', '$routeParams',
+  function(hueAuth, $location, $http, $routeParams) {
     if (!hueAuth.getToken()) $location.path('/');
     this.groups = [];
     this.settings = {};
@@ -25,8 +25,10 @@ module.exports = function(app) {
       })
       .then((res) => {
         console.log('success light change: ', res);
+        this.status = 'success';
       }, (response) => {
         console.log('fail no light change :( ', response);
+        this.status = 'fail';
       });
     };
     this.reset = function(target) {
@@ -39,8 +41,10 @@ module.exports = function(app) {
       })
       .then((res) => {
         console.log('successful reset: ', res);
+        this.status = 'success';
       }, (response) => {
         console.log('reset failed: ', response);
+        this.status = 'fail';
       });
     };
     this.getGroups = function(target) {
@@ -107,7 +111,7 @@ module.exports = function(app) {
       .then((res) => {
         console.log(res);
         self.editing = false;
-        $route.reload();
+        // $route.reload();
       }, (response) => {
         console.log(response);
       });
