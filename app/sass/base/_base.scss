@@ -1,0 +1,47 @@
+* {
+  box-sizing: border-box;
+}
+label {
+  width: 100%;
+  color: $darkgrey;
+}
+input {
+  @include rounded($darkgrey);
+  background-color: white;
+  color: #666666;
+  width: 100%;
+  margin-bottom: $margin;
+}
+button {
+  @include rounded($green);
+  background-color: $green;
+  color: black;
+  width: 100%;
+}
+p {
+  margin: $margin 0px;
+  font-size: 1em;
+}
+h1, h2, h3 {
+  color: $darkgrey;
+  margin-bottom: $margin;
+}
+h1 {
+  font-size: 2em;
+}
+h2 {
+  font-size: 1.5em;
+}
+h3 {
+  font-size: 1.2em;
+}
+main {
+  margin: $margin;
+}
+ul {
+  margin: $margin;
+  li {
+    list-style: disc;
+    margin: $margin;
+  }
+}
