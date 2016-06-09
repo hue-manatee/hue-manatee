@@ -4,7 +4,7 @@ module.exports = function(app) {
   function(hueAuth, $location, $routeParams, $http, $route) {
     if (!hueAuth.getToken()) $location.path('/');
     this.groups = [];
-    this.settings = {}
+    this.settings = {};
     var self = this;
     this.id = $routeParams.id;
     this.update = function(target, alert, colorLoop) {
