@@ -36,11 +36,12 @@ describe('GroupListController Test', () => {
   });
 
   it('It should get rid of duplicates in an array', () => {
-    var arrayResult;
+    var arrayResult = [];
     var testArray = ['test', 'moose', 'test'];
     var resultArray = ['moose', 'test'];
-    groupListCtrl.arrayCompress(testArray);
-    console.log('arrayResult', arrayResult);
+    groupListCtrl.arrayCompress(testArray).then(() => {
+      console.log('arrayResult mooooo', arrayResult);
+    });
     expect(arrayResult).toBe(resultArray);
   });
 
