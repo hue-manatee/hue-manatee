@@ -7,7 +7,6 @@ module.exports = function(app) {
       $location.path('/');
     };
     this.reveal = function() {
-      console.log(hueAuth.getToken(), 'reveal fired');
       if (hueAuth.getToken()) return true;
       return false;
     };
