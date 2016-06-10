@@ -15,9 +15,11 @@ header {
 }
 
 .logout {
-  color: black;
-  margin-top: 30px;
-  font-size: 70px;
+  line-height: 125px;
+  font-size: 2.7em;
   position: absolute;
-  right: 100px;
+  right: 20px;
+  a {
+    color: #ffffff;
+  }
 }
