@@ -1,0 +1,28 @@
+.dashboard article {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: $margin;
+    padding: $padding;
+    text-decoration: none;
+}
+
+.dashboard article a {
+  text-decoration: none;
+}
+.dashboard .button {
+  @include rounded($green);
+  padding-bottom: $padding;
+}
+.dashboard .secondary {
+  @include rounded($blue);
+  padding-bottom: $padding;
+}
+.dashboard article section {
+  padding: $padding;
+  text-decoration: none;
+  width: 30%;
+  height: 160px;
+  min-width: 200px;
+}
