@@ -1,0 +1,10 @@
+.pink {
+  background-color: $pink;
+  border-color: $pink;
+  @include rounded($pink);
+}
+
+.pink:hover {
+  background-color: darken($pink, 15%);
+  border-color: $pink;
+}
