@@ -45,7 +45,7 @@ describe('AllLightsController Test', () => {
   });
 
   it('It should return a status of success when updated', () => {
-    $httpBackend.expectGET('/api/light/magic?group=all')
+    $httpBackend.expectGET('/api/light/magic?group=all&on=false')
     .respond(200);
     $routeParams.allLightsCtrl = 'test';
     allLightsCtrl.update();
