@@ -1,5 +1,6 @@
 .colorpicker input{
   width: calc(100% - 50px;);
+  max-width: calc(#{$maxWidth} - 50px);
   float: left;
 }
 .preview {

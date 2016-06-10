@@ -1,5 +1,6 @@
 .group-item input, .group-item-new input {
   width: calc(100% - 50px);
+  max-width: calc(#{$maxWidth} - 50px);
   float: left;
 }
 
@@ -7,6 +8,7 @@
   width: 40px;
   margin-left: 10px;
   float: left;
+  clear: none;
 }
 
 .group-item button{

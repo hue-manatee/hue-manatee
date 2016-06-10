@@ -10,6 +10,7 @@ select {
 }
 form {
   clear: both;
+  max-width: $maxWidth;
 }
 label {
   width: 100%;
@@ -25,9 +26,11 @@ input {
   width: 100%;
   margin-bottom: $margin;
   font-size: 1em;
+  max-width: $maxWidth;
 }
 button {
   @include rounded($green);
+  clear: both;
   background-color: $green;
   color: black;
   width: 100%;
@@ -35,6 +38,7 @@ button {
   cursor: pointer;
   transition: all 0.5s ease;
   font-size: 1em;
+  max-width: $maxWidth;
 }
 button:hover {
   background-color: darken($green, 15%);
@@ -47,10 +51,12 @@ p {
   margin: $margin 0px;
   font-size: 1em;
   line-height: 1.3em;
+  max-width: $maxWidth;
 }
 h1, h2, h3 {
   color: $darkgrey;
   margin-bottom: $margin;
+  clear: both;
 }
 h1 {
   font-size: 2em;

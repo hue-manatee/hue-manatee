@@ -8,6 +8,7 @@
   transition: all 0.5s ease;
   display: block;
   text-decoration: none;
+  max-width: $maxWidth;
   :hover {
     background-color: darken($green, 15%);
     border-color: $green;
