@@ -4,20 +4,24 @@ header {
   height: 125px;
   margin-bottom: 30px;
   position: relative;
+  z-index: 50;
 }
 
 .logo {
   height: 160px;
   position: relative;
   margin-left: 20px;
+  z-index: 100;
 }
 
 .logout {
-  color: black;
-  margin-top: 30px;
-  font-size: 70px;
+  line-height: 125px;
+  font-size: 2.7em;
   position: absolute;
-  right: 100px;
+  right: 20px;
+  a {
+    color: #ffffff;
+  }
 }
 .center {
   text-align: center;
