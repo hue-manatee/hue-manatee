@@ -31,9 +31,11 @@
   </div> <!-- end switch -->
 
 </div> <!-- end container -->
+<div class="colorpicker">
   <label for="color">Color:</label>
   <input type="text" name="color" data-ng-model="settings.color">
-
+  <span class="preview" style="background:{{settings.color}}"></span>
+</div>
   <label for="brightness">Brightness:</label>
   <input type="text" name="brightness" data-ng-model="settings.brightness">
 

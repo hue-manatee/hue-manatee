@@ -15,9 +15,11 @@
 		</div> <!-- end switch -->
 
 	</div> <!-- end container -->
-
+    <div class="colorpicker">
     <label for="color">Color:</label>
     <input type="text" name="color" data-ng-model="color">
+    <span class="preview" style="background: {{color}}"></span>
+  </div>
 
     <label for="brightness">Brightness:</label>
     <input type="text" name="brightness" data-ng-model="brightness">
@@ -30,8 +32,6 @@
 
   <form>
     <label for="colorloop">Color Loop: </label>
-    <!-- <input type="radio" name="colorloop" value="true" data-ng-model="colorloop" data-ng-click="update(target, null, 'colorloop')"> ON <br>
-    <input type="radio" name="colorloop" value="false" data-ng-model="colorloop" data-ng-click="update(target, null, 'none')"> OFF <br> -->
     <div class="switch-container">
 
 		<div class="switch white">

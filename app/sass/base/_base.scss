@@ -24,6 +24,7 @@ input {
   color: #666666;
   width: 100%;
   margin-bottom: $margin;
+  font-size: 1em;
 }
 button {
   @include rounded($green);
