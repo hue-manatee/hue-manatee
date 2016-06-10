@@ -31,18 +31,19 @@ lightRouter.post('/light/create', jwtAuth, bodyParser, (req, res) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
     newLight.bridgeId = bridge._id;
+    Light.findOne({ bridgeLightId: req.body.bridgeLightId, bridgeId: bridge._id },
+      (error, light) => {
+      if (error) return console.log(error);
+      if (light) {
+        return res.status(405)
+        .json({ msg: 'Light with ID of ' + light.bridgeLightId + ' already exists' });
+      }
+      newLight.save((err, data) => {
+        if (err) return console.log(err);
+        return res.status(200).json(data);
+      });
   });
 
-  Light.findOne({ bridgeLightId: req.body.bridgeLightId }, (error, light) => {
-    if (error) return console.log(error);
-    if (light) {
-    return res.status(405)
-    .json({ msg: 'Light with ID of ' + light.bridgeLightId + ' already exists' });
-  }
-  newLight.save((err, data) => {
-    if (err) return console.log(err);
-    return res.status(200).json(data);
-  });
   });
 });
 
