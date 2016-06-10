@@ -1,7 +1,9 @@
-<article data-ng-init="groupListCtrl.getGroupNames()">
-  <section data-ng-repeat="name in groupListCtrl.groupNames">
-    <h2>Group Name: <a href="/#/group/{{name}}">{{name}}</a></h2>
-    <control-panel data-target="name"></control-panel>
-  </section>
-  <nav-bar></nav-bar>
-</article>
+<section>
+  <nav-bar class="nav"></nav-bar>
+  <article data-ng-init="groupListCtrl.getGroupNames()">
+    <section data-ng-repeat="name in groupListCtrl.groupNames">
+      <h2>Group Name: <a href="/#/group/{{name}}">{{name}}</a></h2>
+      <control-panel data-target="name"></control-panel>
+    </section>
+  </article>
+</section>

@@ -1,9 +1,11 @@
-<article data-ng-init="groupDetailCtrl.getAll()">
-  <h2>Group Name: {{groupDetailCtrl.groupName.toUpperCase()}}</h2>
-  <control-panel data-target="lightCtrl.id"></control-panel>
-  <ul>
-    <li data-ng-repeat="light in groupDetailCtrl.group"><a href='/#/light/{{light.bridgeLightId}}'>{{light.bridgeLightId}}</a></li>
-  </ul>
-  <a href="/#/light/create">Add Light</a>
-  <nav-bar></nav-bar>
-</article>
+<section>
+  <nav-bar class="nav"></nav-bar>
+  <article data-ng-init="groupDetailCtrl.getAll()">
+    <h2>Group Name: {{groupDetailCtrl.groupName.toUpperCase()}}</h2>
+    <control-panel data-target="lightCtrl.id"></control-panel>
+    <ul>
+      <li data-ng-repeat="light in groupDetailCtrl.group"><a href='/#/light/{{light.bridgeLightId}}'>{{light.bridgeLightId}}</a></li>
+    </ul>
+    <a href="/#/light/create">Add Light</a>
+  </article>
+</section>

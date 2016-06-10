@@ -4,12 +4,14 @@ header {
   height: 125px;
   margin-bottom: 30px;
   position: relative;
+  z-index: 50;
 }
 
 .logo {
   height: 160px;
   position: relative;
   margin-left: 20px;
+  z-index: 100;
 }
 
 .logout {
