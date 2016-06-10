@@ -9,13 +9,11 @@ const hexToHue = require(__dirname + '/../lib/hex_to_hue');
 const lightRouter = module.exports = exports = Router();
 
 lightRouter.post('/light/create', jwtAuth, bodyParser, (req, res) => {
-  console.log(req.body.color);
   if (req.body.color) {
     var hexObj = hexToHue(req.body.color);
     req.body.hue = hexObj.hue;
     req.body.sat = hexObj.sat;
   }
-  console.log(req.body.hue, req.body.sat);
   var newLight = new Light(req.body);
 
   if (req.body.groups) {
@@ -328,6 +326,8 @@ lightRouter.get('/light/groups', jwtAuth, (req, res) => {
     Light.find({ bridgeLightId: req.query.lightId, bridgeId: bridge._id }, (err, data) => {
       if (err) return console.log(err);
       if (!data) return res.status(401).json({ msg: 'light not found' });
+      if (!data[0]) return res.status(200).json({ msg: 'light not found' });
+      if (!data[0].groups) return res.status(200).json({ msg: 'no groups found' });
       res.status(200).json({ groups: data[0].groups });
     });
   });
@@ -367,7 +367,7 @@ lightRouter.get('/light/detail/:lightId', jwtAuth, (req, res) => {
       if (!light) {
         return res.status(401).json({
           msg: 'no light found, please create new light',
-          lightExists: true
+          lightExists: false
         });
       }
       return res.status(200).json({

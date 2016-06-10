@@ -61,7 +61,6 @@ module.exports = function(app) {
       })
       .then((res) => {
         this.group = res.data;
-        console.log(this.group);
       }, (response) => {
         console.log(response);
       });

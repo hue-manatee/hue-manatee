@@ -84,6 +84,7 @@ module.exports = function(app) {
         this.settings.colorloop = light.effect;
       }, (response) => {
         console.log('there are no light here:', response);
+        $location.path('/light/create');
       });
     };
     this.save = function(target) {
@@ -111,7 +112,6 @@ module.exports = function(app) {
       .then((res) => {
         console.log(res);
         self.editing = false;
-        // $route.reload();
       }, (response) => {
         console.log(response);
       });

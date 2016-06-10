@@ -58,7 +58,6 @@ module.exports = function(app) {
       .then((res) => {
         this.totalGroupNames = res.data;
         this.arrayCompress(this.totalGroupNames);
-        console.log(arrayResult);
         this.groupNames = arrayResult;
       }, (response) => {
         console.log(response);
