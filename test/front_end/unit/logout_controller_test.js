@@ -24,5 +24,4 @@ describe('LogoutController Test', () => {
   it('should be a controller', () => {
     expect(typeof logoutController).toBe('object');
   });
-  // TODO: Test logging out when the functionality is in the controller.
 });

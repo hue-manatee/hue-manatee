@@ -9,13 +9,11 @@ const hexToHue = require(__dirname + '/../lib/hex_to_hue');
 const lightRouter = module.exports = exports = Router();
 
 lightRouter.post('/light/create', jwtAuth, bodyParser, (req, res) => {
-  console.log(req.body.color);
   if (req.body.color) {
     var hexObj = hexToHue(req.body.color);
     req.body.hue = hexObj.hue;
     req.body.sat = hexObj.sat;
   }
-  console.log(req.body.hue, req.body.sat);
   var newLight = new Light(req.body);
 
   if (req.body.groups) {

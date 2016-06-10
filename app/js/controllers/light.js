@@ -112,7 +112,6 @@ module.exports = function(app) {
       .then((res) => {
         console.log(res);
         self.editing = false;
-        // $route.reload();
       }, (response) => {
         console.log(response);
       });
