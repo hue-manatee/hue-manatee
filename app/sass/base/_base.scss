@@ -33,9 +33,14 @@ button {
   margin-bottom: $margin;
   cursor: pointer;
   transition: all 0.5s ease;
+  font-size: 1em;
 }
 button:hover {
   background-color: darken($green, 15%);
+}
+a {
+  color: $darkblue;
+  font-size: 1em;
 }
 p {
   margin: $margin 0px;

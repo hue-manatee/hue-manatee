@@ -1,6 +1,8 @@
 module.exports = function(app) {
   app.controller('AllLightsController', ['hueAuth', '$http', '$location',
   function(hueAuth, $http, $location) {
+    this.state = 'false';
+    this.colorloop = 'false';
     if (!hueAuth.getToken()) $location.path('/');
     this.update = function(target, alert, colorLoop) {
       $http({

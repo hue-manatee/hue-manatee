@@ -20,7 +20,8 @@
       <input data-ng-model="bridgeCtrl.bridge.bridgeKey" type="text" name="bridge-key">
 
       <button type="submit">Save Changes</button>
-      <button data-ng-click="bridgeCtrl.cancel()" data-ng-if="bridgeCtrl.editing" type="button" name="cancel">Cancel Update</button>
+      <button data-ng-click="bridgeCtrl.cancel()" data-ng-if="bridgeCtrl.editing" type="button" name="cancel" class="secondary">Cancel Update</button>
     </form>
+    <a data-ng-if="bridgeCtrl.bridgeExists && !bridgeCtrl.editing" href="/#/light/create" class="button center">Add Light</a>
   </article>
 </section>
