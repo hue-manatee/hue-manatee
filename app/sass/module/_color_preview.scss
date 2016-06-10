@@ -1,0 +1,13 @@
+.colorpicker input{
+  width: calc(100% - 50px;);
+  max-width: calc(#{$maxWidth} - 50px);
+  float: left;
+}
+.preview {
+display: block;
+width: 40px;
+height: 40px;
+background: #cccccc;
+margin-left: 10px;
+float: left;
+}

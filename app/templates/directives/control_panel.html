@@ -1,10 +1,25 @@
 <section>
   <form data-ng-submit="update(target)">
-    <input type="radio" name="state" value="true" data-ng-model="state"> ON <br>
-    <input type="radio" name="state" value="false" data-ng-model="state"> OFF <br>
+    <div class="switch-container">
 
+		<div class="switch white">
+
+			<input type="radio" name="state" value="false" data-ng-model="state">
+			<input type="radio" name="state" value="true" data-ng-model="state">
+
+			<label for="switch-off">Off</label>
+			<label for="switch-on">On</label>
+
+			<span class="toggle"></span>
+
+		</div> <!-- end switch -->
+
+	</div> <!-- end container -->
+    <div class="colorpicker">
     <label for="color">Color:</label>
     <input type="text" name="color" data-ng-model="color">
+    <span class="preview" style="background: {{color}}"></span>
+  </div>
 
     <label for="brightness">Brightness:</label>
     <input type="text" name="brightness" data-ng-model="brightness">
@@ -17,8 +32,21 @@
 
   <form>
     <label for="colorloop">Color Loop: </label>
-    <input type="radio" name="colorloop" value="true" data-ng-model="colorloop" data-ng-click="update(target, null, 'colorloop')"> ON <br>
-    <input type="radio" name="colorloop" value="false" data-ng-model="colorloop" data-ng-click="update(target, null, 'none')"> OFF <br>
+    <div class="switch-container">
+
+		<div class="switch white">
+
+      <input type="radio" name="colorloop" value="true" data-ng-model="colorloop" data-ng-click="update(target, null, 'none')">
+			<input type="radio" name="colorloop" value="false" data-ng-model="colorloop" data-ng-click="update(target, null, 'colorloop')">
+
+			<label for="switch-off">Off</label>
+			<label for="switch-on">On</label>
+
+			<span class="toggle"></span>
+
+		</div> <!-- end switch -->
+
+	</div> <!-- end container -->
   </form>
   <button class="secondary" data-ng-click="reset(target)">Reset Light/Default</button>
 

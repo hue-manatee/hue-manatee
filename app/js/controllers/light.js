@@ -81,7 +81,7 @@ module.exports = function(app) {
         this.settings.color = light.color;
         if (light.state) this.settings.state = 'true';
         if (!light.state) this.settings.state = 'false';
-        this.settings.colorloop = light.effect;
+        this.settings.effect = light.effect;
       }, (response) => {
         console.log('there are no light here:', response);
         $location.path('/light/create');

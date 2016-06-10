@@ -26,7 +26,7 @@ module.exports = function(app) {
           token: window.localStorage.token
         }
       })
-      .then((res) => {
+      .then(() => {
         this.status = 'success';
         $location.path('/light/' + this.settings.bridgeLightId);
       }, (response) => {

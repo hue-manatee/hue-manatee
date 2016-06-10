@@ -1,10 +1,12 @@
 .alert-button {
-  width: 40px;
   margin-right: 10px;
   float: left;
   background-color: $blue;
   border-color: $blue;
   color: #ffffff;
+  width: auto;
+  font-size: 1em;
+  clear: none;
   box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
 }
 .alert-button:hover {

@@ -65,7 +65,7 @@ module.exports = function(app) {
     };
     this.arrayCompress = function(array) {
       var fakeArray = array.sort();
-      fakeArray.filter( function(ele, index, arr) {
+      fakeArray.filter( (ele, index, arr) => {
         if (index >= 0 && ele !== arr[index - 1]) {
          arrayResult.push(ele);
         }

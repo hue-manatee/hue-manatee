@@ -16,12 +16,26 @@
 
   <h3>Defaults</h3>
   <label for="light">Light</label>
-  <input type="radio" name="state" value="true" data-ng-model="settings.state"> ON <br>
-  <input type="radio" name="state" value="false" data-ng-model="settings.state"> OFF <br>
+  <div class="switch-container">
 
+  <div class="switch white">
+
+    <input type="radio" name="state" value="false" data-ng-model="settings.state">
+    <input type="radio" name="state" value="true" data-ng-model="settings.state">
+
+    <label for="switch-off">Off</label>
+    <label for="switch-on">On</label>
+
+    <span class="toggle"></span>
+
+  </div> <!-- end switch -->
+
+</div> <!-- end container -->
+<div class="colorpicker">
   <label for="color">Color:</label>
   <input type="text" name="color" data-ng-model="settings.color">
-
+  <span class="preview" style="background:{{settings.color}}"></span>
+</div>
   <label for="brightness">Brightness:</label>
   <input type="text" name="brightness" data-ng-model="settings.brightness">
 
@@ -33,8 +47,21 @@
   </select>
 
   <label for="colorloop">Color Loop: </label>
-  <input type="radio" name="colorloop" value="colorloop" data-ng-model="settings.colorloop"> ON <br>
-  <input type="radio" name="colorloop" value="none" data-ng-model="settings.colorloop"> OFF <br>
+  <div class="switch-container">
+
+  <div class="switch white">
+
+    <input type="radio" name="colorloop" value="none" data-ng-model="settings.effect">
+    <input type="radio" name="colorloop" value="colorloop" data-ng-model="settings.effect">
+
+    <label for="switch-off">Off</label>
+    <label for="switch-on">On</label>
+
+    <span class="toggle"></span>
+
+  </div> <!-- end switch -->
+
+</div> <!-- end container -->
 
   <button type="submit" name="save">Save Changes</button>
   <ng-transclude></ng-transclude>

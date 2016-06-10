@@ -10,6 +10,7 @@ select {
 }
 form {
   clear: both;
+  max-width: $maxWidth;
 }
 label {
   width: 100%;
@@ -24,27 +25,39 @@ input {
   color: #666666;
   width: 100%;
   margin-bottom: $margin;
+  font-size: 1em;
+  max-width: $maxWidth;
 }
 button {
   @include rounded($green);
+  clear: both;
   background-color: $green;
   color: black;
   width: 100%;
   margin-bottom: $margin;
   cursor: pointer;
   transition: all 0.5s ease;
+  font-size: 1em;
+  max-width: $maxWidth;
   box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
 }
 button:hover {
   background-color: darken($green, 15%);
 }
+a {
+  color: $darkblue;
+  font-size: 1em;
+}
 p {
   margin: $margin 0px;
   font-size: 1em;
+  line-height: 1.3em;
+  max-width: $maxWidth;
 }
 h1, h2, h3 {
   color: $darkgrey;
   margin-bottom: $margin;
+  clear: both;
 }
 h1 {
   font-size: 2em;

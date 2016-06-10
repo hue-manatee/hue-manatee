@@ -41,7 +41,7 @@ describe('GroupListController Test', () => {
     $httpBackend.flush();
     expect(groupListCtrl.groupNames[0]).toBe('moose');
     expect(groupListCtrl.groupNames[1]).toBe('test');
-    expect(groupListCtrl.groupNames[2]).toBe(undefined);
+    expect(groupListCtrl.groupNames.length).toBe(2);
   });
 
   it('It should return a status of success when updated', () => {
