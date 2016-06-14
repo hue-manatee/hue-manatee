@@ -1,11 +1,11 @@
 module.exports = function(app) {
-
+//get rid of this empty line
   app.controller('LightController', ['hueAuth', '$location', '$http', '$routeParams',
   function(hueAuth, $location, $http, $routeParams) {
     if (!hueAuth.getToken()) $location.path('/');
     this.groups = [];
     this.settings = {};
-    var self = this;
+    var self = this; //boooooooooo, also you only use this one spot.
     this.id = $routeParams.id;
     this.update = function(target, alert, colorLoop) {
       $http({
@@ -73,12 +73,14 @@ module.exports = function(app) {
         }
       })
       .then((res) => {
+        //you could probably do this more programatically with Object.keys and map
         var light = res.data.light;
         this.settings.name = light.name;
         this.settings.bridgeLightId = light.bridgeLightId;
         this.settings.brightness = light.bri;
         this.settings.alert = light.alert;
         this.settings.color = light.color;
+        //this could be a single line
         if (light.state) this.settings.state = 'true';
         if (!light.state) this.settings.state = 'false';
         this.settings.effect = light.effect;
@@ -93,7 +95,7 @@ module.exports = function(app) {
       }
       $http({
         method: 'PUT',
-        url: '/api/light/update/' + target,
+        url: '/api/light/update/' + target, //you're already specifying that you're updating with the put method
         dataType: 'json',
         data: {
           bridgeLightId: this.settings.bridgeLightId,
@@ -113,6 +115,8 @@ module.exports = function(app) {
         console.log(res);
         self.editing = false;
       }, (response) => {
+        //if you're just console.loging the response instead of creating a wrapper
+        //function just pass console.log as the callback
         console.log(response);
       });
     };

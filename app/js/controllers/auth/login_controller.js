@@ -2,7 +2,7 @@ module.exports = function(app) {
   app.controller('LoginController', ['$http', '$location', 'hueHandleError',
   function($http, $location, hueHandleError) {
     this.buttonText = 'Login';
-    this.invalid = false;
+    this.invalid = false; //this will already evaluate to false, no need to set it
     this.errors = [];
     this.authenticate = function(user) {
       $http({

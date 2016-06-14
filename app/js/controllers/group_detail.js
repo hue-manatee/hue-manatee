@@ -1,3 +1,4 @@
+//LGTM
 module.exports = function(app) {
   app.controller('GroupDetailController', ['hueAuth', '$location', '$http', '$routeParams',
   function(hueAuth, $location, $http, $routeParams) {

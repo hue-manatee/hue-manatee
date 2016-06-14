@@ -56,6 +56,7 @@ module.exports = function(app) {
       .then((res) => {
         this.all = res.data;
       }, (response) => {
+        //just pass console.log
         console.log(response);
       });
     };

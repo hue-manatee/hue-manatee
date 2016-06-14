@@ -5,9 +5,15 @@ require('./controllers')(hueApp);
 require('./directives')(hueApp);
 require('./services')(hueApp);
 
+/* when you have this man routes you might consider moving them to 
+   other files, you can still do an app.config from those other files.
+   group them like you would server side routes and pull them into here and
+   create the default/fallback routes.
+*/
+
 hueApp.config(['$routeProvider', function($routing) {
   $routing
-
+//get rid of this blank line
     .when('/', {
       templateUrl: 'templates/views/root_view.html',
       controller: 'RootController',
