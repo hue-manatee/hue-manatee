@@ -46,7 +46,7 @@ module.exports = function(app) {
           console.log('fail no light change :( ', response);
           this.status = 'fail';
         });
-      };
+      };//fix this indentation
     this.getGroupNames = function() {
       $http({
         method: 'GET',
@@ -65,7 +65,7 @@ module.exports = function(app) {
     };
     this.arrayCompress = function(array) {
       var fakeArray = array.sort();
-      fakeArray.filter( (ele, index, arr) => {
+      fakeArray.filter( (ele, index, arr) => { //why does this one have a space and the others don't?
         if (index >= 0 && ele !== arr[index - 1]) {
          arrayResult.push(ele);
         }

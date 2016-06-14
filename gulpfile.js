@@ -10,6 +10,7 @@ var children = [];
 var appFiles = ['*.js', './lib/**/*.js', './routes/**/*.js', './models/**/*.js'];
 var testFiles = [
   './test/auth_test.js', './test/bridge_test.js', './test/hex_module_test.js',
+  //fix this indentation
    './test/light_test.js', './test/rgb_module_test.js',
    './test/server_test.js', './test/test_setup.js', './test/test_teardown.js'
 ];
@@ -65,6 +66,7 @@ gulp.task('lint:appFiles', () => {
 });
 
 gulp.task('sass:dev', () => {
+  //since it's a 'dev' task you can probably skip the minification
   return gulp.src('app/sass/**/*.scss')
     .pipe(maps.init())
     .pipe(sass().on('error', sass.logError))

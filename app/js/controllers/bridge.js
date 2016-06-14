@@ -1,3 +1,7 @@
+/*
+  Just pass console.log if you're only going to console.log the response
+  on an error
+*/
 const copy = require('angular').copy;
 
 module.exports = function(app) {
@@ -9,6 +13,7 @@ module.exports = function(app) {
    this.editing = false;
    this.cancel = function() {
      this.editing = false;
+     //is there a reason you're not copying this back?
      for (var key in this.backup) {
        this.bridge[key] = this.backup[key];
      }

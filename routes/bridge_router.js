@@ -10,6 +10,7 @@ bridgeRouter.post('/bridge/create', jwtAuth, bodyParser, (req, res) => {
   var newBridge = new Bridge(req.body);
   newBridge.admin = req.user._id;
   newBridge.save((err, data) => {
+    //this will create a hanging connection if the bridge cannot be created
     if (err) return console.log(err);
     res.status(200).json(data);
   });
@@ -17,6 +18,7 @@ bridgeRouter.post('/bridge/create', jwtAuth, bodyParser, (req, res) => {
 
 bridgeRouter.get('/bridge/exists', jwtAuth, (req, res) => {
   Bridge.findOne({ admin: req.user._id }, (err, bridge) => {
+    //the indentation in this function is really sloppy.
     if (!bridge) {
       return res.status(401).json({
       msg: 'no bridge found, please create a new bridge',

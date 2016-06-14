@@ -2,10 +2,11 @@ module.exports = function(app) {
   app.controller('SignUpController', ['$http', '$location', 'hueHandleError',
   function($http, $location, hueHandleError) {
     this.signup = true;
-    this.invalid = true;
+    this.invalid = true; //this would be better done by grabbing a reference to the form and checking for $valid
     this.errors = [];
     this.buttonText = 'Create Account';
     this.confirm = function(password) {
+      //you can make this function a single line of code, you already have the logic in here
       if (this.user.password === password && password) {
         return this.invalid = false;
       }

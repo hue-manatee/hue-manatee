@@ -17,6 +17,9 @@ lightRouter.post('/light/create', jwtAuth, bodyParser, (req, res) => {
   var newLight = new Light(req.body);
 
   if (req.body.groups) {
+    //this seems a little convoluted you could probably do something like:
+    //is there a reason you're running the forEach it seems like you could
+    //just do a newLight.groups = req.body.groups.split(','); 
     newLight.groups = [];
     var groups = req.body.groups;
     var groupArr = groups.split(',');
@@ -40,12 +43,21 @@ lightRouter.post('/light/create', jwtAuth, bodyParser, (req, res) => {
         if (err) return console.log(err);
         return res.status(200).json(data);
       });
+  //fix this indentation
   });
 
   });
 });
 
 lightRouter.get('/light/magic', jwtAuth, (req, res) => {
+  /* This desperately needs to be refactored. I would start by splitting
+     each individual "action" you're running on the query into separate function,
+     put all those functions in a file and module.exports an object of those 
+     function. Right not it's pretty difficult to figure what should is being
+     accomplished at a high level in this code. Which, will make this pretty
+     impossible to maintain. Splitting your logic to functions should help
+     with that.
+  */
   var lightObj = {};
   lightObj.effect = 'none';
 
@@ -88,6 +100,7 @@ lightRouter.get('/light/magic', jwtAuth, (req, res) => {
         if (err) return console.log(err);
         res.status(200).json(JSON.parse(superRes.text));
       });
+      //fix this indentation
       } else if (req.query.group === 'all') {
       Light.find({ bridgeId: bridge._id }, (err, lights) => {
         if (err) return console.log('this is the light error', err);
@@ -152,6 +165,8 @@ lightRouter.put('/light/update/:lightId', jwtAuth, bodyParser, (req, res) => {
   var lightData = req.body;
 
   if (req.body.groups) {
+    //same here with the grouping, seems like there could be an easier way to
+    //this, or you could move this process into a function
     var group = req.body.groups;
     lightData.groups = [];
     var groupArr = group.split(',');
@@ -199,6 +214,7 @@ lightRouter.get('/light/all', jwtAuth, (req, res) => {
     if (!bridge) return res.status(401).json({ msg: 'not authorized' });
     if (err) return console.log(err);
     Light.find({ bridgeId: bridge._id }, (err, lights) => {
+    //fix this indentation
       if (err) return console.log(err);
         res.status(200).json(lights);
       });

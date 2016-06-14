@@ -1,3 +1,7 @@
+/* 
+   since I haven't looked at the views yet I might be missing something but
+   isn't a lot of this code also in the light controller?
+*/
 module.exports = function(app) {
   app.controller('CreateLightController', ['hueAuth', '$http', '$location',
   function(hueAuth, $http, $location) {
